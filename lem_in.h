@@ -6,12 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/23 15:17:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/23 15:20:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
+# include <stdlib.h>
 # include "libft.h"
 
 typedef enum	e_opt

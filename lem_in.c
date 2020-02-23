@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/23 15:17:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/23 15:21:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int				main(int argc, char **argv)
 	argv++;
 	opt = ft_read_opt(&argc, &argv);
 	read_input_data();
-	if (opt & leaks)
-		ft_putendl("Print leaks");
 	return_code = 0;
+	if (opt & leaks)
+		system("leaks lem-in");
 	return (return_code);
 }
