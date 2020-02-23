@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.c                                           :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: jkauppi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/23 13:34:56 by jkauppi          ###   ########.fr       */
+/*   Created: 2019/10/19 19:28:01 by jkauppi           #+#    #+#             */
+/*   Updated: 2019/10/25 08:55:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-int		main(int argc, char **argv)
+int		ft_toupper(int c)
 {
-	int		return_code;
-
-	(void)argc;
-	(void)argv;
-	return_code = 0;
-	return (return_code);
+	if (ft_islower(c))
+		return (c - 32);
+	else
+		return (c);
 }
