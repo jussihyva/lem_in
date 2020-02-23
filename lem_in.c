@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/23 15:21:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/23 19:20:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static void		read_input_data(void)
 	int		ret;
 
 	line = NULL;
+	ft_printf("%s\n", " ");
 	while ((ret = ft_get_next_line(0, &line)) > 0)
 	{
-		ft_putendl(line);
+		ft_printf("%s\n", line);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);

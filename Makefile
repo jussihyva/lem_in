@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/02/23 15:17:12 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/02/23 16:27:25 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ C_FLAGS		=	-g -Wall -Werror -Wextra
 
 MAIN_SRC	=	lem_in.c
 HEADER		=	lem_in.h
-INCLUDES	=	-I ./ -I libft
-LIB			=	-L libft -l ft
+INCLUDES	=	-I ./ -I libft -I libftprintf/src
+LIB			=	-L libft -l ft -L libftprintf -l ftprintf
 
 SRC_FOLDER	=	src
 SRC_FILES	=	ft_read_opt.c

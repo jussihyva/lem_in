@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 13:16:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/23 16:33:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ struct		s_substring
 
 typedef struct s_substring	t_substring;
 
+int			ft_printf(const char *format, ...);
+int			ft_dprintf(int fd, const char *format, ...);
+int			ft_sprintf(char *str, const char *format, ...);
 t_list		**split_string(char *input_string, t_list **converter_array);
 t_list		**create_formatters(void);
 t_list		**create_converters(void);

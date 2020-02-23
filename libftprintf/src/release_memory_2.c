@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 09:59:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 10:17:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/23 18:21:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void		reset_elem(t_list *elem)
 		ft_strdel(&s);
 		(*elem).content_size = 0;
 		(*elem).next = NULL;
+		(*elem).prev = NULL;
 	}
 	return ;
 }

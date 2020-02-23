@@ -1,2 +1,5 @@
 lem-in
 lem-in.dSYM
+*.o
+*.a
+*.dSYM

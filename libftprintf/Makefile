@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/01/11 13:03:47 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/02/23 16:37:11 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ_FOLDER		=	./obj
 CC				=	clang
 
 INCLUDES		=	-I ${SRC_FOLDER} -I ${LIBFT_FOLDER}
-CFLAGS			=	-Wall -Werror -Wextra ${INCLUDES}
+CFLAGS			=	-g -Wall -Werror -Wextra ${INCLUDES}
 
 SRC_FILES		=	ft_printf.c split_input_string.c create_converters.c \
 					ft_lltoa_base.c ft_ulltoa_base.c param_type.c \
