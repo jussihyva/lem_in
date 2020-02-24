@@ -57,6 +57,7 @@ typedef struct		t_move_action
 typedef struct		s_transportation
 {
 	t_ant		*ants;
+	size_t		number_of_ants;
 	int128		*room_reservation;
 	t_list		*move_lines;
 }			t_transportation;
