@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/02/23 16:27:25 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/02/24 12:41:41 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INCLUDES	=	-I ./ -I libft -I libftprintf/src
 LIB			=	-L libft -l ft -L libftprintf -l ftprintf
 
 SRC_FOLDER	=	src
-SRC_FILES	=	ft_read_opt.c
+SRC_FILES	=	ft_read_opt.c ft_strtoi.c
 
 OBJ_FOLDER	=	obj
 OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(patsubst %.c, %.o, $(SRC_FILES)))
@@ -37,7 +37,7 @@ $(OBJ_FOLDER):
 	@mkdir $(OBJ_FOLDER)
 
 norm:
-	@norminette $(MAIN_SRC) $(HEADER)
+	@norminette $(MAIN_SRC) $(HEADER) $(SRC_FOLDER)
 
 clean:
 	@\rm -rf $(NAME).dSYM
