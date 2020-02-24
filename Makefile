@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/02/24 12:41:41 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/02/24 16:06:46 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INCLUDES	=	-I ./ -I libft -I libftprintf/src
 LIB			=	-L libft -l ft -L libftprintf -l ftprintf
 
 SRC_FOLDER	=	src
-SRC_FILES	=	ft_read_opt.c ft_strtoi.c
+SRC_FILES	=	ft_read_opt.c ft_strtoi.c manage_room_data.c ft_arraydel.c
 
 OBJ_FOLDER	=	obj
 OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(patsubst %.c, %.o, $(SRC_FILES)))

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/24 12:41:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/24 19:21:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,24 @@
 # include "libft.h"
 # include "limits.h"
 # include "errno.h"
+# include <fcntl.h>
 
 typedef enum		e_read_status
 {
 	start_reading,
 	num_of_ants,
 	comment,
-	read_start_room,
-	read_end_room,
-	read_room_name,
-	read_connection,
+	read_start_room_data,
+	read_end_room_data,
+	read_room_data,
+	read_connection_data,
 	stop_reading
 }					t_read_status;
 
 typedef enum		e_opt
 {
-	leaks = 0x1
+	leaks = 0x1,
+	map_file = 0x2
 }					t_opt;
 
 typedef struct		s_room
@@ -78,16 +80,27 @@ typedef struct		s_transportation
 
 typedef enum		e_input_error
 {
-	num_of_ants_error = 1
+	num_of_ants_error = 1,
+	faulty_room_data,
+	invalid_room_data,
+	input_file_missing
 }					t_input_error;
 
 typedef struct		s_input
 {
 	t_input_error	error;
+	t_opt			opt;
+	char			*input_file;
 	size_t			number_of_ants;
+	t_list			*start_room;
+	t_list			*room_lst;
+	t_list			*end_room;
 }					t_input;
 
-t_opt				ft_read_opt(int *argc, char ***argv);
+void				ft_read_opt(t_input *input, int *argc, char ***argv);
 int					ft_strtoi(const char *str, char **endptr, int base);
+t_read_status		get_room_data(char *line, t_input *input,
+												t_read_status	read_status);
+void				ft_arraydel(char **array);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/24 12:36:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/24 19:15:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_read_status	read_num_of_ants(char *line, t_input *input)
+static t_read_status	get_num_of_ants(char *line, t_input *input)
 {
 	char			*endptr;
 	t_read_status	read_status;
@@ -23,26 +23,53 @@ static t_read_status	read_num_of_ants(char *line, t_input *input)
 	if (errno || *endptr)
 		input->error = num_of_ants_error;
 	else
-		read_status = read_room_name;
-	ft_printf("%s\n", line);
+		read_status = read_room_data;
 	return (read_status);
 }
 
-static void				read_input_data(void)
+static void				init_input_structure(t_input *input)
+{
+	input->error = 0;
+	input->input_file = NULL;
+	input->opt = 0;
+	input->start_room = NULL;
+	input->room_lst = NULL;
+	input->end_room = NULL;
+	return ;
+}
+
+static int				open_input_file(t_input *input)
+{
+	int		fd;
+
+	if (input->opt & map_file)
+		fd = open(input->input_file, O_RDONLY);
+	else
+		fd = 0;
+	return (fd);
+}
+
+static void				read_input_data(t_input *input)
 {
 	char			*line;
 	int				ret;
 	t_read_status	read_status;
-	t_input			input;
+	int				fd;
 
 	line = NULL;
 	read_status = start_reading;
-	input.error = 0;
-	while ((ret = ft_get_next_line(0, &line)) > 0 && !input.error &&
+	fd = open_input_file(input);
+	while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
 													read_status != stop_reading)
 	{
 		if (read_status == start_reading)
-			read_status = read_num_of_ants(line, &input);
+			read_status = get_num_of_ants(line, input);
+		else if (read_status == read_room_data)
+			read_status = get_room_data(line, input, read_status);
+		else if (read_status == read_start_room_data)
+			read_status = get_room_data(line, input, read_status);
+		else if (read_status == read_end_room_data)
+			read_status = get_room_data(line, input, read_status);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
@@ -51,15 +78,28 @@ static void				read_input_data(void)
 
 int						main(int argc, char **argv)
 {
-	int		return_code;
-	t_opt	opt;
+	int				return_code;
+	t_input			input;
 
 	argc--;
 	argv++;
-	opt = ft_read_opt(&argc, &argv);
-	read_input_data();
+	init_input_structure(&input);
+	ft_read_opt(&input, &argc, &argv);
+	read_input_data(&input);
+	if (!input.error)
+	{
+		ft_printf("Number of ants: %20d\n", input.number_of_ants);
+		ft_printf("Start room name: %20s\n",
+								((t_room *)input.start_room->content)->name);
+		ft_printf("Start room X: %20d\n",
+								((t_room *)input.start_room->content)->coord_x);
+		ft_printf("End room name: %20s\n",
+								((t_room *)input.end_room->content)->name);
+		ft_printf("End room X: %20d\n",
+								((t_room *)input.end_room->content)->coord_x);
+	}
 	return_code = 0;
-	if (opt & leaks)
+	if (input.opt & leaks)
 		system("leaks lem-in");
 	return (return_code);
 }

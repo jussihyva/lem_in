@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 14:14:32 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/24 12:42:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/24 17:25:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,33 @@ static void		step_args(int *argc, char ***argv)
 	(*argv)++;
 }
 
-t_opt			ft_read_opt(int *argc, char ***argv)
+static void		save_input_file(t_input *input, int *argc, char ***argv)
 {
-	t_opt	opt;
-
-	opt = 0;
-	while (*argc)
+	step_args(argc, argv);
+	if (*argc > 0)
 	{
-		if (ft_strequ((*argv)[*argc - 1], "-l"))
-			opt |= leaks;
-		else
-			break ;
+		input->input_file = ft_strdup(*argv[0]);
+		input->opt |= map_file;
 		step_args(argc, argv);
 	}
-	return (opt);
+	else
+		input->error = input_file_missing;
+	return ;
+}
+
+void			ft_read_opt(t_input *input, int *argc, char ***argv)
+{
+	while (*argc)
+	{
+		if (ft_strequ((*argv)[0], "-l"))
+		{
+			input->opt |= leaks;
+			step_args(argc, argv);
+		}
+		if (ft_strequ((*argv)[0], "-f"))
+			save_input_file(input, argc, argv);
+		else
+			break ;
+	}
+	return ;
 }
