@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 16:39:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:32:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct		s_room
 	int				coord_x;
 	int				coord_y;
 	size_t			id;
+	t_list			*connection_lst;
 }					t_room;
 
 typedef struct		s_history

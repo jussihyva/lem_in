@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 16:24:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:40:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static t_room			*create_new_room(char **splitted_line, t_input *input)
 	if (errno || *endptr)
 		input->error = faulty_room_data;
 	room->id = id++;
+	room->connection_lst = NULL;
 	return (room);
 }
 

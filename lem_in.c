@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 16:38:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:53:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,15 @@ int						main(int argc, char **argv)
 	read_status = start_reading;
 	fd = open_input_file(&input);
 	read_input_data(&input, fd, read_status);
+	return_code = 1;
 	if (!input.error)
 	{
 		ft_printf("Number of ants: %20d\n", input.number_of_ants);
 		print_result(&input);
+		return_code = 0;
 	}
-	return_code = 0;
+	else
+		ft_printf("Error\n");
 	if (input.opt & leaks)
 		system("leaks lem-in");
 	return (return_code);

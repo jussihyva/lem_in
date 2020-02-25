@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 16:56:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:35:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ static t_room			*get_room(char *name, t_list *room_lst)
 	return (room);
 }
 
+static void				add_connection(t_room *room, t_room *dest_room)
+{
+	t_list		*elem;
+
+	elem = ft_lstnew(dest_room, sizeof(*dest_room));
+	if (room->connection_lst)
+		ft_lstadd(&room->connection_lst, elem);
+	else
+		room->connection_lst = elem;
+	return ;
+}
 static t_read_status	validate_connection_data(char *line, t_input *input,
 													t_read_status read_status)
 {
@@ -49,8 +60,8 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 		room2 = get_room(splitted_line[1], input->room_lst);
 		if (room1 && room2)
 		{
-			// add_connection(room1, room2);
-			// add_connection(room2, room1);
+			add_connection(room1, room2);
+			add_connection(room2, room1);
 		}
 	}
 	else
