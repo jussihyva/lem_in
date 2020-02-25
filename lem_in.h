@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 15:13:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 16:39:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef enum		e_input_error
 	num_of_ants_error = 1,
 	faulty_room_data,
 	invalid_room_data,
+	invalid_connection_data,
 	input_file_missing
 }					t_input_error;
 
@@ -101,7 +102,9 @@ typedef struct		s_input
 void				ft_read_opt(t_input *input, int *argc, char ***argv);
 int					ft_strtoi(const char *str, char **endptr, int base);
 t_read_status		get_room_data(char *line, t_input *input,
-												t_read_status	read_status);
+													t_read_status read_status);
+t_read_status		get_connection_data(char *line, t_input *input,
+													t_read_status read_status);
 void				ft_arraydel(char **array);
 void				print_result(t_input *input);
 

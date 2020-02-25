@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 15:03:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 16:24:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_list	*add_room(t_input *input, t_room *room)
+static t_list			*add_room(t_input *input, t_room *room)
 {
 	t_list		*room_elem;
 
@@ -26,7 +26,7 @@ static t_list	*add_room(t_input *input, t_room *room)
 	return (room_elem);
 }
 
-t_room			*create_new_room(char **splitted_line, t_input *input)
+static t_room			*create_new_room(char **splitted_line, t_input *input)
 {
 	t_room			*room;
 	static size_t	id;
@@ -45,7 +45,7 @@ t_room			*create_new_room(char **splitted_line, t_input *input)
 	return (room);
 }
 
-t_read_status	validate_room_data(char *line, t_input *input,
+static t_read_status	validate_room_data(char *line, t_input *input,
 													t_read_status read_status)
 {
 	char			**splitted_line;
@@ -53,7 +53,6 @@ t_read_status	validate_room_data(char *line, t_input *input,
 	t_room			*room;
 	t_list			*room_elem;
 
-	ft_printf("Get start room data: %s\n", line);
 	splitted_line = ft_strsplit(line, ' ');
 	c = 0;
 	while (splitted_line[c])
@@ -74,10 +73,9 @@ t_read_status	validate_room_data(char *line, t_input *input,
 	return (read_status);
 }
 
-t_read_status	get_room_data(char *line, t_input *input,
+t_read_status			get_room_data(char *line, t_input *input,
 													t_read_status read_status)
 {
-	ft_printf("Get room data: %s\n", line);
 	if (ft_strequ(line, "##start"))
 		read_status = read_start_room_data;
 	else if (ft_strequ(line, "##end"))
@@ -90,8 +88,7 @@ t_read_status	get_room_data(char *line, t_input *input,
 		if (input->error == invalid_room_data)
 		{
 			input->error = 0;
-			// read_status = read_connection_data;
-			// read_status = validate_connection_data(line, input, read_status);
+			read_status = read_connection_data;
 		}
 	}
 	return (read_status);
