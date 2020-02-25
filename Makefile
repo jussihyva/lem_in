@@ -6,12 +6,12 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/02/25 09:33:23 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/02/25 14:40:17 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	lem-in
-CC			=	clang
+CC			=	gcc
 C_FLAGS		=	-g -Wall -Werror -Wextra
 
 MAIN_SRC	=	lem_in.c

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 12:22:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 15:13:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_room
 	char			*name;
 	int				coord_x;
 	int				coord_y;
-	int				id;
+	size_t			id;
 }					t_room;
 
 typedef struct		s_history
@@ -91,7 +91,7 @@ typedef struct		s_input
 	t_input_error	error;
 	t_opt			opt;
 	char			*input_file;
-//	t_list			*valid_input_lines;
+	t_list			*valid_input_lines;
 	size_t			number_of_ants;
 	t_list			*start_room;
 	t_list			*room_lst;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 10:31:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 14:55:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void				init_input_structure(t_input *input)
 	input->start_room = NULL;
 	input->room_lst = NULL;
 	input->end_room = NULL;
-//	input->valid_input_lines = NULL;
+	input->valid_input_lines = NULL;
 	input->number_of_ants = 0;
 	return ;
 }
@@ -90,7 +90,10 @@ int						main(int argc, char **argv)
 	ft_read_opt(&input, &argc, &argv);
 	read_input_data(&input);
 	if (!input.error)
+	{
+		ft_printf("Number of ants: %20d\n", input.number_of_ants);
 		print_result(&input);
+	}
 	return_code = 0;
 	if (input.opt & leaks)
 		system("leaks lem-in");
