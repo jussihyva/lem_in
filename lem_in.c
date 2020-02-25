@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 14:55:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 15:15:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void				read_input_data(t_input *input)
 	int				ret;
 	t_read_status	read_status;
 	int				fd;
-//	t_list			*elem;
+	t_list			*elem;
 
 	line = NULL;
 	read_status = start_reading;
@@ -71,8 +71,8 @@ static void				read_input_data(t_input *input)
 					read_status == read_start_room_data ||
 					read_status == read_end_room_data)
 			read_status = get_room_data(line, input, read_status);
-//		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-//		ft_lstadd_e(&input->valid_input_lines, elem);
+		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+		ft_lstadd_e(&input->valid_input_lines, elem);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);

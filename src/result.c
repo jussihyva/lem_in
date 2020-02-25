@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 14:40:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 15:16:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ static void		print_room_data(t_room *room)
 	return ;
 }
 
-// static void		print_valid_input_lines(t_list **line_lst)
-// {
-// 	t_list		*elem;
+static void		print_valid_input_lines(t_list **line_lst)
+{
+	t_list		*elem;
 
-// 	elem = *line_lst;
-// 	while (elem)
-// 	{
-// 		ft_printf("LINE: %s\n", (char *)elem->content);
-// 		elem = elem->next;
-// 	}
-// 	return ;
-// }
+	elem = *line_lst;
+	while (elem)
+	{
+		ft_printf("LINE: %s\n", (char *)elem->content);
+		elem = elem->next;
+	}
+	return ;
+}
 
 void			print_result(t_input *input)
 {
@@ -43,6 +43,6 @@ void			print_result(t_input *input)
 		print_room_data((t_room *)elem->content);
 		elem = elem->next;
 	}
-//	print_valid_input_lines(&input->valid_input_lines);
+	print_valid_input_lines(&input->valid_input_lines);
 	return ;
 }
