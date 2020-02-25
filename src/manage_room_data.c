@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/24 19:21:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 09:26:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,16 @@ t_read_status	get_room_data(char *line, t_input *input,
 		read_status = read_start_room_data;
 	else if (ft_strequ(line, "##end"))
 		read_status = read_end_room_data;
+	else if (line[0] == '#')
+		read_status = read_room_data;
 	else
 	{
 		read_status = validate_room_data(line, input, read_status);
 		if (input->error == invalid_room_data)
 		{
 			input->error = 0;
-//			read_status = read_connection_data;
-//			read_status = validate_connection_data(line, input, read_status);
+			// read_status = read_connection_data;
+			// read_status = validate_connection_data(line, input, read_status);
 		}
 	}
 	return (read_status);

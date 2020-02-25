@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/24 19:15:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 10:31:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void				init_input_structure(t_input *input)
 	input->start_room = NULL;
 	input->room_lst = NULL;
 	input->end_room = NULL;
+//	input->valid_input_lines = NULL;
+	input->number_of_ants = 0;
 	return ;
 }
 
@@ -55,6 +57,7 @@ static void				read_input_data(t_input *input)
 	int				ret;
 	t_read_status	read_status;
 	int				fd;
+//	t_list			*elem;
 
 	line = NULL;
 	read_status = start_reading;
@@ -64,12 +67,12 @@ static void				read_input_data(t_input *input)
 	{
 		if (read_status == start_reading)
 			read_status = get_num_of_ants(line, input);
-		else if (read_status == read_room_data)
+		else if (read_status == read_room_data ||
+					read_status == read_start_room_data ||
+					read_status == read_end_room_data)
 			read_status = get_room_data(line, input, read_status);
-		else if (read_status == read_start_room_data)
-			read_status = get_room_data(line, input, read_status);
-		else if (read_status == read_end_room_data)
-			read_status = get_room_data(line, input, read_status);
+//		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+//		ft_lstadd_e(&input->valid_input_lines, elem);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
@@ -87,17 +90,7 @@ int						main(int argc, char **argv)
 	ft_read_opt(&input, &argc, &argv);
 	read_input_data(&input);
 	if (!input.error)
-	{
-		ft_printf("Number of ants: %20d\n", input.number_of_ants);
-		ft_printf("Start room name: %20s\n",
-								((t_room *)input.start_room->content)->name);
-		ft_printf("Start room X: %20d\n",
-								((t_room *)input.start_room->content)->coord_x);
-		ft_printf("End room name: %20s\n",
-								((t_room *)input.end_room->content)->name);
-		ft_printf("End room X: %20d\n",
-								((t_room *)input.end_room->content)->coord_x);
-	}
+		print_result(&input);
 	return_code = 0;
 	if (input.opt & leaks)
 		system("leaks lem-in");

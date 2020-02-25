@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/24 19:21:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/25 12:22:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct		s_input
 	t_input_error	error;
 	t_opt			opt;
 	char			*input_file;
+//	t_list			*valid_input_lines;
 	size_t			number_of_ants;
 	t_list			*start_room;
 	t_list			*room_lst;
@@ -102,5 +103,6 @@ int					ft_strtoi(const char *str, char **endptr, int base);
 t_read_status		get_room_data(char *line, t_input *input,
 												t_read_status	read_status);
 void				ft_arraydel(char **array);
+void				print_result(t_input *input);
 
 #endif
