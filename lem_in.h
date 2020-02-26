@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 17:32:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 10:29:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "errno.h"
 # include <fcntl.h>
 
-typedef enum		e_read_status
+typedef enum				e_read_status
 {
 	start_reading,
 	num_of_ants,
@@ -29,66 +29,66 @@ typedef enum		e_read_status
 	read_room_data,
 	read_connection_data,
 	stop_reading
-}					t_read_status;
+}							t_read_status;
 
-typedef enum		e_opt
+typedef enum				e_opt
 {
 	leaks = 0x1,
 	map_file = 0x2
-}					t_opt;
+}							t_opt;
 
-typedef struct		s_room
+typedef struct				s_room
 {
 	char			*name;
 	int				coord_x;
 	int				coord_y;
 	size_t			id;
 	t_list			*connection_lst;
-}					t_room;
+}							t_room;
 
-typedef struct		s_history
+typedef struct				s_history
 {
 	size_t			line_nr;
 	t_room			room;
 	size_t			move_order;
-}					t_history;
+}							t_history;
 
-typedef struct		s_ant
+typedef struct				s_ant
 {
 	int				id;
 	t_room			current_room;
 	t_history		*room_history;
-}					t_ant;
+}							t_ant;
 
-typedef struct		s_move_action
+typedef struct				s_move_action
 {
 	t_ant			ant;
 	t_room			room;
-}					t_move_action;
+}							t_move_action;
 
-typedef struct		s_move_line
+typedef struct				s_move_line
 {
 	t_move_action	move_action;
-}					t_move_line;
+}							t_move_line;
 
-typedef struct		s_transportation
+typedef struct				s_transportation
 {
 	t_ant			*ants;
 	size_t			number_of_ants;
 	int64_t			*room_reservation;
 	t_list			*move_lines;
-}					t_transportation;
+}							t_transportation;
 
-typedef enum		e_input_error
+typedef enum				e_input_error
 {
 	num_of_ants_error = 1,
 	faulty_room_data,
 	invalid_room_data,
 	invalid_connection_data,
 	input_file_missing
-}					t_input_error;
+}							t_input_error;
 
-typedef struct		s_input
+typedef struct				s_input
 {
 	t_input_error	error;
 	t_opt			opt;
@@ -98,15 +98,24 @@ typedef struct		s_input
 	t_list			*start_room;
 	t_list			*room_lst;
 	t_list			*end_room;
-}					t_input;
+}							t_input;
 
-void				ft_read_opt(t_input *input, int *argc, char ***argv);
-int					ft_strtoi(const char *str, char **endptr, int base);
-t_read_status		get_room_data(char *line, t_input *input,
+typedef struct				s_transportation_report
+{
+	int				error;
+}							t_transportation_report;
+
+void						ft_read_opt(t_input *input, int *argc,
+																char ***argv);
+int							ft_strtoi(const char *str, char **endptr,
+																	int base);
+t_read_status				get_room_data(char *line, t_input *input,
 													t_read_status read_status);
-t_read_status		get_connection_data(char *line, t_input *input,
+t_read_status				get_connection_data(char *line, t_input *input,
 													t_read_status read_status);
-void				ft_arraydel(char **array);
-void				print_result(t_input *input);
+void						ft_arraydel(char **array);
+void						print_result(t_input *input);
+void						ft_step_args(int *argc, char ***argv);
+t_transportation_report		ants_transportation(t_input *input);
 
 #endif

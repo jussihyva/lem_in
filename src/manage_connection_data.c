@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 17:35:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 09:41:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void				add_connection(t_room *room, t_room *dest_room)
 		room->connection_lst = elem;
 	return ;
 }
+
 static t_read_status	validate_connection_data(char *line, t_input *input,
 													t_read_status read_status)
 {
