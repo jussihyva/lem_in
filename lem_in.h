@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 10:29:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:06:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ typedef struct				s_transportation
 
 typedef enum				e_input_error
 {
-	num_of_ants_error = 1,
+	file_open_failure = 1,
+	num_of_ants_error,
 	faulty_room_data,
 	invalid_room_data,
 	invalid_connection_data,

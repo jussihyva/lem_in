@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 10:32:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:07:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,19 @@ int						main(int argc, char **argv)
 	init_input_structure(&input);
 	ft_read_opt(&input, &argc, &argv);
 	fd = open_input_file(&input);
-	read_input_data(&input, fd, start_reading);
+	if (fd < 0)
+		input.error = file_open_failure;
+	else
+		read_input_data(&input, fd, start_reading);
 	return_code = 1;
-	if (!input.error)
+	if (input.error)
+		ft_printf("ERROR\n");
+	else
 	{
 		ants_transportation(&input);
 		print_result(&input);
 		return_code = 0;
 	}
-	else
-		ft_printf("ERROR\n");
 	if (input.opt & leaks)
 		system("leaks lem-in");
 	return (return_code);

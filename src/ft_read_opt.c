@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 14:14:32 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 09:40:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:03:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ static void		save_input_file(t_input *input, int *argc, char ***argv)
 {
 	if (*argc > 0)
 	{
-		input->input_file = ft_strdup(*argv[0]);
-		input->opt |= map_file;
+		if (!(input->opt & map_file))
+		{
+			input->input_file = ft_strdup(*argv[0]);
+			input->opt |= map_file;
+		}
 		ft_step_args(argc, argv);
 	}
 	else
