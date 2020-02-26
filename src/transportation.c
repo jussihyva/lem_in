@@ -43,7 +43,10 @@ static int					navigate_to_start(t_list room_elem,
 				break ;
 			}
 			else
-				adj_room_elem = room->connection_lst;
+			{
+				visited_room[room->id / 64] |= 1 << room->id % 64;
+				next jump to recurcive;
+			}
 		}
 	}
 	return (result);
@@ -74,6 +77,27 @@ static t_list				*get_path(t_input *input, t_list *start_room_elem,
 		visited_room = NULL;
 	}
 	return (path);
+}
+
+static int					add_room_to_path(t_list *current_room_elem)
+{
+	room = (t_room *)current_room_elem->content;
+	adj_room_elem = room->connection_lst;
+	result = 0;
+	while (adj_room_elem)
+	{
+		room = (t_room *)adj_room_elem->content;
+		if (visited_room[room->id / 64] & 1 << (room->id) % 64)
+			adj_room_elem = adj_room_elem->next;
+		else if (room->id == ((t_room *)start_room_elem->content)->id)
+		{
+			result = 1;
+			break ;
+		}
+		else
+		{
+			
+	}
 }
 
 static void					print_path(t_list *path)
