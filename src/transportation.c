@@ -79,7 +79,8 @@ static t_list				*get_path(t_input *input, t_list *start_room_elem,
 	return (path);
 }
 
-static int					add_room_to_path(t_list *current_room_elem)
+static int					add_next_room_to_path(t_transportation_report *transportation_report,
+								 t_list *current_room_elem)
 {
 	room = (t_room *)current_room_elem->content;
 	adj_room_elem = room->connection_lst;
@@ -91,13 +92,16 @@ static int					add_room_to_path(t_list *current_room_elem)
 			adj_room_elem = adj_room_elem->next;
 		else if (room->id == ((t_room *)start_room_elem->content)->id)
 		{
-			result = 1;
+			save_path(transportation_report, path);
 			break ;
 		}
 		else
 		{
-			visited_room[room->id / 64] |= 1 << room->id % 64;
-			add_room_to_path(adj_room_elem);
+			ft_lstadd(path, ft_lstnew(room, adj_room_elem->content_size));
+			visited_room[room->id / 64] |= 1 << (room->id % 64);
+			add_next_room_to_path(transportation_report, adj_room_elem);
+			visited_room[room->id / 64] &= ~(1 << (room->id % 64));
+			ft_lstdelone(path, *path);
 		}
 			
 	}
