@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/25 17:40:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:14:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_list			*add_room(t_input *input, t_room *room)
 		ft_lstadd(&input->room_lst, room_elem);
 	else
 		input->room_lst = room_elem;
+	input->num_of_rooms++;
 	return (room_elem);
 }
 
@@ -82,7 +83,7 @@ t_read_status			get_room_data(char *line, t_input *input,
 	else if (ft_strequ(line, "##end"))
 		read_status = read_end_room_data;
 	else if (line[0] == '#')
-		read_status = read_room_data;
+		;
 	else
 	{
 		read_status = validate_room_data(line, input, read_status);

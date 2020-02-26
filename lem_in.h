@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 13:49:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:12:12 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct				s_input
 	size_t			number_of_ants;
 	t_list			*start_room;
 	t_list			*room_lst;
+	size_t			num_of_rooms;
 	t_list			*end_room;
 }							t_input;
 

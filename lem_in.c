@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 13:07:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:12:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@ static t_read_status	get_num_of_ants(char *line, t_input *input)
 	char			*endptr;
 	t_read_status	read_status;
 
-	endptr = NULL;
-	read_status = stop_reading;
-	input->number_of_ants = ft_strtoi(line, &endptr, 10);
-	if (errno || *endptr)
-		input->error = num_of_ants_error;
+	if (line[0] == '#')
+		read_status = start_reading;
 	else
-		read_status = read_room_data;
+	{
+		endptr = NULL;
+		input->number_of_ants = ft_strtoi(line, &endptr, 10);
+		if (errno || *endptr)
+		{
+			input->error = num_of_ants_error;
+			read_status = stop_reading;
+		}
+		else
+			read_status = read_room_data;
+	}
 	return (read_status);
 }
 
@@ -36,6 +43,7 @@ static void				init_input_structure(t_input *input)
 	input->room_lst = NULL;
 	input->end_room = NULL;
 	input->valid_input_lines = NULL;
+	input->number_of_ants = 0;
 	input->number_of_ants = 0;
 	return ;
 }
