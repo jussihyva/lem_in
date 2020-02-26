@@ -96,6 +96,9 @@ static int					add_room_to_path(t_list *current_room_elem)
 		}
 		else
 		{
+			visited_room[room->id / 64] |= 1 << room->id % 64;
+			add_room_to_path(adj_room_elem);
+		}
 			
 	}
 }
