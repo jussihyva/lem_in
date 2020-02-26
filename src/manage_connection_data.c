@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 18:09:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:39:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,18 @@ static t_room			*get_room(char *name, t_list *room_lst)
 	return (room);
 }
 
-static void				add_connection(t_room *room, t_room *dest_room)
+static void				add_connection(t_room *room1, t_room *room2)
 {
 	t_list		*elem;
 
-	elem = ft_lstnew(dest_room, sizeof(*dest_room));
+	elem = ft_lstnew(room1, sizeof(*room1));
 	free(elem->content);
-	elem->content = dest_room;
-	ft_lstadd_e(&room->connection_lst, elem);
+	elem->content = room1;
+	ft_lstadd_e(&room2->connection_lst, elem);
+	elem = ft_lstnew(room2, sizeof(*room2));
+	free(elem->content);
+	elem->content = room2;
+	ft_lstadd_e(&room1->connection_lst, elem);
 	return ;
 }
 
@@ -59,10 +63,7 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 		room1 = get_room(splitted_line[0], input->room_lst);
 		room2 = get_room(splitted_line[1], input->room_lst);
 		if (room1 && room2)
-		{
 			add_connection(room1, room2);
-			add_connection(room2, room1);
-		}
 		else
 			input->error = invalid_connection_data;
 	}

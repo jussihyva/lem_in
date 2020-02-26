@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 18:20:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:45:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ static void					del_path(void *room, size_t size)
 	return ;
 }
 
-static void					navigate_to_start(t_list *adj_room_elem,
+static int					navigate_to_start(t_list room_elem,
 				int64_t *visited_room, t_list *start_room_elem, t_list **path)
 {
 	t_room			*room;
+	int				result;
+	t_list			*adj_room_elem;
 
+	result = 0;
+	adj_room_elem = &room_elem;
 	while (adj_room_elem)
 	{
 		room = (t_room *)adj_room_elem->content;
@@ -34,12 +38,15 @@ static void					navigate_to_start(t_list *adj_room_elem,
 			visited_room[room->id / 64] |= 1 << room->id;
 			ft_lstadd(path, ft_lstnew(room, adj_room_elem->content_size));
 			if (room->id == ((t_room *)start_room_elem->content)->id)
+			{
+				result = 1;
 				break ;
+			}
 			else
 				adj_room_elem = room->connection_lst;
 		}
 	}
-	return ;
+	return (result);
 }
 
 static t_list				*get_path(t_input *input, t_list *start_room_elem,
@@ -50,20 +57,22 @@ static t_list				*get_path(t_input *input, t_list *start_room_elem,
 	int64_t			*visited_room;
 	t_room			*room;
 
-	visited_room = (int64_t *)ft_memalloc(sizeof(*visited_room) *
-										((input->num_of_rooms - 1) / 64 + 1));
 	adj_room_elem = ((t_room *)end_room_elem->content)->connection_lst;
-	if (adj_room_elem)
+	path = NULL;
+	while (adj_room_elem)
 	{
+		visited_room = (int64_t *)ft_memalloc(sizeof(*visited_room) *
+										((input->num_of_rooms - 1) / 64 + 1));
 		room = (t_room *)end_room_elem->content;
 		path = ft_lstnew(room, end_room_elem->content_size);
 		visited_room[room->id / 64] |= 1 << room->id % 64;
-		navigate_to_start(adj_room_elem, visited_room, start_room_elem, &path);
+		if (navigate_to_start(*adj_room_elem, visited_room, start_room_elem,
+																		&path))
+			break ;
+		adj_room_elem = adj_room_elem->next;
+		free(visited_room);
+		visited_room = NULL;
 	}
-	else
-		path = NULL;
-	free(visited_room);
-	visited_room = NULL;
 	return (path);
 }
 
