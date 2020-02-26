@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 09:41:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:39:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void				add_connection(t_room *room, t_room *dest_room)
 
 	elem = ft_lstnew(dest_room, sizeof(*dest_room));
 	if (room->connection_lst)
-		ft_lstadd(&room->connection_lst, elem);
+		ft_lstadd_e(&(room->connection_lst), elem);
 	else
 		room->connection_lst = elem;
 	return ;
