@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 18:12:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 10:24:12 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,10 @@ static void				read_input_data(t_input *input,
 
 int						main(int argc, char **argv)
 {
-	int				return_code;
-	t_input			input;
-	int				fd;
+	int							return_code;
+	t_input						input;
+	int							fd;
+	t_transportation_report		*transportation_report;
 
 	ft_step_args(&argc, &argv);
 	init_input_structure(&input);
@@ -108,7 +109,9 @@ int						main(int argc, char **argv)
 		ft_printf("ERROR\n");
 	else
 	{
-		ants_transportation(&input);
+		transportation_report = ants_transportation(&input);
+		free(transportation_report);
+		transportation_report = NULL;
 		print_result(&input);
 		return_code = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 18:45:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 11:18:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,76 +15,43 @@
 static void					del_path(void *room, size_t size)
 {
 	(void)size;
-	free((t_room *)room);
+	(void)room;
 	return ;
 }
 
-static int					navigate_to_start(t_list room_elem,
-				int64_t *visited_room, t_list *start_room_elem, t_list **path)
+static void					save_path(t_transportation_report
+										*transportation_report, t_list *path)
 {
-	t_room			*room;
-	int				result;
-	t_list			*adj_room_elem;
+	t_list			*elem;
+	size_t			c;
 
-	result = 0;
-	adj_room_elem = &room_elem;
-	while (adj_room_elem)
+	transportation_report->valid_path =
+		(t_room **)ft_memalloc(sizeof(*transportation_report->valid_path) *
+								(transportation_report->number_of_rooms + 1));
+	elem = path;
+	c = 0;
+	while (elem)
 	{
-		room = (t_room *)adj_room_elem->content;
-		if (visited_room[room->id / 64] & 1 << (room->id) % 64)
-			adj_room_elem = adj_room_elem->next;
-		else
-		{
-			visited_room[room->id / 64] |= 1 << room->id;
-			ft_lstadd(path, ft_lstnew(room, adj_room_elem->content_size));
-			if (room->id == ((t_room *)start_room_elem->content)->id)
-			{
-				result = 1;
-				break ;
-			}
-			else
-			{
-				visited_room[room->id / 64] |= 1 << room->id % 64;
-				next jump to recurcive;
-			}
-		}
+		transportation_report->valid_path[c] = (t_room *)elem->content;
+		c++;
+		elem = elem->next;
 	}
-	return (result);
+	transportation_report->valid_path[c] = 0;
+	return ;
 }
 
-static t_list				*get_path(t_input *input, t_list *start_room_elem,
-														t_list *end_room_elem)
+static void					add_next_room_to_path(t_transportation_report
+							*transportation_report, t_list *current_room_elem,
+							t_list *start_room_elem, int64_t *visited_room)
 {
-	t_list			*path;
-	t_list			*adj_room_elem;
-	int64_t			*visited_room;
 	t_room			*room;
+	t_list			*adj_room_elem;
+	t_list			**path;
+	t_list			*old_path;
 
-	adj_room_elem = ((t_room *)end_room_elem->content)->connection_lst;
-	path = NULL;
-	while (adj_room_elem)
-	{
-		visited_room = (int64_t *)ft_memalloc(sizeof(*visited_room) *
-										((input->num_of_rooms - 1) / 64 + 1));
-		room = (t_room *)end_room_elem->content;
-		path = ft_lstnew(room, end_room_elem->content_size);
-		visited_room[room->id / 64] |= 1 << room->id % 64;
-		if (navigate_to_start(*adj_room_elem, visited_room, start_room_elem,
-																		&path))
-			break ;
-		adj_room_elem = adj_room_elem->next;
-		free(visited_room);
-		visited_room = NULL;
-	}
-	return (path);
-}
-
-static int					add_next_room_to_path(t_transportation_report *transportation_report,
-								 t_list *current_room_elem)
-{
 	room = (t_room *)current_room_elem->content;
+	path = transportation_report->path;
 	adj_room_elem = room->connection_lst;
-	result = 0;
 	while (adj_room_elem)
 	{
 		room = (t_room *)adj_room_elem->content;
@@ -92,46 +59,77 @@ static int					add_next_room_to_path(t_transportation_report *transportation_rep
 			adj_room_elem = adj_room_elem->next;
 		else if (room->id == ((t_room *)start_room_elem->content)->id)
 		{
-			save_path(transportation_report, path);
+			transportation_report->number_of_rooms++;
+			ft_lstadd(path, ft_lstnew(room, adj_room_elem->content_size));
+			save_path(transportation_report, *path);
+			transportation_report->number_of_rooms--;
 			break ;
 		}
 		else
 		{
 			ft_lstadd(path, ft_lstnew(room, adj_room_elem->content_size));
 			visited_room[room->id / 64] |= 1 << (room->id % 64);
-			add_next_room_to_path(transportation_report, adj_room_elem);
+			transportation_report->number_of_rooms++;
+			add_next_room_to_path(transportation_report, adj_room_elem,
+												start_room_elem, visited_room);
 			visited_room[room->id / 64] &= ~(1 << (room->id % 64));
-			ft_lstdelone(path, *path);
+			transportation_report->number_of_rooms--;
+			old_path = *path;
+			*path = (*path)->next;
+			ft_lstdelone(&old_path, del_path);
+			adj_room_elem = adj_room_elem->next;
 		}
-			
 	}
+	return ;
 }
 
-static void					print_path(t_list *path)
+static void					print_path(t_room **path)
 {
-	t_list		*elem;
+	size_t		c;
 
-	elem = path;
-	while (elem)
+	c = 0;
+	while (path[c])
 	{
-		ft_printf("%5s ", ((t_room *)elem->content)->name);
-		elem = elem->next;
+		ft_printf("%5s ", path[c]->name);
+		free(path[c]);
+		path[c] = NULL;
+		c++;
 	}
 	ft_printf("\n");
 	return ;
 }
 
-t_transportation_report		ants_transportation(t_input *input)
+t_transportation_report		*ants_transportation(t_input *input)
 {
-	t_transportation_report		transportation_report;
-	t_list						*path;
+	t_transportation_report		*transportation_report;
+	int64_t						*visited_room;
+	t_room						*room;
 
-	transportation_report.error = 0;
-	path = get_path(input, input->start_room, input->end_room);
-	if (path)
+	transportation_report =
+		(t_transportation_report *)ft_memalloc(sizeof(*transportation_report));
+	transportation_report->error = 0;
+	transportation_report->path =
+				(t_list **)ft_memalloc(sizeof(*(transportation_report->path)));
+	transportation_report->valid_path = NULL;
+	room = (t_room *)input->end_room->content;
+	*(transportation_report->path) =
+								ft_lstnew(room, sizeof(t_room));
+	visited_room = (int64_t *)ft_memalloc(sizeof(*visited_room) *
+										((input->num_of_rooms - 1) / 64 + 1));
+	visited_room[room->id / 64] |= 1 << (room->id % 64);
+	transportation_report->number_of_rooms = 1;
+	add_next_room_to_path(transportation_report, input->end_room,
+											input->start_room, visited_room);
+	if (transportation_report->valid_path)
 	{
-		print_path(path);
-		ft_lstdel(&path, del_path);
+		print_path(transportation_report->valid_path);
+		free(transportation_report->valid_path);
+		transportation_report->valid_path = NULL;
 	}
+	ft_lstdel(transportation_report->path, del_path);
+	free(transportation_report->path);
+	transportation_report->path = NULL;
+	free(visited_room);
+	visited_room = NULL;
 	return (transportation_report);
 }
