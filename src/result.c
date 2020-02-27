@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 14:17:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 17:09:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ static void		print_valid_input_lines(t_list **line_lst)
 
 void			print_result(t_input *input)
 {
-	t_list		*elem;
+	size_t		c;
+	t_room		**room;
 
 	ft_printf("Number of ants: %20d\n", input->number_of_ants);
-	elem = input->room_lst;
-	while (elem)
+	room = input->room_array;
+	c = 0;
+	while (room[c])
 	{
-		print_room_data((t_room *)elem->content);
-		elem = elem->next;
+		print_room_data(room[c]);
+		c++;
 	}
 	print_valid_input_lines(&input->valid_input_lines);
 	return ;
