@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 21:14:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 22:13:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void					save_path(t_report *report, t_list *path)
 		c = 0;
 		while (elem)
 		{
-			report->valid_path[c] = ((t_room *)elem->content);
+			report->valid_path[c] = *((t_room **)elem->content);
 			c++;
 			elem = elem->next;
 		}
@@ -48,7 +48,7 @@ static void					add_next_room_to_path(t_report *report,
 		if (!(visited_room[room->id / 64] & 1 << (room->id) % 64))
 		{
 			report->number_of_rooms++;
-			new_room_elem = ft_lstnew(room, sizeof(*room));
+			new_room_elem = ft_lstnew(&room, sizeof(room));
 			ft_lstadd(report->path, new_room_elem);
 			visited_room[room->id / 64] |= 1 << (room->id % 64);
 			if (room->id == (*start_room)->id)
@@ -73,13 +73,11 @@ static void					print_path(t_report *report)
 
 	if (report->valid_path)
 	{
-		path = report->valid_path;
+		path = (t_room **)report->valid_path;
 		c = 0;
 		while (path[c])
 		{
 			ft_printf("%5s ", path[c]->name);
-			free(path[c]);
-			path[c] = NULL;
 			c++;
 		}
 		ft_printf("\n");
@@ -100,7 +98,7 @@ t_report					*ants_transportation(t_input *input)
 	report->path = (t_list **)ft_memalloc(sizeof(*(report->path)));
 	report->valid_path = NULL;
 	room = *input->end_room;
-	*(report->path) = ft_lstnew(room, sizeof(*room));
+	*(report->path) = ft_lstnew(&room, sizeof(room));
 	visited_room = (int64_t *)ft_memalloc(sizeof(*visited_room) *
 										((input->num_of_rooms - 1) / 64 + 1));
 	visited_room[room->id / 64] |= 1 << (room->id % 64);
