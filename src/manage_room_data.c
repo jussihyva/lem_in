@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 13:27:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:12:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,19 @@ static t_room			**create_room_array(t_list *room_lst,
 															size_t num_of_rooms)
 {
 	t_room		**room_array;
+	t_list		*elem;
+	size_t		id;
 
 	room_array =
 			(t_room **)ft_memalloc(sizeof(*room_array) * (num_of_rooms + 1));
-	(void)room_lst;
+	elem = room_lst;
+	while (elem)
+	{
+		id = ((t_room *)elem->content)->id;
+		room_array[id] = (t_room *)elem->content;
+		elem = elem->next;
+	}
+	room_array[num_of_rooms] = NULL;
 	return (room_array);
 }
 
