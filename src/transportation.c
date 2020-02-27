@@ -6,18 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 14:10:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:25:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static void					del_path(void *room, size_t size)
-{
-	(void)size;
-	(void)room;
-	return ;
-}
 
 static void					save_path(t_report *report, t_list *path)
 {

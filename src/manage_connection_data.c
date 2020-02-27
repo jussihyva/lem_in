@@ -6,27 +6,27 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 18:39:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:23:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_room			*get_room(char *name, t_list *room_lst)
+static t_room			*get_room(char *name, t_room **room_array)
 {
 	t_room		*room;
-	t_list		*elem;
+	size_t		c;
 
 	room = NULL;
-	elem = room_lst;
-	while (elem)
+	c = 0;
+	while (room_array[c])
 	{
-		if (ft_strequ(((t_room *)elem->content)->name, name))
+		if (ft_strequ(room_array[c]->name, name))
 		{
-			room = ((t_room *)elem->content);
+			room = room_array[c];
 			break ;
 		}
-		elem = elem->next;
+		c++;
 	}
 	return (room);
 }
@@ -60,8 +60,8 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 		c++;
 	if (c == 2)
 	{
-		room1 = get_room(splitted_line[0], input->room_lst);
-		room2 = get_room(splitted_line[1], input->room_lst);
+		room1 = get_room(splitted_line[0], input->room_array);
+		room2 = get_room(splitted_line[1], input->room_array);
 		if (room1 && room2)
 			add_connection(room1, room2);
 		else

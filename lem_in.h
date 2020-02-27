@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 13:40:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:26:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,6 @@ void						ft_arraydel(char **array);
 void						print_result(t_input *input);
 void						ft_step_args(int *argc, char ***argv);
 t_report					*ants_transportation(t_input *input);
+void						del_path(void *room, size_t size);
 
 #endif
