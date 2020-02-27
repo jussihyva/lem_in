@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/26 18:14:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 13:27:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,17 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 	return (read_status);
 }
 
+static t_room			**create_room_array(t_list *room_lst,
+															size_t num_of_rooms)
+{
+	t_room		**room_array;
+
+	room_array =
+			(t_room **)ft_memalloc(sizeof(*room_array) * (num_of_rooms + 1));
+	(void)room_lst;
+	return (room_array);
+}
+
 t_read_status			get_room_data(char *line, t_input *input,
 													t_read_status read_status)
 {
@@ -89,6 +100,8 @@ t_read_status			get_room_data(char *line, t_input *input,
 		read_status = validate_room_data(line, input, read_status);
 		if (input->error == invalid_room_data)
 		{
+			input->room_array = create_room_array(input->room_lst,
+														input->num_of_rooms);
 			input->error = 0;
 			read_status = read_connection_data;
 		}

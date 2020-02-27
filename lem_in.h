@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 10:42:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/27 13:40:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,18 @@ typedef struct				s_input
 	size_t			number_of_ants;
 	t_list			*start_room;
 	t_list			*room_lst;
+	t_room			**room_array;
 	size_t			num_of_rooms;
 	t_list			*end_room;
 }							t_input;
 
-typedef struct				s_transportation_report
+typedef struct				s_report
 {
 	int				error;
 	t_list			**path;
 	size_t			number_of_rooms;
 	t_room			**valid_path;
-}							t_transportation_report;
+}							t_report;
 
 void						ft_read_opt(t_input *input, int *argc,
 																char ***argv);
@@ -121,6 +122,6 @@ t_read_status				get_connection_data(char *line, t_input *input,
 void						ft_arraydel(char **array);
 void						print_result(t_input *input);
 void						ft_step_args(int *argc, char ***argv);
-t_transportation_report		*ants_transportation(t_input *input);
+t_report					*ants_transportation(t_input *input);
 
 #endif
