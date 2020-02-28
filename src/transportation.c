@@ -6,11 +6,32 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 09:38:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 10:40:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+static void					print_path(t_report *report)
+{
+	size_t		c;
+	t_room		**path;
+
+	if (report->valid_path)
+	{
+		path = (t_room **)report->valid_path;
+		c = 0;
+		while (path[c])
+		{
+			ft_printf("%5s ", path[c]->name);
+			c++;
+		}
+		ft_printf("\n");
+		free(report->valid_path);
+		report->valid_path = NULL;
+	}
+	return ;
+}
 
 static void					save_path(t_report *report, t_list *path)
 {
@@ -66,27 +87,6 @@ static void					add_next_room_to_path(t_report *report,
 	return ;
 }
 
-static void					print_path(t_report *report)
-{
-	size_t		c;
-	t_room		**path;
-
-	if (report->valid_path)
-	{
-		path = (t_room **)report->valid_path;
-		c = 0;
-		while (path[c])
-		{
-			ft_printf("%5s ", path[c]->name);
-			c++;
-		}
-		ft_printf("\n");
-		free(report->valid_path);
-		report->valid_path = NULL;
-	}
-	return ;
-}
-
 t_report					*ants_transportation(t_input *input)
 {
 	t_report		*report;
@@ -104,7 +104,7 @@ t_report					*ants_transportation(t_input *input)
 	visited_room[room->id / 64] |= 1 << (room->id % 64);
 	report->number_of_rooms = 1;
 	add_next_room_to_path(report, room->connection_lst,
-											input->start_room_ptr, visited_room);
+										input->start_room_ptr, visited_room);
 	print_path(report);
 	ft_lstdel(report->path, del_path_2);
 	free(report->path);

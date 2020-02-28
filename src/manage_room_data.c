@@ -6,31 +6,29 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 09:44:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 10:42:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 static void				create_new_room(char **splitted_line, t_input *input,
-															t_room **room)
+															t_room **room_ptr)
 {
 	static size_t	id;
 	char			*endptr;
-//	t_room			*room;
 
-	*room = (t_room *)ft_memalloc(sizeof(t_room));
-//	room_ptr = &room;
-	(*room)->name = ft_strdup(splitted_line[0]);
+	*room_ptr = (t_room *)ft_memalloc(sizeof(t_room));
+	(*room_ptr)->name = ft_strdup(splitted_line[0]);
 	endptr = NULL;
-	(*room)->coord_x = ft_strtoi(splitted_line[1], &endptr, 10);
+	(*room_ptr)->coord_x = ft_strtoi(splitted_line[1], &endptr, 10);
 	if (errno || *endptr)
 		input->error = faulty_room_data;
-	(*room)->coord_y = ft_strtoi(splitted_line[2], &endptr, 10);
+	(*room_ptr)->coord_y = ft_strtoi(splitted_line[2], &endptr, 10);
 	if (errno || *endptr)
 		input->error = faulty_room_data;
-	(*room)->id = id++;
-	(*room)->connection_lst = NULL;
+	(*room_ptr)->id = id++;
+	(*room_ptr)->connection_lst = NULL;
 	return ;
 }
 
@@ -57,7 +55,7 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 {
 	char			**splitted_line;
 	size_t			c;
-	t_room			**room;
+	t_room			**room_ptr;
 
 	splitted_line = ft_strsplit(line, ' ');
 	c = 0;
@@ -65,11 +63,11 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 		c++;
 	if (c == 3)
 	{
-		room = add_room(splitted_line, input);
+		room_ptr = add_room(splitted_line, input);
 		if (read_status == read_start_room_data)
-			input->start_room_ptr = room;
+			input->start_room_ptr = room_ptr;
 		else if (read_status == read_end_room_data)
-			input->end_room_ptr = room;
+			input->end_room_ptr = room_ptr;
 	}
 	else
 		input->error = invalid_room_data;
