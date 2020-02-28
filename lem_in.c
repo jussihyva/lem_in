@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 20:25:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 09:37:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void				init_input_structure(t_input *input)
 	input->error = 0;
 	input->input_file = NULL;
 	input->opt = 0;
-	input->start_room = NULL;
+	input->start_room_ptr = NULL;
 	input->room_lst = NULL;
-	input->end_room = NULL;
+	input->end_room_ptr = NULL;
 	input->valid_input_lines = NULL;
 	input->number_of_ants = 0;
 	input->number_of_ants = 0;

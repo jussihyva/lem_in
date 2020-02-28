@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 09:18:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 09:44:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 	{
 		room = add_room(splitted_line, input);
 		if (read_status == read_start_room_data)
-			input->start_room = room;
+			input->start_room_ptr = room;
 		else if (read_status == read_end_room_data)
-			input->end_room = room;
+			input->end_room_ptr = room;
 	}
 	else
 		input->error = invalid_room_data;
@@ -93,10 +93,10 @@ static t_room			**create_room_array(t_input *input)
 	{
 		id = (*(t_room **)elem->content)->id;
 		room_array[id] = *(t_room **)elem->content;
-		if ((*input->start_room)->id == id)
-			input->start_room = &room_array[id];
-		if ((*input->end_room)->id == id)
-			input->end_room = &room_array[id];
+		if ((*input->start_room_ptr)->id == id)
+			input->start_room_ptr = &room_array[id];
+		if ((*input->end_room_ptr)->id == id)
+			input->end_room_ptr = &room_array[id];
 		elem = elem->next;
 	}
 	room_array[num_of_rooms] = NULL;

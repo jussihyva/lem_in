@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 09:27:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 09:38:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ t_report					*ants_transportation(t_input *input)
 	report->error = 0;
 	report->path = (t_list **)ft_memalloc(sizeof(*(report->path)));
 	report->valid_path = NULL;
-	room = *input->end_room;
+	room = *input->end_room_ptr;
 	*(report->path) = ft_lstnew(&room, sizeof(room));
 	visited_room = (int64_t *)ft_memalloc(sizeof(*visited_room) *
 										((input->num_of_rooms - 1) / 64 + 1));
 	visited_room[room->id / 64] |= 1 << (room->id % 64);
 	report->number_of_rooms = 1;
 	add_next_room_to_path(report, room->connection_lst,
-											input->start_room, visited_room);
+											input->start_room_ptr, visited_room);
 	print_path(report);
 	ft_lstdel(report->path, del_path_2);
 	free(report->path);
