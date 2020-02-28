@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 22:13:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 09:27:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void					add_next_room_to_path(t_report *report,
 												start_room, visited_room);
 			visited_room[room->id / 64] &= ~(1 << (room->id % 64));
 			*report->path = (*report->path)->next;
-			ft_lstdelone(&new_room_elem, del_path);
+			ft_lstdelone(&new_room_elem, del_path_2);
 			report->number_of_rooms--;
 		}
 		adj_room_elem = adj_room_elem->next;
@@ -106,7 +106,7 @@ t_report					*ants_transportation(t_input *input)
 	add_next_room_to_path(report, room->connection_lst,
 											input->start_room, visited_room);
 	print_path(report);
-	ft_lstdel(report->path, del_path);
+	ft_lstdel(report->path, del_path_2);
 	free(report->path);
 	report->path = NULL;
 	free(visited_room);
