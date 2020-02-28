@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 15:25:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 18:01:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int					is_start_room(t_room *room, t_room **start_room,
 
 static void					add_next_room_to_path(t_report *report,
 							t_list **adj_room_elem,
-							t_room **start_room, int64_t *visited_room)
+							t_room **start_room, size_t *visited_room)
 {
 	t_room			*room;
 	t_list			*new_room_elem;
@@ -68,16 +68,15 @@ static void					add_next_room_to_path(t_report *report,
 	while (*adj_room_elem && !report->valid_path)
 	{
 		room = (t_room *)(*adj_room_elem)->content;
-		if (!(visited_room[room->id / 64] & 1 << (room->id) % 64))
+		if (!(visited_room[room->id / 32] & 1 << (room->id % 32)))
 		{
 			report->number_of_rooms++;
 			new_room_elem = ft_lstnew(&room, sizeof(room));
 			ft_lstadd(report->path, new_room_elem);
-			visited_room[room->id / 64] |= 1 << (room->id % 64);
+			visited_room[room->id / 32] |= 1 << (room->id % 32);
 			if (!is_start_room(room, start_room, report))
 				add_next_room_to_path(report, &room->connection_lst,
 													start_room, visited_room);
-			visited_room[room->id / 64] &= ~(1 << (room->id % 64));
 			*report->path = (*report->path)->next;
 			ft_lstdelone(&new_room_elem, del_path_2);
 			report->number_of_rooms--;
@@ -90,7 +89,7 @@ static void					add_next_room_to_path(t_report *report,
 t_report					*ants_transportation(t_input *input)
 {
 	t_report		*report;
-	int64_t			*visited_room;
+	size_t			*visited_room;
 	t_room			*room;
 
 	report = (t_report *)ft_memalloc(sizeof(*report));
@@ -100,9 +99,9 @@ t_report					*ants_transportation(t_input *input)
 	report->valid_path = NULL;
 	room = *input->end_room_ptr;
 	*(report->path) = ft_lstnew(&room, sizeof(room));
-	visited_room = (int64_t *)ft_memalloc(sizeof(*visited_room) *
-										((input->num_of_rooms - 1) / 64 + 1));
-	visited_room[room->id / 64] |= 1 << (room->id % 64);
+	visited_room = (size_t *)ft_memalloc(sizeof(*visited_room) *
+										((input->num_of_rooms - 1) / 32 + 1));
+	visited_room[room->id / 32] |= 1 << (room->id % 32);
 	report->number_of_rooms = 1;
 	add_next_room_to_path(report, &room->connection_lst,
 										input->start_room_ptr, visited_room);
