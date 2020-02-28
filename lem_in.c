@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 09:37:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:26:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ static t_read_status	get_num_of_ants(char *line, t_input *input)
 {
 	char			*endptr;
 	t_read_status	read_status;
+	t_list			*elem;
 
 	if (line[0] == '#')
 		read_status = start_reading;
 	else
 	{
+		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+		ft_lstadd_e(&input->valid_input_lines, elem);
 		endptr = NULL;
 		input->number_of_ants = ft_strtoi(line, &endptr, 10);
 		if (errno || *endptr)
@@ -70,7 +73,6 @@ static void				read_input_data(t_input *input,
 {
 	char		*line;
 	int			ret;
-	t_list		*elem;
 	int			fd;
 
 	if (input->opt & map_file)
@@ -86,8 +88,6 @@ static void				read_input_data(t_input *input,
 													read_status != stop_reading)
 		{
 			read_status = parse_line(line, input, read_status);
-			elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-			ft_lstadd_e(&input->valid_input_lines, elem);
 			ft_strdel(&line);
 		}
 		ft_strdel(&line);
@@ -111,9 +111,11 @@ int						main(int argc, char **argv)
 	else
 	{
 		report = ants_transportation(&input);
+		print_result(&input, report);
+		free(report->valid_path);
+		report->valid_path = NULL;
 		free(report);
 		report = NULL;
-		print_result(&input);
 		return_code = 0;
 	}
 	if (input.opt & leaks)

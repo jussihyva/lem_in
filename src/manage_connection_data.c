@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 16:25:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:29:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,15 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 t_read_status			get_connection_data(char *line, t_input *input,
 													t_read_status read_status)
 {
+	t_list			*elem;
+
 	if (line[0] == '#')
 		read_status = read_connection_data;
 	else
+	{
 		read_status = validate_connection_data(line, input, read_status);
+		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+		ft_lstadd_e(&input->valid_input_lines, elem);
+	}
 	return (read_status);
 }

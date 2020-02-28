@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 10:42:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:32:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static void				create_new_room(char **splitted_line, t_input *input,
 	*room_ptr = (t_room *)ft_memalloc(sizeof(t_room));
 	(*room_ptr)->name = ft_strdup(splitted_line[0]);
 	endptr = NULL;
-	(*room_ptr)->coord_x = ft_strtoi(splitted_line[1], &endptr, 10);
+	(*room_ptr)->coord_x = ft_strtoi(splitted_line[1], &endptr, 10) * 30;
 	if (errno || *endptr)
 		input->error = faulty_room_data;
-	(*room_ptr)->coord_y = ft_strtoi(splitted_line[2], &endptr, 10);
+	(*room_ptr)->coord_y = ft_strtoi(splitted_line[2], &endptr, 10) * 100;
 	if (errno || *endptr)
 		input->error = faulty_room_data;
 	(*room_ptr)->id = id++;
@@ -104,22 +104,28 @@ static t_room			**create_room_array(t_input *input)
 t_read_status			get_room_data(char *line, t_input *input,
 													t_read_status read_status)
 {
+	int				add_line;
+
+	add_line = 1;
 	if (ft_strequ(line, "##start"))
 		read_status = read_start_room_data;
 	else if (ft_strequ(line, "##end"))
 		read_status = read_end_room_data;
 	else if (line[0] == '#')
-		;
+		add_line = 0;
 	else
 	{
+		add_line = 2;
 		read_status = validate_room_data(line, input, read_status);
 		if (input->error == invalid_room_data)
 		{
+			add_line = 1;
 			input->room_array = create_room_array(input);
 			ft_lstdel(&input->room_lst, del_path_2);
 			input->error = 0;
 			read_status = read_connection_data;
 		}
 	}
+	print_line(input, line, add_line);
 	return (read_status);
 }

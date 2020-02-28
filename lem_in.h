@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 09:32:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:33:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum				e_read_status
 typedef enum				e_opt
 {
 	leaks = 0x1,
-	map_file = 0x2
+	map_file = 0x2,
+	verbose = 0x4
 }							t_opt;
 
 typedef struct				s_room
@@ -106,6 +107,7 @@ typedef struct				s_input
 typedef struct				s_report
 {
 	int				error;
+	t_opt			opt;
 	t_list			**path;
 	size_t			number_of_rooms;
 	t_room			**valid_path;
@@ -120,10 +122,13 @@ t_read_status				get_room_data(char *line, t_input *input,
 t_read_status				get_connection_data(char *line, t_input *input,
 													t_read_status read_status);
 void						ft_arraydel(char **array);
-void						print_result(t_input *input);
+void						print_result(t_input *input, t_report *report);
 void						ft_step_args(int *argc, char ***argv);
 t_report					*ants_transportation(t_input *input);
 void						del_path(void *room, size_t size);
 void						del_path_2(void *room, size_t size);
+void						print_path(t_room **path);
+void						print_line(t_input *input, char *line,
+																int add_line);
 
 #endif

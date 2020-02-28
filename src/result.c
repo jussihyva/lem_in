@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/27 17:09:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:34:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,75 @@ static void		print_valid_input_lines(t_list **line_lst)
 	elem = *line_lst;
 	while (elem)
 	{
-		ft_printf("LINE: %s\n", (char *)elem->content);
+		ft_printf("%s\n", (char *)elem->content);
 		elem = elem->next;
+	}
+	ft_printf("\nL1-3 L2-2\n");
+	return ;
+}
+
+void			print_line(t_input *input, char *line, int add_line)
+{
+	t_list			*elem;
+	char			*mod_line;
+
+	if (add_line)
+	{
+		if (add_line == 1)
+		{
+			elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+			ft_lstadd_e(&input->valid_input_lines, elem);
+		}
+		else
+		{
+			mod_line = (char *)ft_memalloc(sizeof(*mod_line) * 100);
+			ft_sprintf(mod_line, "%s %d %d",
+							(*((t_room **)input->room_lst->content))->name,
+							(*((t_room **)input->room_lst->content))->coord_x,
+							(*((t_room **)input->room_lst->content))->coord_y);
+			elem = ft_lstnew(mod_line, sizeof(*mod_line) *
+													(ft_strlen(mod_line) + 1));
+			ft_lstadd_e(&input->valid_input_lines, elem);
+			ft_strdel(&mod_line);
+		}
 	}
 	return ;
 }
 
-void			print_result(t_input *input)
+void			print_path(t_room **path)
+{
+	size_t			c;
+	static size_t	path_cnt;
+
+	path_cnt++;
+	ft_printf("Path: %5d:  ", path_cnt);
+	c = 0;
+	while (path[c])
+	{
+		ft_printf("%5s ", path[c]->name);
+		c++;
+	}
+	ft_printf("\n");
+	return ;
+}
+
+void			print_result(t_input *input, t_report *report)
 {
 	size_t		c;
 	t_room		**room;
 
-	ft_printf("Number of ants: %20d\n", input->number_of_ants);
 	room = input->room_array;
-	c = 0;
-	while (room[c])
+	if (input->opt & verbose)
 	{
-		print_room_data(room[c]);
-		c++;
+		c = 0;
+		while (room[c])
+		{
+			print_room_data(room[c]);
+			c++;
+		}
 	}
 	print_valid_input_lines(&input->valid_input_lines);
+	if (input->opt & verbose)
+		print_path(report->valid_path);
 	return ;
 }
