@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 15:33:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/01 14:03:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef enum				e_input_error
 	file_open_failure = 1,
 	num_of_ants_error,
 	faulty_room_data,
+	invalid_room_name,
 	invalid_room_data,
 	invalid_connection_data,
 	input_file_missing
@@ -112,6 +113,7 @@ typedef struct				s_report
 	t_list			**path;
 	size_t			number_of_rooms;
 	t_room			**valid_path;
+	size_t			*visited_room;
 }							t_report;
 
 void						ft_read_opt(t_input *input, int *argc,
@@ -131,5 +133,7 @@ void						del_path_2(void *room, size_t size);
 void						print_path(t_room **path);
 void						print_line(t_input *input, char *line,
 																int add_line);
+int							is_road_to_start_room(t_room *room, t_input *input,
+															t_report *report);
 
 #endif

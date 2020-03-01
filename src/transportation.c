@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 18:01:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/01 14:02:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,56 +41,61 @@ static void					save_path(t_report *report, t_list *path, int print)
 	return ;
 }
 
-static int					is_start_room(t_room *room, t_room **start_room,
-															t_report *report)
+static int					add_next_room_to_path(t_report *report,
+							t_room *room, t_input *input, t_list *adj_room_elem)
 {
-	int		result;
+	t_list			*new_room_elem;
+	int				result;
 
 	result = 0;
-	if (room->id == (*start_room)->id)
-		save_path(report, *report->path, 0);
-	else
+	while (adj_room_elem)
 	{
-		if (report->opt & verbose)
-			save_path(report, *report->path, 1);
-		result = 0;
-	}
-	return (result);
-}
-
-static void					add_next_room_to_path(t_report *report,
-							t_list **adj_room_elem,
-							t_room **start_room, size_t *visited_room)
-{
-	t_room			*room;
-	t_list			*new_room_elem;
-
-	while (*adj_room_elem && !report->valid_path)
-	{
-		room = (t_room *)(*adj_room_elem)->content;
-		if (!(visited_room[room->id / 32] & 1 << (room->id % 32)))
+		room = (t_room *)adj_room_elem->content;
+		if (!(report->visited_room[room->id / 32] & 1 << (room->id % 32)))
 		{
 			report->number_of_rooms++;
 			new_room_elem = ft_lstnew(&room, sizeof(room));
 			ft_lstadd(report->path, new_room_elem);
-			visited_room[room->id / 32] |= 1 << (room->id % 32);
-			if (!is_start_room(room, start_room, report))
-				add_next_room_to_path(report, &room->connection_lst,
-													start_room, visited_room);
+			report->visited_room[room->id / 32] |= 1 << (room->id % 32);
+			if (is_road_to_start_room(room, input, report))
+			{
+				report->visited_room[room->id / 32] &= ~(1 << (room->id % 32));
+				result = 1;
+			}
 			*report->path = (*report->path)->next;
 			ft_lstdelone(&new_room_elem, del_path_2);
 			report->number_of_rooms--;
 		}
-		adj_room_elem = &(*adj_room_elem)->next;
+		adj_room_elem = adj_room_elem->next;
 	}
-	return ;
+	return (result);
+}
+
+int							is_road_to_start_room(t_room *room,
+											t_input *input, t_report *report)
+{
+	int		result;
+
+	if (room->id == (*input->start_room_ptr)->id)
+	{
+		save_path(report, *report->path, 0);
+		result = 1;
+	}
+	else
+	{
+		if (report->opt & verbose)
+			save_path(report, *report->path, 1);
+		result = add_next_room_to_path(report, room, input,
+														room->connection_lst);
+	}
+	return (result);
 }
 
 t_report					*ants_transportation(t_input *input)
 {
 	t_report		*report;
-	size_t			*visited_room;
 	t_room			*room;
+	int				result;
 
 	report = (t_report *)ft_memalloc(sizeof(*report));
 	report->error = 0;
@@ -99,16 +104,15 @@ t_report					*ants_transportation(t_input *input)
 	report->valid_path = NULL;
 	room = *input->end_room_ptr;
 	*(report->path) = ft_lstnew(&room, sizeof(room));
-	visited_room = (size_t *)ft_memalloc(sizeof(*visited_room) *
+	report->visited_room = (size_t *)ft_memalloc(sizeof(*report->visited_room) *
 										((input->num_of_rooms - 1) / 32 + 1));
-	visited_room[room->id / 32] |= 1 << (room->id % 32);
+	report->visited_room[room->id / 32] |= 1 << (room->id % 32);
 	report->number_of_rooms = 1;
-	add_next_room_to_path(report, &room->connection_lst,
-										input->start_room_ptr, visited_room);
+	result = add_next_room_to_path(report, room, input, room->connection_lst);
 	ft_lstdel(report->path, del_path_2);
 	free(report->path);
 	report->path = NULL;
-	free(visited_room);
-	visited_room = NULL;
+	free(report->visited_room);
+	report->visited_room = NULL;
 	return (report);
 }
