@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 15:34:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/05 15:15:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ static void		print_room_data(t_room *room)
 		ft_printf("%60s\n", ((t_room *)elem->content)->name);
 		elem = elem->next;
 	}
-	return ;
-}
-
-static void		print_valid_input_lines(t_list **line_lst)
-{
-	t_list		*elem;
-
-	elem = *line_lst;
-	while (elem)
-	{
-		ft_printf("%s\n", (char *)elem->content);
-		elem = elem->next;
-	}
-	ft_printf("\nL1-3 L2-2\n");
 	return ;
 }
 
@@ -69,6 +55,21 @@ void			print_line(t_input *input, char *line, int add_line)
 	return ;
 }
 
+static void		print_valid_paths(t_list **lst_of_valid_paths)
+{
+	t_list		*elem;
+	t_room		**valid_path;
+
+	elem = *lst_of_valid_paths;
+	while (elem)
+	{
+		valid_path = (t_room **)elem->content;
+		print_path(valid_path);
+		elem = elem->next;
+	}
+	return ;
+}
+
 void			print_path(t_room **path)
 {
 	size_t			c;
@@ -90,6 +91,7 @@ void			print_result(t_input *input, t_report *report)
 {
 	size_t		c;
 	t_room		**room;
+	t_list		*elem;
 
 	room = input->room_array;
 	if (input->opt & verbose)
@@ -101,8 +103,14 @@ void			print_result(t_input *input, t_report *report)
 			c++;
 		}
 	}
-	print_valid_input_lines(&input->valid_input_lines);
-	if (input->opt & verbose)
-		print_path(report->valid_path);
+	elem = input->valid_input_lines;
+	while (elem)
+	{
+		ft_printf("%s\n", (char *)elem->content);
+		elem = elem->next;
+	}
+	ft_printf("\nL1-3 L2-2\n");
+	if (input->opt & verbose && *report->lst_of_valid_paths)
+		print_valid_paths(report->lst_of_valid_paths);
 	return ;
 }

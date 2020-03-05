@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 14:26:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/05 15:07:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,7 @@ int						main(int argc, char **argv)
 	{
 		report = ants_transportation(&input);
 		print_result(&input, report);
-		free(report->valid_path);
-		report->valid_path = NULL;
-		free(report);
-		report = NULL;
+		release_report(report);
 		return_code = 0;
 	}
 	if (input.opt & leaks)

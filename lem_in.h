@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/01 14:03:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/05 15:08:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct				s_report
 	t_list			**path;
 	size_t			number_of_rooms;
 	t_room			**valid_path;
+	t_list			**lst_of_valid_paths;
 	size_t			*visited_room;
 }							t_report;
 
@@ -135,5 +136,6 @@ void						print_line(t_input *input, char *line,
 																int add_line);
 int							is_road_to_start_room(t_room *room, t_input *input,
 															t_report *report);
+void						release_report(t_report *report);
 
 #endif

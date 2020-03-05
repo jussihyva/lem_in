@@ -6,38 +6,38 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/01 14:02:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/05 15:11:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void					save_path(t_report *report, t_list *path, int print)
+static void					save_path(t_report *report, t_list *path, int save,
+																	int print)
 {
 	t_list			*elem;
 	size_t			c;
+	size_t			size_of_valid_path;
 
-	if (!report->valid_path)
+	size_of_valid_path = sizeof(*report->valid_path) *
+												(report->number_of_rooms + 1);
+	report->valid_path = (t_room **)ft_memalloc(size_of_valid_path);
+	elem = path;
+	c = 0;
+	while (elem)
 	{
-		report->valid_path =
-							(t_room **)ft_memalloc(sizeof(*report->valid_path) *
-							(report->number_of_rooms + 1));
-		elem = path;
-		c = 0;
-		while (elem)
-		{
-			report->valid_path[c] = *((t_room **)elem->content);
-			c++;
-			elem = elem->next;
-		}
-		report->valid_path[c] = 0;
+		report->valid_path[c] = *((t_room **)elem->content);
+		c++;
+		elem = elem->next;
 	}
+	report->valid_path[c] = 0;
 	if (print)
-	{
 		print_path(report->valid_path);
-		free(report->valid_path);
-		report->valid_path = NULL;
-	}
+	if (save)
+		ft_lstadd_e(report->lst_of_valid_paths, ft_lstnew(report->valid_path,
+														size_of_valid_path));
+	free(report->valid_path);
+	report->valid_path = NULL;
 	return ;
 }
 
@@ -78,13 +78,16 @@ int							is_road_to_start_room(t_room *room,
 
 	if (room->id == (*input->start_room_ptr)->id)
 	{
-		save_path(report, *report->path, 0);
+		if (report->opt & verbose)
+			save_path(report, *report->path, 1, 1);
+		else
+			save_path(report, *report->path, 1, 0);
 		result = 1;
 	}
 	else
 	{
 		if (report->opt & verbose)
-			save_path(report, *report->path, 1);
+			save_path(report, *report->path, 0, 1);
 		result = add_next_room_to_path(report, room, input,
 														room->connection_lst);
 	}
@@ -101,6 +104,8 @@ t_report					*ants_transportation(t_input *input)
 	report->error = 0;
 	report->opt = input->opt;
 	report->path = (t_list **)ft_memalloc(sizeof(*(report->path)));
+	report->lst_of_valid_paths =
+				(t_list **)ft_memalloc(sizeof(*(report->lst_of_valid_paths)));
 	report->valid_path = NULL;
 	room = *input->end_room_ptr;
 	*(report->path) = ft_lstnew(&room, sizeof(room));
