@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/05 18:49:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/05 20:00:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,27 @@ static t_room				**save_path(t_report *report, t_list *path,
 }
 
 static int					add_next_room_to_path(t_report *report,
-							t_room *room, t_input *input, t_list *adj_room_elem)
+										t_input *input, t_room *current_room,
+										t_list *adj_room_elem)
 {
 	t_list			*new_room_elem;
 	int				result;
+	t_room			*next_room;
 
+	(void)current_room;
 	result = 0;
 	while (adj_room_elem)
 	{
-		room = (t_room *)adj_room_elem->content;
-		if (!(report->visited_room[room->id / 32] & 1 << (room->id % 32)))
+		next_room = (t_room *)adj_room_elem->content;
+		if (!(report->visited_room[next_room->id / 32] & 1 << (next_room->id % 32)))
 		{
 			report->number_of_rooms++;
-			new_room_elem = ft_lstnew(&room, sizeof(room));
+			new_room_elem = ft_lstnew(&next_room, sizeof(next_room));
 			ft_lstadd(report->path, new_room_elem);
-			report->visited_room[room->id / 32] |= 1 << (room->id % 32);
-			if (is_road_to_start_room(room, input, report))
+			report->visited_room[next_room->id / 32] |= 1 << (next_room->id % 32);
+			if (is_road_to_start_room(next_room, input, report))
 			{
-				report->visited_room[room->id / 32] &= ~(1 << (room->id % 32));
+				report->visited_room[next_room->id / 32] &= ~(1 << (next_room->id % 32));
 				result = 1;
 			}
 			*report->path = (*report->path)->next;
@@ -77,7 +80,7 @@ static int					add_next_room_to_path(t_report *report,
 	return (result);
 }
 
-int							is_road_to_start_room(t_room *room,
+int							is_road_to_start_room(t_room *current_room,
 											t_input *input, t_report *report)
 {
 	int			result;
@@ -85,7 +88,7 @@ int							is_road_to_start_room(t_room *room,
 	size_t		size_of_valid_path;
 
 	size_of_valid_path = sizeof(*valid_path) * (report->number_of_rooms + 1);
-	if (room->id == (*input->start_room_ptr)->id)
+	if (current_room->id == (*input->start_room_ptr)->id)
 	{
 		valid_path = save_path(report, *report->path, size_of_valid_path);
 		add_path_to_valid_lst(report->lst_of_valid_paths, valid_path,
@@ -100,8 +103,8 @@ int							is_road_to_start_room(t_room *room,
 			free(valid_path);
 			valid_path = NULL;
 		}
-		result = add_next_room_to_path(report, room, input,
-														room->connection_lst);
+		result = add_next_room_to_path(report, input, current_room,
+												current_room->connection_lst);
 	}
 	return (result);
 }
@@ -124,7 +127,7 @@ t_report					*ants_transportation(t_input *input)
 										((input->num_of_rooms - 1) / 32 + 1));
 	report->visited_room[room->id / 32] |= 1 << (room->id % 32);
 	report->number_of_rooms = 1;
-	result = add_next_room_to_path(report, room, input, room->connection_lst);
+	result = add_next_room_to_path(report, input, room, room->connection_lst);
 	ft_lstdel(report->path, del_path_2);
 	free(report->path);
 	report->path = NULL;
