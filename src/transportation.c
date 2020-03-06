@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/06 14:54:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/06 16:17:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,22 @@ static void					add_room_to_path(t_report *report,
 	while (adj_room_elem)
 	{
 		next_room = (t_room *)adj_room_elem->content;
-		report->number_of_rooms++;
-		report->step_counter++;
-		new_room_elem = ft_lstnew(&next_room, sizeof(next_room));
-		ft_lstadd(report->path, new_room_elem);
-		if (next_room->id == (*input->start_room_ptr)->id)
-			add_path_to_valid_lst(report, save_path(report, *report->path));
-		else if (!next_room->num_of_connections_to_end ||
-					next_room->num_of_connections_to_end > report->step_counter)
-			add_room_to_path(report, input, next_room);
-		*report->path = (*report->path)->next;
-		ft_lstdelone(&new_room_elem, del_path_2);
-		report->number_of_rooms--;
-		report->step_counter--;
+		if ((next_room->id == (*input->start_room_ptr)->id) || (!next_room->num_of_connections_to_end ||
+					next_room->num_of_connections_to_end > report->step_counter))
+		{
+			report->number_of_rooms++;
+			report->step_counter++;
+			new_room_elem = ft_lstnew(&next_room, sizeof(next_room));
+			ft_lstadd(report->path, new_room_elem);
+			if (next_room->id == (*input->start_room_ptr)->id)
+				add_path_to_valid_lst(report, save_path(report, *report->path));
+			else
+				add_room_to_path(report, input, next_room);
+			*report->path = (*report->path)->next;
+			ft_lstdelone(&new_room_elem, del_path_2);
+			report->number_of_rooms--;
+			report->step_counter--;
+		}
 		adj_room_elem = adj_room_elem->next;
 	}
 	return ;
