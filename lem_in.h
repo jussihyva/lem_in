@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/05 18:00:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/06 13:41:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct				s_room
 	int				coord_y;
 	size_t			id;
 	t_list			*connection_lst;
+	size_t			num_of_connections_to_end;
 }							t_room;
 
 typedef struct				s_history
@@ -114,6 +115,7 @@ typedef struct				s_report
 	size_t			number_of_rooms;
 	t_list			**lst_of_valid_paths;
 	size_t			*visited_room;
+	size_t			step_counter;
 }							t_report;
 
 void						ft_read_opt(t_input *input, int *argc,
@@ -133,7 +135,7 @@ void						del_path_2(void *room, size_t size);
 void						print_path(t_room **path);
 void						print_line(t_input *input, char *line,
 																int add_line);
-int							is_road_to_start_room(t_room *room, t_input *input,
+void						is_road_to_start_room(t_room *room, t_input *input,
 															t_report *report);
 void						release_report(t_report *report);
 
