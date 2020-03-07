@@ -69,7 +69,7 @@ void						validate_adj_rooms(t_report *report, t_input *input,
 		next_room = *(t_room **)adj_room_elem->content;
 		if ((next_room->id == (*input->start_room_ptr)->id) ||
 					(!next_room->num_of_conn_to_end ||
-					next_room->num_of_conn_to_end > report->connection_counter))
+					next_room->num_of_conn_to_end > (report->connection_counter + 1)))
 			is_start_room(next_room, input, report);
 		adj_room_elem = adj_room_elem->next;
 	}
