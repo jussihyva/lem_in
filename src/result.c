@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/05 15:15:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 13:24:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void			print_line(t_input *input, char *line, int add_line)
 		if (add_line == 1)
 		{
 			elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-			ft_lstadd_e(&input->valid_input_lines, elem);
+			ft_lstadd(input->valid_input_lines, elem);
 		}
 		else
 		{
@@ -48,7 +48,7 @@ void			print_line(t_input *input, char *line, int add_line)
 							(*((t_room **)input->room_lst->content))->coord_y);
 			elem = ft_lstnew(mod_line, sizeof(*mod_line) *
 													(ft_strlen(mod_line) + 1));
-			ft_lstadd_e(&input->valid_input_lines, elem);
+			ft_lstadd(input->valid_input_lines, elem);
 			ft_strdel(&mod_line);
 		}
 	}
@@ -57,14 +57,14 @@ void			print_line(t_input *input, char *line, int add_line)
 
 static void		print_valid_paths(t_list **lst_of_valid_paths)
 {
-	t_list		*elem;
-	t_room		**valid_path;
+	t_list			*elem;
+	t_valid_path	*valid_path;
 
 	elem = *lst_of_valid_paths;
 	while (elem)
 	{
-		valid_path = (t_room **)elem->content;
-		print_path(valid_path);
+		valid_path = (t_valid_path *)elem->content;
+		print_path(valid_path->path);
 		elem = elem->next;
 	}
 	return ;
@@ -103,7 +103,7 @@ void			print_result(t_input *input, t_report *report)
 			c++;
 		}
 	}
-	elem = input->valid_input_lines;
+	elem = *input->valid_input_lines;
 	while (elem)
 	{
 		ft_printf("%s\n", (char *)elem->content);

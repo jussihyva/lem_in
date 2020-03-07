@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/05 15:07:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 15:28:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_read_status	get_num_of_ants(char *line, t_input *input)
 	else
 	{
 		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-		ft_lstadd_e(&input->valid_input_lines, elem);
+		ft_lstadd(input->valid_input_lines, elem);
 		endptr = NULL;
 		input->number_of_ants = ft_strtoi(line, &endptr, 10);
 		if (errno || *endptr)
@@ -45,7 +45,8 @@ static void				init_input_structure(t_input *input)
 	input->start_room_ptr = NULL;
 	input->room_lst = NULL;
 	input->end_room_ptr = NULL;
-	input->valid_input_lines = NULL;
+	input->valid_input_lines =
+					(t_list **)ft_memalloc(sizeof(*input->valid_input_lines));
 	input->number_of_ants = 0;
 	input->number_of_ants = 0;
 	return ;

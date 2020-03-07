@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/06 13:41:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 16:14:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct				s_room
 	int				coord_y;
 	size_t			id;
 	t_list			*connection_lst;
-	size_t			num_of_connections_to_end;
+	size_t			num_of_conn_to_end;
 }							t_room;
 
 typedef struct				s_history
@@ -98,7 +98,7 @@ typedef struct				s_input
 	t_input_error	error;
 	t_opt			opt;
 	char			*input_file;
-	t_list			*valid_input_lines;
+	t_list			**valid_input_lines;
 	size_t			number_of_ants;
 	t_room			**start_room_ptr;
 	t_room			**end_room_ptr;
@@ -107,15 +107,21 @@ typedef struct				s_input
 	size_t			num_of_rooms;
 }							t_input;
 
+typedef struct				s_valid_path
+{
+	t_room			**path;
+	size_t			num_of_rooms;
+	size_t			*visited_rooms;
+}							t_valid_path;
+
 typedef struct				s_report
 {
 	int				error;
 	t_opt			opt;
 	t_list			**path;
-	size_t			number_of_rooms;
 	t_list			**lst_of_valid_paths;
 	size_t			*visited_room;
-	size_t			step_counter;
+	size_t			connection_counter;
 }							t_report;
 
 void						ft_read_opt(t_input *input, int *argc,
@@ -130,7 +136,7 @@ void						ft_arraydel(char **array);
 void						print_result(t_input *input, t_report *report);
 void						ft_step_args(int *argc, char ***argv);
 t_report					*ants_transportation(t_input *input);
-void						del_path(void *room, size_t size);
+void						del_report(void *room, size_t size);
 void						del_path_2(void *room, size_t size);
 void						print_path(t_room **path);
 void						print_line(t_input *input, char *line,
@@ -138,5 +144,7 @@ void						print_line(t_input *input, char *line,
 void						is_road_to_start_room(t_room *room, t_input *input,
 															t_report *report);
 void						release_report(t_report *report);
+//void						validate_adj_rooms(t_report *report, t_input *input,
+//																t_room *room);
 
 #endif

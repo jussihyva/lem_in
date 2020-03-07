@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/28 14:29:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 13:23:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static void				add_connection(t_room *room1, t_room *room2)
 	elem = ft_lstnew(room1, sizeof(*room1));
 	free(elem->content);
 	elem->content = room1;
-	ft_lstadd_e(&room2->connection_lst, elem);
+	ft_lstadd(&room2->connection_lst, elem);
 	elem = ft_lstnew(room2, sizeof(*room2));
 	free(elem->content);
 	elem->content = room2;
-	ft_lstadd_e(&room1->connection_lst, elem);
+	ft_lstadd(&room1->connection_lst, elem);
 	return ;
 }
 
@@ -85,7 +85,10 @@ t_read_status			get_connection_data(char *line, t_input *input,
 	{
 		read_status = validate_connection_data(line, input, read_status);
 		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-		ft_lstadd_e(&input->valid_input_lines, elem);
+		if (*input->valid_input_lines)
+			ft_lstadd(input->valid_input_lines, elem);
+		else
+			*input->valid_input_lines = elem;
 	}
 	return (read_status);
 }
