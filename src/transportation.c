@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 16:13:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 16:19:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,38 @@ static void					save_path(t_report *report, t_list *path)
 	return ;
 }
 
-static void					validate_adj_rooms(t_report *report,
-										t_input *input, t_room *room)
+static void					is_start_room(t_room *next_room, t_input *input,
+															t_report *report)
 {
 	t_list			*new_room_elem;
+
+	new_room_elem = ft_lstnew(&next_room, sizeof(next_room));
+	ft_lstadd(report->path, new_room_elem);
+	if (next_room->id == (*input->start_room_ptr)->id)
+		save_path(report, *report->path);
+	else
+		validate_adj_rooms(report, input, next_room);
+	*report->path = (*report->path)->next;
+	ft_lstdelone(&new_room_elem, del_path_2);
+	return ;
+}
+
+void						validate_adj_rooms(t_report *report, t_input *input,
+																t_room *room)
+{
 	t_room			*next_room;
 	t_list			*adj_room_elem;
 
 	report->connection_counter++;
+	room->num_of_conn_to_end = report->connection_counter;
 	adj_room_elem = room->connection_lst;
 	while (adj_room_elem)
 	{
 		next_room = (t_room *)adj_room_elem->content;
 		if ((next_room->id == (*input->start_room_ptr)->id) ||
 					(!next_room->num_of_conn_to_end ||
-				next_room->num_of_conn_to_end > report->connection_counter))
-		{
-			new_room_elem = ft_lstnew(&next_room, sizeof(next_room));
-			ft_lstadd(report->path, new_room_elem);
-			if (next_room->id == (*input->start_room_ptr)->id)
-				save_path(report, *report->path);
-			else
-			{
-				room->num_of_conn_to_end = report->connection_counter;
-				validate_adj_rooms(report, input, next_room);
-			}
-			*report->path = (*report->path)->next;
-			ft_lstdelone(&new_room_elem, del_path_2);
-		}
+					next_room->num_of_conn_to_end > report->connection_counter))
+			is_start_room(next_room, input, report);
 		adj_room_elem = adj_room_elem->next;
 	}
 	report->connection_counter--;
