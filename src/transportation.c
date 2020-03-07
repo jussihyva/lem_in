@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 16:50:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 18:27:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void						validate_adj_rooms(t_report *report, t_input *input,
 	adj_room_elem = room->connection_lst;
 	while (adj_room_elem)
 	{
-		next_room = (t_room *)adj_room_elem->content;
+		next_room = *(t_room **)adj_room_elem->content;
 		if ((next_room->id == (*input->start_room_ptr)->id) ||
 					(!next_room->num_of_conn_to_end ||
 					next_room->num_of_conn_to_end > report->connection_counter))

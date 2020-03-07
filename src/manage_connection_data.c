@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 13:23:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 18:25:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,9 @@ static void				add_connection(t_room *room1, t_room *room2)
 {
 	t_list		*elem;
 
-	elem = ft_lstnew(room1, sizeof(*room1));
-	free(elem->content);
-	elem->content = room1;
+	elem = ft_lstnew(&room1, sizeof(room1));
 	ft_lstadd(&room2->connection_lst, elem);
-	elem = ft_lstnew(room2, sizeof(*room2));
-	free(elem->content);
-	elem->content = room2;
+	elem = ft_lstnew(&room2, sizeof(room2));
 	ft_lstadd(&room1->connection_lst, elem);
 	return ;
 }
