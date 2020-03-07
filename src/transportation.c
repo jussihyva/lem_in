@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 16:19:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/07 16:50:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void					save_path(t_report *report, t_list *path)
 	t_valid_path		valid_path;
 	size_t				size_of_path;
 
-	size_of_path = sizeof(valid_path) * (report->connection_counter + 2);
+	size_of_path = sizeof(*valid_path.path) * (report->connection_counter + 2);
 	valid_path.path = (t_room **)ft_memalloc(size_of_path);
 	elem = path;
 	c = 0;
