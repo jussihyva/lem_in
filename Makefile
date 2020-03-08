@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/03/08 11:15:50 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/03/08 13:25:00 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,10 @@ norm:
 
 clean:
 	@\rm -rf $(NAME).dSYM
+	@\rm -rf $(OBJ_FILES)
 
 fclean: clean
+	@\rm -rf $(NAME)
 
 re: fclean all
 
