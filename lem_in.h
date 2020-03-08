@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 16:19:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 10:06:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ t_read_status				get_connection_data(char *line, t_input *input,
 void						ft_arraydel(char **array);
 void						print_result(t_input *input, t_report *report);
 void						ft_step_args(int *argc, char ***argv);
-t_report					*ants_transportation(t_input *input);
+t_report					*calc_distance(t_input *input);
 void						del_report(void *room, size_t size);
 void						del_path_2(void *room, size_t size);
 void						print_path(t_room **path);
@@ -144,7 +144,7 @@ void						print_line(t_input *input, char *line,
 void						is_road_to_start_room(t_room *room, t_input *input,
 															t_report *report);
 void						release_report(t_report *report);
-void						validate_adj_rooms(t_report *report, t_input *input,
-																t_room *room);
+void						validate_adj_rooms(size_t *connection_counter,
+												t_input *input, t_room *room);
 
 #endif

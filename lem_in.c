@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 15:28:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 10:00:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int						main(int argc, char **argv)
 		ft_printf("ERROR\n");
 	else
 	{
-		report = ants_transportation(&input);
+		report = calc_distance(&input);
 		print_result(&input, report);
 		release_report(report);
 		return_code = 0;
