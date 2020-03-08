@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 09:45:38 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 18:27:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 09:45:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void					save_path(t_report *report, t_list *path)
 	}
 	valid_path.path[c] = 0;
 	valid_path.num_of_rooms = c;
-//	valid_path->visited_rooms = .....;
 	if (report->opt & verbose)
 		print_path(valid_path.path);
 	ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
@@ -68,8 +67,8 @@ void						validate_adj_rooms(t_report *report, t_input *input,
 	{
 		next_room = *(t_room **)adj_room_elem->content;
 		if ((next_room->id == (*input->start_room_ptr)->id) ||
-					(!next_room->num_of_conn_to_end ||
-					next_room->num_of_conn_to_end > (report->connection_counter + 1)))
+			(!next_room->num_of_conn_to_end ||
+			next_room->num_of_conn_to_end > (report->connection_counter + 1)))
 			is_start_room(next_room, input, report);
 		adj_room_elem = adj_room_elem->next;
 	}

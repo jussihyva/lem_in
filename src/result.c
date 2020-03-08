@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 13:24:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 09:36:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		print_room_data(t_room *room)
 	elem = room->connection_lst;
 	while (elem)
 	{
-		ft_printf("%60s\n", ((t_room *)elem->content)->name);
+		ft_printf("%60s\n", (*(t_room **)elem->content)->name);
 		elem = elem->next;
 	}
 	return ;
