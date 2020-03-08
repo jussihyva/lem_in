@@ -6,16 +6,37 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 10:46:53 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 11:43:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 11:56:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+static t_room	*get_next_best_room(t_list *adj_room_elem)
+{
+	t_room		*best_room;
+	t_room		*next_room;
+
+	best_room = NULL;
+	while (adj_room_elem)
+	{
+		next_room = *(t_room **)adj_room_elem->content;
+		if (best_room)
+		{
+			if (next_room->num_of_conn_to_end <
+											best_room->num_of_conn_to_end)
+				best_room = next_room;
+		}
+		else
+			best_room = next_room;
+		adj_room_elem = adj_room_elem->next;
+	}
+	return (best_room);
+}
+
 void			navigate_shortest_path(t_input *input, t_report *report)
 {
 	t_room		*start_room;
-	t_room		*next_room;
 	t_room		*best_room;
 	t_list		*adj_room_elem;
 	int			end_room_reached;
@@ -27,20 +48,7 @@ void			navigate_shortest_path(t_input *input, t_report *report)
 	end_room_reached = 0;
 	while (!end_room_reached)
 	{
-		best_room = NULL;
-		while (adj_room_elem)
-		{
-			next_room = *(t_room **)adj_room_elem->content;
-			if (best_room)
-			{
-				if (next_room->num_of_conn_to_end <
-												best_room->num_of_conn_to_end)
-					best_room = next_room;
-			}
-			else
-				best_room = next_room;
-			adj_room_elem = adj_room_elem->next;
-		}
+		best_room = get_next_best_room(adj_room_elem);
 		ft_lstadd(report->path, ft_lstnew(&best_room, sizeof(best_room)));
 		ft_printf(" %10s", best_room->name);
 		if (best_room == *input->end_room_ptr)

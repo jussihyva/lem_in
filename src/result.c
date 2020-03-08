@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 11:46:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 12:01:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,33 +57,18 @@ void			print_line(t_input *input, char *line, int add_line)
 	return ;
 }
 
-static void		print_valid_paths(t_list **lst_of_valid_paths)
+static void		print_path(t_report *report)
 {
-	t_list			*elem;
-	t_valid_path	*valid_path;
+	t_list		*elem;
 
-	elem = *lst_of_valid_paths;
+	elem = *report->path;
+	while (elem->next)
+		elem = elem->next;
+	ft_printf("#path: ");
 	while (elem)
 	{
-		valid_path = (t_valid_path *)elem->content;
-		print_path(valid_path->path);
-		elem = elem->next;
-	}
-	return ;
-}
-
-void			print_path(t_room **path)
-{
-	size_t			c;
-	static size_t	path_cnt;
-
-	path_cnt++;
-	ft_printf("Path: %5d:  ", path_cnt);
-	c = 0;
-	while (path[c])
-	{
-		ft_printf("%5s ", path[c]->name);
-		c++;
+		ft_printf(" %10s", (*(t_room **)elem->content)->name);
+		elem = elem->prev;
 	}
 	ft_printf("\n");
 	return ;
@@ -113,18 +98,7 @@ void			print_result(t_input *input, t_report *report)
 		ft_printf("%s\n", (char *)elem->content);
 		elem = elem->prev;
 	}
-	elem = *report->path;
-	while (elem->next)
-		elem = elem->next;
-	ft_printf("#path: ");
-	while (elem)
-	{
-		ft_printf(" %10s", (*(t_room **)elem->content)->name);
-		elem = elem->prev;
-	}
-	ft_printf("\n");
+	print_path(report);
 	ft_printf("\nL1-3 L2-2\n");
-	if (input->opt & verbose && *report->lst_of_valid_paths)
-		print_valid_paths(report->lst_of_valid_paths);
 	return ;
 }
