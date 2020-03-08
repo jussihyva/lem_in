@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 10:06:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 11:12:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ void						is_road_to_start_room(t_room *room, t_input *input,
 void						release_report(t_report *report);
 void						validate_adj_rooms(size_t *connection_counter,
 												t_input *input, t_room *room);
+void						navigate_shortest_path(t_input *input, t_report *report);
 
 #endif

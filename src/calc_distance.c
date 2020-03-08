@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 10:22:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 11:41:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,12 @@ t_report					*calc_distance(t_input *input)
 	report->lst_of_valid_paths =
 				(t_list **)ft_memalloc(sizeof(*(report->lst_of_valid_paths)));
 	room = *input->end_room_ptr;
-	*(report->path) = ft_lstnew(&room, sizeof(room));
+//	*(report->path) = ft_lstnew(&room, sizeof(room));
 	report->visited_room = (size_t *)ft_memalloc(sizeof(*report->visited_room) *
 										((input->num_of_rooms - 1) / 32 + 1));
 	report->visited_room[room->id / 32] |= 1 << (room->id % 32);
 	report->connection_counter = -1;
 	validate_adj_rooms(&report->connection_counter, input, room);
-	ft_lstdel(report->path, del_path_2);
-	free(report->path);
-	report->path = NULL;
 	free(report->visited_room);
 	report->visited_room = NULL;
 	return (report);

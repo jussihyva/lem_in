@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/07 13:13:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 11:33:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void			release_report(t_report *report)
 	ft_lstdel(report->lst_of_valid_paths, del_report);
 	free(report->lst_of_valid_paths);
 	report->lst_of_valid_paths = NULL;
+	ft_lstdel(report->path, del_path_2);
+	free(report->path);
+	report->path = NULL;
 	free(report);
 	report = NULL;
 	return ;

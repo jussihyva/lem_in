@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 10:00:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 11:16:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int						main(int argc, char **argv)
 	else
 	{
 		report = calc_distance(&input);
+		navigate_shortest_path(&input, report);
 		print_result(&input, report);
 		release_report(report);
 		return_code = 0;

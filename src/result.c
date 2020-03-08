@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 10:24:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/08 11:46:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,23 @@ void			print_result(t_input *input, t_report *report)
 		}
 	}
 	elem = *input->valid_input_lines;
+	while (elem->next)
+		elem = elem->next;
 	while (elem)
 	{
 		ft_printf("%s\n", (char *)elem->content);
-		elem = elem->next;
+		elem = elem->prev;
 	}
+	elem = *report->path;
+	while (elem->next)
+		elem = elem->next;
+	ft_printf("#path: ");
+	while (elem)
+	{
+		ft_printf(" %10s", (*(t_room **)elem->content)->name);
+		elem = elem->prev;
+	}
+	ft_printf("\n");
 	ft_printf("\nL1-3 L2-2\n");
 	if (input->opt & verbose && *report->lst_of_valid_paths)
 		print_valid_paths(report->lst_of_valid_paths);
