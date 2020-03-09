@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 16:45:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 17:04:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_room	*get_next_best_room(t_list *adj_room_elem)
+static t_room			*get_next_best_room(t_list *adj_room_elem)
 {
 	t_room		*best_room;
 	t_room		*next_room;
@@ -34,15 +34,13 @@ static t_room	*get_next_best_room(t_list *adj_room_elem)
 	return (best_room);
 }
 
-void			select_paths(t_input *input, t_report *report)
+static t_valid_path		*find_shortest_path(t_input *input, t_list **path)
 {
-	t_room			*best_room;
 	t_list			*adj_room_elem;
-	t_list			**path;
 	int				end_room_reached;
+	t_room			*best_room;
 	t_valid_path	*valid_path;
 
-	path = (t_list **)ft_memalloc(sizeof(*path));
 	ft_lstadd_e(path, ft_lstnew(input->start_room_ptr,
 											sizeof(*input->start_room_ptr)));
 	adj_room_elem = (*input->start_room_ptr)->connection_lst;
@@ -58,6 +56,18 @@ void			select_paths(t_input *input, t_report *report)
 	}
 	valid_path = (t_valid_path *)ft_memalloc(sizeof(*valid_path));
 	valid_path->path = path;
+	valid_path->num_of_conn_to_end =
+								(*input->start_room_ptr)->num_of_conn_to_end;
+	return (valid_path);
+}
+
+void					select_paths(t_input *input, t_report *report)
+{
+	t_valid_path	*valid_path;
+	t_list			**path;
+
+	path = (t_list **)ft_memalloc(sizeof(*path));
+	valid_path = find_shortest_path(input, path);
 	ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
 														sizeof(valid_path)));
 	return ;
