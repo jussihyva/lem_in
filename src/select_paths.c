@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 17:04:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 19:56:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,21 @@ void					select_paths(t_input *input, t_report *report)
 {
 	t_valid_path	*valid_path;
 	t_list			**path;
+	size_t			c;
+	char			*ant_id;
 
 	path = (t_list **)ft_memalloc(sizeof(*path));
 	valid_path = find_shortest_path(input, path);
 	ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
 														sizeof(valid_path)));
+	report->number_of_paths = 1;
+	c = -1;
+	while (++c < report->number_of_ants)
+	{
+		ant_id = ft_itoa(c + 1);
+		report->ant_array[c].name = ft_strjoin("L", ant_id);
+		ft_strdel(&ant_id);
+		report->ant_array[c].path = valid_path->path;
+	}
 	return ;
 }

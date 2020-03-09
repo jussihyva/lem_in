@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   result.c                                           :+:      :+:    :+:   */
+/*   result_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 16:38:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 20:39:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ t_report		*initialize_report(t_input *input)
 	report->opt = input->opt;
 	report->lst_of_valid_paths =
 				(t_list **)ft_memalloc(sizeof(*report->lst_of_valid_paths));
-	report->ant_array = (t_ant **)ft_memalloc(sizeof(*report->ant_array) *
+	report->ant_array = (t_ant *)ft_memalloc(sizeof(*report->ant_array) *
 														input->number_of_ants);
+	report->number_of_ants = input->number_of_ants;
+	report->end_room_ptr = input->end_room_ptr;
 	return (report);
 }
 
@@ -105,12 +107,9 @@ void			print_result(t_input *input, t_report *report)
 	room = input->room_array;
 	if (input->opt & verbose)
 	{
-		c = 0;
-		while (room[c])
-		{
+		c = -1;
+		while (room[++c])
 			print_room_data(room[c]);
-			c++;
-		}
 	}
 	elem = *input->valid_input_lines;
 	while (elem->next)
@@ -121,6 +120,6 @@ void			print_result(t_input *input, t_report *report)
 		elem = elem->prev;
 	}
 	print_path(report);
-	ft_printf("\nL1-3 L2-2\n");
+	print_instructions(report);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 16:55:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 20:39:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef enum				e_opt
 	verbose = 0x4
 }							t_opt;
 
+typedef struct				s_ant
+{
+	t_list			**path;
+	t_list			*current_room_elem;
+	char			*name;
+}							t_ant;
+
 typedef struct				s_room
 {
 	char			*name;
@@ -47,21 +54,8 @@ typedef struct				s_room
 	size_t			id;
 	t_list			*connection_lst;
 	size_t			num_of_conn_to_end;
+	t_ant			*ant;
 }							t_room;
-
-typedef struct				s_history
-{
-	size_t			line_nr;
-	t_room			room;
-	size_t			move_order;
-}							t_history;
-
-typedef struct				s_transportation
-{
-	size_t			number_of_ants;
-	int64_t			*room_reservation;
-	t_list			*move_lines;
-}							t_transportation;
 
 typedef enum				e_input_error
 {
@@ -73,13 +67,6 @@ typedef enum				e_input_error
 	invalid_connection_data,
 	input_file_missing
 }							t_input_error;
-
-typedef struct				s_ant
-{
-	t_room			*room_in_a_path;
-	t_room			**path;
-	char			*name;
-}							t_ant;
 
 typedef struct				s_input
 {
@@ -108,7 +95,10 @@ typedef struct				s_report
 	t_opt			opt;
 	t_list			**lst_of_valid_paths;
 	size_t			connection_counter;
-	t_ant			**ant_array;
+	t_room			**end_room_ptr;
+	t_ant			*ant_array;
+	size_t			number_of_paths;
+	size_t			number_of_ants;
 }							t_report;
 
 void						ft_read_opt(t_input *input, int *argc,
@@ -135,5 +125,6 @@ void						validate_adj_rooms(size_t *connection_counter,
 void						select_paths(t_input *input, t_report *report);
 t_report					*initialize_report(t_input *input);
 void						transportation(t_report *report);
+void						print_instructions(t_report *report);
 
 #endif

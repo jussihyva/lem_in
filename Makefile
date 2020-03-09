@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/03/09 10:32:18 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/03/09 19:25:31 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIB			=	-L libft -l ft -L libftprintf -l ftprintf
 
 SRC_FOLDER	=	src
 SRC_FILES	=	ft_read_opt.c ft_strtoi.c manage_room_data.c ft_arraydel.c \
-				result.c manage_connection_data.c ft_step_args.c \
+				result_1.c result_2.c manage_connection_data.c ft_step_args.c \
 				calc_distance.c memory.c select_paths.c transportation.c
 
 OBJ_FOLDER	=	obj

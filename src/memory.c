@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 16:34:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 19:18:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,14 @@ void			del_report(void *elem, size_t size)
 
 void			release_report(t_report *report)
 {
+	size_t		c;
+
 	ft_lstdel(report->lst_of_valid_paths, del_report);
 	free(report->lst_of_valid_paths);
 	report->lst_of_valid_paths = NULL;
+	c = -1;
+	while (++c < report->number_of_ants)
+		ft_strdel(&report->ant_array[c].name);
 	free(report->ant_array);
 	report->ant_array = NULL;
 	free(report);
