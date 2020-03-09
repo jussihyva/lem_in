@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 11:15:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 16:38:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,26 @@ void			print_line(t_input *input, char *line, int add_line)
 
 static void		print_path(t_report *report)
 {
-	t_list		*elem;
-	t_list		**path_lst;
+	t_list			*elem;
+	t_list			*valid_path_elem;
+	t_valid_path	*valid_path;
+	t_list			**path_lst;
 
 	path_lst = ((t_list *)report->lst_of_valid_paths)->content;
-	elem = (*(t_list **)path_lst)->content;
-	while (elem->next)
-		elem = elem->next;
-	ft_printf("#path: ");
-	while (elem)
+	valid_path_elem = *report->lst_of_valid_paths;
+	while (valid_path_elem)
 	{
-		ft_printf(" %10s", (*(t_room **)elem->content)->name);
-		elem = elem->prev;
+		valid_path = *(t_valid_path **)valid_path_elem->content;
+		elem = *valid_path->path;
+		ft_printf("#path: ");
+		while (elem)
+		{
+			ft_printf(" %10s", (*(t_room **)elem->content)->name);
+			elem = elem->next;
+		}
+		ft_printf("\n");
+		valid_path_elem = valid_path_elem->next;
 	}
-	ft_printf("\n");
 	return ;
 }
 
@@ -83,9 +89,8 @@ t_report		*initialize_report(t_input *input)
 	report = (t_report *)ft_memalloc(sizeof(*report));
 	report->error = 0;
 	report->opt = input->opt;
-	report->path = NULL;
 	report->lst_of_valid_paths =
-				(t_list **)ft_memalloc(sizeof(*(report->lst_of_valid_paths)));
+				(t_list **)ft_memalloc(sizeof(*report->lst_of_valid_paths));
 	report->ant_array = (t_ant **)ft_memalloc(sizeof(*report->ant_array) *
 														input->number_of_ants);
 	return (report);

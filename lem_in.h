@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 11:44:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 16:02:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct				s_input
 
 typedef struct				s_valid_path
 {
-	t_room			**path;
+	t_list			**path;
 	size_t			num_of_rooms;
 	size_t			*visited_rooms;
 }							t_valid_path;
@@ -106,7 +106,6 @@ typedef struct				s_report
 {
 	int				error;
 	t_opt			opt;
-	t_list			*path;
 	t_list			**lst_of_valid_paths;
 	size_t			connection_counter;
 	t_ant			**ant_array;

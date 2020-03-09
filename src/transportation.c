@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:25:46 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 12:31:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 16:38:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 void				transportation(t_report *report)
 {
-	t_list		**elem;
-	t_list		*path;
-	t_room		*room;
+	t_list			*elem;
+	t_list			*valid_path_elem;
+	t_valid_path	*valid_path;
+	t_room			*room;
 
-	path = *(t_list **)report->lst_of_valid_paths;
-	while (path)
+	valid_path_elem = *report->lst_of_valid_paths;
+	while (valid_path_elem)
 	{
-		elem  = path->content;
+		valid_path = *(t_valid_path **)valid_path_elem->content;
 		ft_printf("Path : ");
-		while (*elem)
+		elem = *valid_path->path;
+		while (elem)
 		{
-			room = *(t_room **)(*elem)->content;
+			room = *(t_room **)elem->content;
 			ft_printf("%10s", room->name);
-			elem = &(*elem)->next;
+			elem = elem->next;
 		}
 		ft_printf("\n");
-		path  = path->next;
+		valid_path_elem = valid_path_elem->next;
 	}
 	return ;
 }
