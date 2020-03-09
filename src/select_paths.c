@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 11:47:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 12:31:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,18 @@ void			select_paths(t_input *input, t_report *report)
 	int			end_room_reached;
 
 	start_room = *input->start_room_ptr;
-	ft_lstadd(&report->path, ft_lstnew(&start_room, sizeof(start_room)));
-	ft_printf("%10s", start_room->name);
+	ft_lstadd_e(&report->path, ft_lstnew(&start_room, sizeof(start_room)));
 	adj_room_elem = start_room->connection_lst;
 	end_room_reached = 0;
 	while (!end_room_reached)
 	{
 		best_room = get_next_best_room(adj_room_elem);
-		ft_lstadd(&report->path, ft_lstnew(&best_room, sizeof(best_room)));
-		ft_printf(" %10s", best_room->name);
+		ft_lstadd_e(&report->path, ft_lstnew(&best_room, sizeof(best_room)));
 		if (best_room == *input->end_room_ptr)
 			end_room_reached = 1;
 		else
 			adj_room_elem = best_room->connection_lst;
 	}
-	ft_printf("\n");
 	ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&report->path,
 														sizeof(report->path)));
 	return ;
