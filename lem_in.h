@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 12:00:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 11:44:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,8 @@ typedef struct				s_history
 	size_t			move_order;
 }							t_history;
 
-typedef struct				s_ant
-{
-	int				id;
-	t_room			current_room;
-	t_history		*room_history;
-}							t_ant;
-
-typedef struct				s_move_action
-{
-	t_ant			ant;
-	t_room			room;
-}							t_move_action;
-
-typedef struct				s_move_line
-{
-	t_move_action	move_action;
-}							t_move_line;
-
 typedef struct				s_transportation
 {
-	t_ant			*ants;
 	size_t			number_of_ants;
 	int64_t			*room_reservation;
 	t_list			*move_lines;
@@ -92,6 +73,13 @@ typedef enum				e_input_error
 	invalid_connection_data,
 	input_file_missing
 }							t_input_error;
+
+typedef struct				s_ant
+{
+	t_room			*room_in_a_path;
+	t_room			**path;
+	char			*name;
+}							t_ant;
 
 typedef struct				s_input
 {
@@ -118,10 +106,10 @@ typedef struct				s_report
 {
 	int				error;
 	t_opt			opt;
-	t_list			**path;
+	t_list			*path;
 	t_list			**lst_of_valid_paths;
-	size_t			*visited_room;
 	size_t			connection_counter;
+	t_ant			**ant_array;
 }							t_report;
 
 void						ft_read_opt(t_input *input, int *argc,
@@ -135,9 +123,9 @@ t_read_status				get_connection_data(char *line, t_input *input,
 void						ft_arraydel(char **array);
 void						print_result(t_input *input, t_report *report);
 void						ft_step_args(int *argc, char ***argv);
-t_report					*calc_distance(t_input *input);
+void						calc_distance(t_input *input);
 void						del_report(void *room, size_t size);
-void						del_path_2(void *room, size_t size);
+void						del_path(void *room, size_t size);
 void						print_line(t_input *input, char *line,
 																int add_line);
 void						is_road_to_start_room(t_room *room, t_input *input,
@@ -145,7 +133,8 @@ void						is_road_to_start_room(t_room *room, t_input *input,
 void						release_report(t_report *report);
 void						validate_adj_rooms(size_t *connection_counter,
 												t_input *input, t_room *room);
-void						navigate_shortest_path(t_input *input,
-															t_report *report);
+void						select_paths(t_input *input, t_report *report);
+t_report					*initialize_report(t_input *input);
+void						transportation(t_report *report);
 
 #endif

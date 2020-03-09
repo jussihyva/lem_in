@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 12:01:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 11:15:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ void			print_line(t_input *input, char *line, int add_line)
 static void		print_path(t_report *report)
 {
 	t_list		*elem;
+	t_list		**path_lst;
 
-	elem = *report->path;
+	path_lst = ((t_list *)report->lst_of_valid_paths)->content;
+	elem = (*(t_list **)path_lst)->content;
 	while (elem->next)
 		elem = elem->next;
 	ft_printf("#path: ");
@@ -72,6 +74,21 @@ static void		print_path(t_report *report)
 	}
 	ft_printf("\n");
 	return ;
+}
+
+t_report		*initialize_report(t_input *input)
+{
+	t_report		*report;
+
+	report = (t_report *)ft_memalloc(sizeof(*report));
+	report->error = 0;
+	report->opt = input->opt;
+	report->path = NULL;
+	report->lst_of_valid_paths =
+				(t_list **)ft_memalloc(sizeof(*(report->lst_of_valid_paths)));
+	report->ant_array = (t_ant **)ft_memalloc(sizeof(*report->ant_array) *
+														input->number_of_ants);
+	return (report);
 }
 
 void			print_result(t_input *input, t_report *report)

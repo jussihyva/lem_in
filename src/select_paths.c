@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_paths.c                                     :+:      :+:    :+:   */
+/*   select_paths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/08 10:46:53 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 11:56:47 by jkauppi          ###   ########.fr       */
+/*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
+/*   Updated: 2020/03/09 11:47:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_room	*get_next_best_room(t_list *adj_room_elem)
 	return (best_room);
 }
 
-void			navigate_shortest_path(t_input *input, t_report *report)
+void			select_paths(t_input *input, t_report *report)
 {
 	t_room		*start_room;
 	t_room		*best_room;
@@ -42,14 +42,14 @@ void			navigate_shortest_path(t_input *input, t_report *report)
 	int			end_room_reached;
 
 	start_room = *input->start_room_ptr;
-	ft_lstadd(report->path, ft_lstnew(&start_room, sizeof(start_room)));
+	ft_lstadd(&report->path, ft_lstnew(&start_room, sizeof(start_room)));
 	ft_printf("%10s", start_room->name);
 	adj_room_elem = start_room->connection_lst;
 	end_room_reached = 0;
 	while (!end_room_reached)
 	{
 		best_room = get_next_best_room(adj_room_elem);
-		ft_lstadd(report->path, ft_lstnew(&best_room, sizeof(best_room)));
+		ft_lstadd(&report->path, ft_lstnew(&best_room, sizeof(best_room)));
 		ft_printf(" %10s", best_room->name);
 		if (best_room == *input->end_room_ptr)
 			end_room_reached = 1;
@@ -57,5 +57,7 @@ void			navigate_shortest_path(t_input *input, t_report *report)
 			adj_room_elem = best_room->connection_lst;
 	}
 	ft_printf("\n");
+	ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&report->path,
+														sizeof(report->path)));
 	return ;
 }

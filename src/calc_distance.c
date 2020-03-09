@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 11:51:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 10:29:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,13 @@ void						validate_adj_rooms(size_t *connection_counter,
 	return ;
 }
 
-t_report					*calc_distance(t_input *input)
+void						calc_distance(t_input *input)
 {
-	t_report		*report;
-	t_room			*room;
+	t_room		*room;
+	size_t		connection_counter;
 
-	report = (t_report *)ft_memalloc(sizeof(*report));
-	report->error = 0;
-	report->opt = input->opt;
-	report->path = (t_list **)ft_memalloc(sizeof(*(report->path)));
-	report->lst_of_valid_paths =
-				(t_list **)ft_memalloc(sizeof(*(report->lst_of_valid_paths)));
 	room = *input->end_room_ptr;
-	report->visited_room = (size_t *)ft_memalloc(sizeof(*report->visited_room) *
-										((input->num_of_rooms - 1) / 32 + 1));
-	report->visited_room[room->id / 32] |= 1 << (room->id % 32);
-	report->connection_counter = -1;
-	validate_adj_rooms(&report->connection_counter, input, room);
-	free(report->visited_room);
-	report->visited_room = NULL;
-	return (report);
+	connection_counter = -1;
+	validate_adj_rooms(&connection_counter, input, room);
+	return ;
 }

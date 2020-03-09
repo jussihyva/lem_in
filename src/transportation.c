@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory.c                                           :+:      :+:    :+:   */
+/*   transportation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 11:44:22 by jkauppi          ###   ########.fr       */
+/*   Created: 2020/03/09 10:25:46 by jkauppi           #+#    #+#             */
+/*   Updated: 2020/03/09 10:37:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			del_path(void *room, size_t size)
+void				transportation(t_report *report)
 {
-	(void)size;
-	free(room);
-	room = NULL;
-	return ;
-}
+	t_list		*elem;
+	t_room		*room;
 
-void			release_report(t_report *report)
-{
-	ft_lstdel(report->lst_of_valid_paths, del_path);
-	free(report->lst_of_valid_paths);
-	report->lst_of_valid_paths = NULL;
-	ft_lstdel(&report->path, del_path);
-	free(report->ant_array);
-	report->ant_array = NULL;
-	free(report);
-	report = NULL;
+	elem = *(t_list **)report->lst_of_valid_paths;
+	while (elem)
+	{
+		room = (t_room *)elem->content;
+		elem = elem->next;
+	}
 	return ;
 }

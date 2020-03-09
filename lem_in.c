@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 11:16:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 10:32:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,10 @@ int						main(int argc, char **argv)
 		ft_printf("ERROR\n");
 	else
 	{
-		report = calc_distance(&input);
-		navigate_shortest_path(&input, report);
+		calc_distance(&input);
+		report = initialize_report(&input);
+		select_paths(&input, report);
+		transportation(report);
 		print_result(&input, report);
 		release_report(report);
 		return_code = 0;

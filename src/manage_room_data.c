@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/01 12:33:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/09 11:44:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ t_read_status			get_room_data(char *line, t_input *input,
 		{
 			add_line = 1;
 			input->room_array = create_room_array(input);
-			ft_lstdel(&input->room_lst, del_path_2);
+			ft_lstdel(&input->room_lst, del_path);
 			input->error = 0;
 			read_status = read_connection_data;
 		}
