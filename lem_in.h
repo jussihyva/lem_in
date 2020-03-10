@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 13:00:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 14:01:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ t_report					*initialize_report(t_input *input);
 void						transportation(t_report *report);
 void						print_instructions(t_report *report);
 t_room						**add_room(char **splitted_line, t_input *input);
-t_room						*get_room(char *name, t_room **room_array);
+t_room						*get_room_1(char *name, t_input *input);
+t_room						*get_room_2(char *name, t_input *input);
 t_room						**create_room_array_1(t_input *input);
 t_room						**create_room_array_2(t_input *input);
 
