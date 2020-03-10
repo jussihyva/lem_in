@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 10:03:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 11:39:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,53 +28,28 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 		if (splitted_line[0][0] == 'L')
 			input->error = invalid_room_name;
 		room_ptr = add_room(splitted_line, input);
-		if (read_status == read_start_room_data)
+		if (read_status == e_read_start_room_data)
 			input->start_room_ptr = room_ptr;
-		else if (read_status == read_end_room_data)
+		else if (read_status == e_read_end_room_data)
 			input->end_room_ptr = room_ptr;
 	}
 	else
 		input->error = invalid_room_data;
 	ft_arraydel(splitted_line);
-	read_status = read_room_data;
+	read_status = e_read_room_data;
 	return (read_status);
 }
 
-static t_room			**create_room_array(t_input *input)
-{
-	t_room		**room_array;
-	t_list		*elem;
-	size_t		id;
-	size_t		num_of_rooms;
-
-	num_of_rooms = input->num_of_rooms;
-	room_array =
-			(t_room **)ft_memalloc(sizeof(*room_array) * (num_of_rooms + 1));
-	elem = input->room_lst;
-	while (elem)
-	{
-		id = (*(t_room **)elem->content)->id;
-		room_array[id] = *(t_room **)elem->content;
-		if ((*input->start_room_ptr)->id == id)
-			input->start_room_ptr = &room_array[id];
-		if ((*input->end_room_ptr)->id == id)
-			input->end_room_ptr = &room_array[id];
-		elem = elem->next;
-	}
-	room_array[num_of_rooms] = NULL;
-	return (room_array);
-}
-
-t_read_status			get_room_data(char *line, t_input *input,
+t_read_status			read_room_data(char *line, t_input *input,
 													t_read_status read_status)
 {
 	int				add_line;
 
 	add_line = 1;
 	if (ft_strequ(line, "##start"))
-		read_status = read_start_room_data;
+		read_status = e_read_start_room_data;
 	else if (ft_strequ(line, "##end"))
-		read_status = read_end_room_data;
+		read_status = e_read_end_room_data;
 	else if (line[0] == '#')
 		add_line = 0;
 	else
@@ -84,10 +59,10 @@ t_read_status			get_room_data(char *line, t_input *input,
 		if (input->error == invalid_room_data)
 		{
 			add_line = 1;
-			input->room_array = create_room_array(input);
+			input->room_array = create_room_array_2(input);
 			ft_lstdel(&input->room_lst, del_path);
 			input->error = 0;
-			read_status = read_connection_data;
+			read_status = e_read_connection_data;
 		}
 	}
 	print_line(input, line, add_line);

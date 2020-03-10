@@ -6,20 +6,20 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 10:32:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 11:08:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_read_status	get_num_of_ants(char *line, t_input *input)
+static t_read_status	read_num_of_ants(char *line, t_input *input)
 {
 	char			*endptr;
 	t_read_status	read_status;
 	t_list			*elem;
 
 	if (line[0] == '#')
-		read_status = start_reading;
+		read_status = e_start_reading;
 	else
 	{
 		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
@@ -29,10 +29,10 @@ static t_read_status	get_num_of_ants(char *line, t_input *input)
 		if (errno || *endptr)
 		{
 			input->error = num_of_ants_error;
-			read_status = stop_reading;
+			read_status = e_stop_reading;
 		}
 		else
-			read_status = read_room_data;
+			read_status = e_read_room_data;
 	}
 	return (read_status);
 }
@@ -55,16 +55,16 @@ static void				init_input_structure(t_input *input)
 static t_read_status	parse_line(char *line, t_input *input,
 													t_read_status read_status)
 {
-	if (read_status == start_reading)
-		read_status = get_num_of_ants(line, input);
+	if (read_status == e_start_reading)
+		read_status = read_num_of_ants(line, input);
 	else
 	{
-		if (read_status == read_room_data ||
-					read_status == read_start_room_data ||
-					read_status == read_end_room_data)
-			read_status = get_room_data(line, input, read_status);
-		if (read_status == read_connection_data)
-			read_status = get_connection_data(line, input, read_status);
+		if (read_status == e_read_room_data ||
+					read_status == e_read_start_room_data ||
+					read_status == e_read_end_room_data)
+			read_status = read_room_data(line, input, read_status);
+		if (read_status == e_read_connection_data)
+			read_status = read_connection_data(line, input, read_status);
 	}
 	return (read_status);
 }
@@ -86,7 +86,7 @@ static void				read_input_data(t_input *input,
 	else
 	{
 		while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
-													read_status != stop_reading)
+												read_status != e_stop_reading)
 		{
 			read_status = parse_line(line, input, read_status);
 			ft_strdel(&line);
@@ -105,7 +105,7 @@ int						main(int argc, char **argv)
 	ft_step_args(&argc, &argv);
 	init_input_structure(&input);
 	ft_read_opt(&input, &argc, &argv);
-	read_input_data(&input, start_reading);
+	read_input_data(&input, e_start_reading);
 	return_code = 1;
 	if (input.error)
 		ft_printf("ERROR\n");

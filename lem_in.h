@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 09:51:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 11:01:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 
 typedef enum				e_read_status
 {
-	start_reading,
-	num_of_ants,
-	comment,
-	read_start_room_data,
-	read_end_room_data,
-	read_room_data,
-	read_connection_data,
-	stop_reading
+	e_start_reading,
+	e_num_of_ants,
+	e_comment,
+	e_read_start_room_data,
+	e_read_end_room_data,
+	e_read_room_data,
+	e_read_connection_data,
+	e_stop_reading
 }							t_read_status;
 
 typedef enum				e_opt
@@ -105,9 +105,9 @@ void						ft_read_opt(t_input *input, int *argc,
 																char ***argv);
 int							ft_strtoi(const char *str, char **endptr,
 																	int base);
-t_read_status				get_room_data(char *line, t_input *input,
+t_read_status				read_room_data(char *line, t_input *input,
 													t_read_status read_status);
-t_read_status				get_connection_data(char *line, t_input *input,
+t_read_status				read_connection_data(char *line, t_input *input,
 													t_read_status read_status);
 void						ft_arraydel(char **array);
 void						print_result(t_input *input, t_report *report);
@@ -128,5 +128,7 @@ void						transportation(t_report *report);
 void						print_instructions(t_report *report);
 t_room						**add_room(char **splitted_line, t_input *input);
 t_room						*get_room(char *name, t_room **room_array);
+t_room						**create_room_array_1(t_input *input);
+t_room						**create_room_array_2(t_input *input);
 
 #endif
