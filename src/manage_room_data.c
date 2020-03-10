@@ -6,49 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 11:44:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 10:03:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static void				create_new_room(char **splitted_line, t_input *input,
-															t_room **room_ptr)
-{
-	static size_t	id;
-	char			*endptr;
-
-	*room_ptr = (t_room *)ft_memalloc(sizeof(t_room));
-	(*room_ptr)->name = ft_strdup(splitted_line[0]);
-	endptr = NULL;
-	(*room_ptr)->coord_x = ft_strtoi(splitted_line[1], &endptr, 10) * 30;
-	if (errno || *endptr)
-		input->error = faulty_room_data;
-	(*room_ptr)->coord_y = ft_strtoi(splitted_line[2], &endptr, 10) * 100;
-	if (errno || *endptr)
-		input->error = faulty_room_data;
-	(*room_ptr)->id = id++;
-	(*room_ptr)->connection_lst = NULL;
-	return ;
-}
-
-static t_room			**add_room(char **splitted_line, t_input *input)
-{
-	t_list		*room_elem;
-	t_room		**room_ptr;
-
-	room_ptr = (t_room **)ft_memalloc(sizeof(*room_ptr));
-	create_new_room(splitted_line, input, room_ptr);
-	room_elem = ft_lstnew(room_ptr, sizeof(*room_ptr));
-	free(room_ptr);
-	room_ptr = NULL;
-	if (input->room_lst)
-		ft_lstadd(&input->room_lst, room_elem);
-	else
-		input->room_lst = room_elem;
-	input->num_of_rooms++;
-	return (room_elem->content);
-}
 
 static t_read_status	validate_room_data(char *line, t_input *input,
 													t_read_status read_status)

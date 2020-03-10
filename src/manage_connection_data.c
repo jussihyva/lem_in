@@ -6,30 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/08 12:57:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 09:51:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static t_room			*get_room(char *name, t_room **room_array)
-{
-	t_room		*room;
-	size_t		c;
-
-	room = NULL;
-	c = 0;
-	while (room_array[c])
-	{
-		if (ft_strequ(room_array[c]->name, name))
-		{
-			room = room_array[c];
-			break ;
-		}
-		c++;
-	}
-	return (room);
-}
 
 static void				add_connection(t_room *room1, t_room *room2)
 {

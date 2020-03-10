@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 20:39:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 10:06:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,7 @@ void			print_result(t_input *input, t_report *report)
 	}
 	print_path(report);
 	print_instructions(report);
+	if (report->opt && report->opt & verbose)
+		print_path(report);
 	return ;
 }
