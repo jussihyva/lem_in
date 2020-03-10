@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 11:01:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 13:00:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef enum				e_opt
 {
 	leaks = 0x1,
 	map_file = 0x2,
-	verbose = 0x4
+	verbose = 0x4,
+	ants = 0x8
 }							t_opt;
 
 typedef struct				s_ant
@@ -65,7 +66,8 @@ typedef enum				e_input_error
 	invalid_room_name,
 	invalid_room_data,
 	invalid_connection_data,
-	input_file_missing
+	input_file_missing,
+	num_of_ants_missing
 }							t_input_error;
 
 typedef struct				s_input

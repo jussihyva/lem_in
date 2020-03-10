@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 11:08:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 13:44:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@ static t_read_status	read_num_of_ants(char *line, t_input *input)
 		read_status = e_start_reading;
 	else
 	{
+		read_status = e_read_room_data;
 		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
 		ft_lstadd(input->valid_input_lines, elem);
 		endptr = NULL;
-		input->number_of_ants = ft_strtoi(line, &endptr, 10);
-		if (errno || *endptr)
+		if (!input->number_of_ants)
 		{
-			input->error = num_of_ants_error;
-			read_status = e_stop_reading;
+			input->number_of_ants = ft_strtoi(line, &endptr, 10);
+			if (errno || *endptr)
+			{
+				input->error = num_of_ants_error;
+				read_status = e_stop_reading;
+			}
 		}
-		else
-			read_status = e_read_room_data;
 	}
 	return (read_status);
 }
