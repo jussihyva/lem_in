@@ -6,48 +6,74 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:57:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 14:32:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/10 19:50:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+static void			set_start_end_ptr(t_input *input, t_room **room_array)
+{
+	size_t		id;
+	size_t		start_id;
+	size_t		end_id;
+
+	id = -1;
+	start_id = 0;
+	end_id = 0;
+	while (++id < input->num_of_rooms)
+	{
+		if ((*input->start_room_ptr)->id == room_array[id]->id)
+		{
+			input->start_room_ptr = &room_array[id];
+			start_id = id;
+		}
+		if ((*input->end_room_ptr)->id == room_array[id]->id)
+		{
+			input->end_room_ptr = &room_array[id];
+			end_id = id;
+		}
+	}
+	room_array[start_id]->id = start_id;
+	room_array[end_id]->id = end_id;
+	return ;
+}
+
+static void			add_room_to_array(t_room **room_array, t_list *elem,
+																size_t index)
+{
+	size_t		c;
+
+	c = index;
+	while (c && (ft_strcmp(room_array[c - 1]->name,
+									(*(t_room **)elem->content)->name) > 0))
+	{
+		room_array[c] = room_array[c - 1];
+		c--;
+	}
+	room_array[c] = *(t_room **)elem->content;
+	return ;
+}
+
 t_room				**create_room_array_2(t_input *input)
 {
 	t_room		**room_array;
 	t_list		*elem;
-	size_t		id;
-	size_t		c;
-	size_t		num_of_rooms;
+	size_t		index;
 
-	num_of_rooms = input->num_of_rooms;
-	room_array =
-			(t_room **)ft_memalloc(sizeof(*room_array) * (num_of_rooms + 1));
+	room_array = (t_room **)ft_memalloc(sizeof(*room_array) *
+													(input->num_of_rooms + 1));
 	elem = input->room_lst;
-	id = -1;
-	room_array[++id] = *(t_room **)elem->content;
+	index = -1;
+	room_array[++index] = *(t_room **)elem->content;
 	elem = elem->next;
 	while (elem)
 	{
-		c = ++id;
-		while (c && (ft_strcmp(room_array[c - 1]->name, (*(t_room **)elem->content)->name) > 0))
-		{
-			room_array[c] = room_array[c - 1];
-			c--;
-		}
-		room_array[c] = *(t_room **)elem->content;
+		add_room_to_array(room_array, elem, ++index);
 		elem = elem->next;
 	}
-	room_array[num_of_rooms] = NULL;
-	id = -1;
-	while (++id < num_of_rooms)
-	{
-		if ((*input->start_room_ptr)->id == room_array[id]->id)
-			input->start_room_ptr = &room_array[id];
-		if ((*input->end_room_ptr)->id == room_array[id]->id)
-			input->end_room_ptr = &room_array[id];
-		room_array[id]->id = id;
-	}
+	room_array[input->num_of_rooms] = NULL;
+	set_start_end_ptr(input, room_array);
 	return (room_array);
 }
 
