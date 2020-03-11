@@ -81,7 +81,7 @@ static void					validate_adj_rooms_2(t_input *input,
 															connection_counter);
 			elem = elem->next;
 		}
-//		ft_lstdel(&current_room_element_lst, del_path);
+		ft_lstdel(&current_room_element_lst, del_path);
 	}
 	return ;
 }
