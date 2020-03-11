@@ -6,35 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/11 14:42:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/11 17:17:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-// static void					validate_adj_rooms_1(size_t *connection_counter,
-// 												t_input *input, t_room *room)
-// {
-// 	t_room			*next_room;
-// 	t_list			*adj_room_elem;
-
-// 	(*connection_counter)++;
-// 	room->num_of_conn_to_end = *connection_counter;
-// 	adj_room_elem = room->connection_lst;
-// 	while (adj_room_elem)
-// 	{
-// 		next_room = *(t_room **)adj_room_elem->content;
-// 		if (next_room != *input->end_room_ptr)
-// 		{
-// 			if (!next_room->num_of_conn_to_end ||
-// 				next_room->num_of_conn_to_end > (*connection_counter + 1))
-// 				validate_adj_rooms_1(connection_counter, input, next_room);
-// 		}
-// 		adj_room_elem = adj_room_elem->next;
-// 	}
-// 	(*connection_counter)--;
-// 	return ;
-// }
 
 static void					add_new_rooms(t_input *input, t_list *elem,
 					t_list **new_room_element_lst, size_t connection_counter)
@@ -54,11 +30,31 @@ static void					add_new_rooms(t_input *input, t_list *elem,
 			while (new_elem)
 			{
 				new_room = *(t_room **)new_elem->content;
-				tmp_elem = ft_lstnew(&new_room->id, sizeof(new_room->id));
+				tmp_elem = ft_lstnew(&new_room->id, sizeof(&new_room->id));
 				ft_lstadd(new_room_element_lst, tmp_elem);
 				new_elem = new_elem->next;
 			}
 		}
+	}
+	return ;
+}
+
+static void					ft_lstdel_1(t_list **lst_ptr)
+{
+	t_list		*elem;
+	t_list		*next_elem;
+
+	if (lst_ptr)
+	{
+		elem = *lst_ptr;
+		while (elem)
+		{
+			next_elem = elem->next;
+			free((t_room **)elem->content);
+			free(elem);
+			elem = next_elem;
+		}
+		*lst_ptr = NULL;
 	}
 	return ;
 }
@@ -70,7 +66,8 @@ static void					validate_adj_rooms_2(t_input *input,
 	t_list			*elem;
 	size_t			connection_counter;
 
-	current_room_element_lst = (t_list **)ft_memalloc(sizeof(*current_room_element_lst));
+	current_room_element_lst =
+					(t_list **)ft_memalloc(sizeof(*current_room_element_lst));
 	connection_counter = 0;
 	while (*new_room_element_lst)
 	{
@@ -84,7 +81,7 @@ static void					validate_adj_rooms_2(t_input *input,
 															connection_counter);
 			elem = elem->next;
 		}
-//		ft_lstdel(current_room_element_lst, del_path);
+		ft_lstdel_1(current_room_element_lst);
 	}
 	free(current_room_element_lst);
 	return ;
@@ -98,20 +95,20 @@ void						calc_distance(t_input *input)
 	t_list			*tmp_elem;
 	size_t			c;
 
-	new_room_element_lst = (t_list **)ft_memalloc(sizeof(*new_room_element_lst));
+	new_room_element_lst =
+						(t_list **)ft_memalloc(sizeof(*new_room_element_lst));
 	room = *input->end_room_ptr;
 	elem = room->connection_lst;
 	c = 0;
 	while (elem)
 	{
 		room = *(t_room **)elem->content;
-		tmp_elem = ft_lstnew(&room->id, sizeof(room->id));
+		tmp_elem = ft_lstnew(&room->id, sizeof(&room->id));
 		ft_lstadd_e(new_room_element_lst, tmp_elem);
 		elem = elem->next;
 		c++;
 	}
 	validate_adj_rooms_2(input, new_room_element_lst);
-//	validate_adj_rooms_1(&connection_counter, input, room);
 	free(new_room_element_lst);
 	return ;
 }

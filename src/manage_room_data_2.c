@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:57:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/11 14:25:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/11 17:02:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void			set_start_end_ptr(t_input *input, t_room **room_array)
 	id = -1;
 	while (++id < input->num_of_rooms)
 		room_array[id]->id = id;
-	return ;
 }
 
 static void			add_room_to_array(t_room **room_array, t_list *elem,
