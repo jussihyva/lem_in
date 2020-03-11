@@ -39,7 +39,7 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 	{
 		room1 = get_room_2(splitted_line[0], input);
 		room2 = get_room_2(splitted_line[1], input);
-		if (room1 && room2)
+		if (room1 && room2 && room1 != room2)
 			add_connection(room1, room2);
 		else
 			input->error = invalid_connection_data;
