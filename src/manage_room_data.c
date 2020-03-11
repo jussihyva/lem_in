@@ -63,6 +63,7 @@ t_read_status			read_room_data(char *line, t_input *input,
 			ft_lstdel(&input->room_lst, del_path);
 			input->error = 0;
 			read_status = e_read_connection_data;
+			return (read_status);
 		}
 	}
 	print_line(input, line, add_line);
