@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 10:06:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/11 17:02:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void			print_result(t_input *input, t_report *report)
 		elem = elem->next;
 	while (elem)
 	{
-		ft_printf("%s\n", (char *)elem->content);
+		ft_putendl((char *)elem->content);
 		elem = elem->prev;
 	}
 	print_path(report);
