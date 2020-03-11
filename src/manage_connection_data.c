@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 14:29:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/11 11:13:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 		room2 = get_room_2(splitted_line[1], input);
 		if (room1 && room2 && room1 != room2)
 			add_connection(room1, room2);
-		else
-			input->error = invalid_connection_data;
+//		else
+//			input->error = invalid_connection_data;
 	}
 	else
 		input->error = invalid_connection_data;
