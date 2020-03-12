@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 12:43:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 19:36:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void					add_new_rooms(t_input *input, t_list *elem,
 	return ;
 }
 
-static void					ft_lstdel_1(t_list **lst_ptr)
+void						ft_lstdel_1(t_list **lst_ptr)
 {
 	t_list		*elem;
 	t_list		*next_elem;
