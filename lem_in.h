@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 12:39:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 14:33:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ typedef enum				e_input_error
 	invalid_room_data,
 	invalid_connection_data,
 	input_file_missing,
-	num_of_ants_missing
+	num_of_ants_missing,
+	no_path_available
 }							t_input_error;
 
 typedef struct				s_input
@@ -125,7 +126,7 @@ void						is_road_to_start_room(t_room *room, t_input *input,
 void						release_report(t_report *report);
 void						validate_adj_rooms(size_t *connection_counter,
 												t_input *input, t_room *room);
-void						select_paths(t_input *input, t_report *report);
+int							select_paths(t_input *input, t_report *report);
 t_report					*initialize_report(t_input *input);
 void						transportation(t_report *report);
 void						print_instructions(t_report *report);
@@ -133,5 +134,7 @@ t_room						**add_room(char **splitted_line, t_input *input);
 t_room						*get_room_1(char *name, t_input *input);
 t_room						*get_room_2(char *name, t_input *input);
 t_room						**create_room_array_2(t_input *input);
+void						set_error(t_input *input, char *line,
+											t_input_error error, char *text);
 
 #endif

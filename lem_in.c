@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 13:44:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 14:39:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,15 @@ static t_read_status	parse_line(char *line, t_input *input,
 }
 
 static void				read_input_data(t_input *input,
-													t_read_status read_status)
+							t_read_status read_status, int *argc, char ***argv)
 {
 	char		*line;
 	int			ret;
 	int			fd;
 
+	ft_step_args(argc, argv);
+	init_input_structure(input);
+	ft_read_opt(input, argc, argv);
 	if (input->opt & map_file)
 		fd = open(input->input_file, O_RDONLY);
 	else
@@ -104,22 +107,23 @@ int						main(int argc, char **argv)
 	t_input			input;
 	t_report		*report;
 
-	ft_step_args(&argc, &argv);
-	init_input_structure(&input);
-	ft_read_opt(&input, &argc, &argv);
-	read_input_data(&input, e_start_reading);
+	read_input_data(&input, e_start_reading, &argc, &argv);
 	return_code = 1;
-	if (input.error)
+	if (input.error != invalid_connection_data && input.error)
 		ft_printf("ERROR\n");
 	else
 	{
 		calc_distance(&input);
 		report = initialize_report(&input);
-		select_paths(&input, report);
-		transportation(report);
-		print_result(&input, report);
-		release_report(report);
-		return_code = 0;
+		if (select_paths(&input, report))
+		{
+			transportation(report);
+			print_result(&input, report);
+			release_report(report);
+			return_code = 0;
+		}
+		else
+			ft_printf("ERROR\n");
 	}
 	if (input.opt & leaks)
 		system("leaks lem-in");
