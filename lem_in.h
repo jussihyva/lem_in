@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 14:01:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 11:24:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ typedef enum				e_read_status
 
 typedef enum				e_opt
 {
-	leaks = 0x1,
-	map_file = 0x2,
-	verbose = 0x4,
-	ants = 0x8
+	leaks = 0x01,
+	map_file = 0x02,
+	verbose = 0x04,
+	ants = 0x08,
+	errors = 0x10
 }							t_opt;
 
 typedef struct				s_ant
@@ -131,7 +132,6 @@ void						print_instructions(t_report *report);
 t_room						**add_room(char **splitted_line, t_input *input);
 t_room						*get_room_1(char *name, t_input *input);
 t_room						*get_room_2(char *name, t_input *input);
-t_room						**create_room_array_1(t_input *input);
 t_room						**create_room_array_2(t_input *input);
 
 #endif

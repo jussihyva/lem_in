@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 09:48:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/11 16:01:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 11:23:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,6 @@ t_room				**add_room(char **splitted_line, t_input *input)
 		input->room_lst = room_elem;
 	input->num_of_rooms++;
 	return (room_elem->content);
-}
-
-t_room				**create_room_array_1(t_input *input)
-{
-	t_room		**room_array;
-	t_list		*elem;
-	size_t		id;
-	size_t		num_of_rooms;
-
-	num_of_rooms = input->num_of_rooms;
-	room_array =
-			(t_room **)ft_memalloc(sizeof(*room_array) * (num_of_rooms + 1));
-	elem = input->room_lst;
-	while (elem)
-	{
-		id = (*(t_room **)elem->content)->id;
-		room_array[id] = *(t_room **)elem->content;
-		if ((*input->start_room_ptr)->id == id)
-			input->start_room_ptr = &room_array[id];
-		if ((*input->end_room_ptr)->id == id)
-			input->end_room_ptr = &room_array[id];
-		elem = elem->next;
-	}
-	room_array[num_of_rooms] = NULL;
-	return (room_array);
 }
 
 t_room				*get_room_1(char *name, t_input *input)
