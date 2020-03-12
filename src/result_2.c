@@ -6,11 +6,29 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 12:42:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 14:40:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void			set_error(t_input *input, char *line, t_input_error error,
+																	char *text)
+{
+	char			*error_line;
+	t_list			*elem;
+
+	if (input->opt && input->opt & errors)
+	{
+		error_line = ft_strjoin(text, line);
+		elem = ft_lstnew(error_line, sizeof(char) *
+												ft_strlen(error_line));
+		ft_lstadd(input->valid_input_lines, elem);
+	}
+	else
+		input->error = error;
+	return ;
+}
 
 static void		put_ants_to_valid_path(t_report *report)
 {
