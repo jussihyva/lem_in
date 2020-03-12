@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 14:40:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 20:16:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			set_error(t_input *input, char *line, t_input_error error,
 		elem = ft_lstnew(error_line, sizeof(char) *
 												ft_strlen(error_line));
 		ft_lstadd(input->valid_input_lines, elem);
+		ft_strdel(&error_line);
 	}
 	else
 		input->error = error;

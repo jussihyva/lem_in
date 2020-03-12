@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 14:33:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 18:38:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct				s_room
 	t_list			*connection_lst;
 	size_t			num_of_conn_to_end;
 	t_ant			*ant;
+	int				is_visited;
 }							t_room;
 
 typedef enum				e_input_error
@@ -119,6 +120,7 @@ void						ft_step_args(int *argc, char ***argv);
 void						calc_distance(t_input *input);
 void						del_report(void *room, size_t size);
 void						del_path(void *room, size_t size);
+void						ft_lstdel_1(t_list **lst_ptr);
 void						print_line(t_input *input, char *line,
 																int add_line);
 void						is_road_to_start_room(t_room *room, t_input *input,
