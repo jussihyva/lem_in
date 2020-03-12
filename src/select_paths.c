@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 19:56:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 12:40:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static t_valid_path		*find_shortest_path(t_input *input, t_list **path)
 	t_room			*best_room;
 	t_valid_path	*valid_path;
 
-	ft_lstadd_e(path, ft_lstnew(input->start_room_ptr,
-											sizeof(*input->start_room_ptr)));
-	adj_room_elem = (*input->start_room_ptr)->connection_lst;
+	ft_lstadd_e(path, ft_lstnew(&input->start_room_ptr,
+											sizeof(input->start_room_ptr)));
+	adj_room_elem = input->start_room_ptr->connection_lst;
 	end_room_reached = 0;
 	while (!end_room_reached)
 	{
 		best_room = get_next_best_room(adj_room_elem);
 		ft_lstadd_e(path, ft_lstnew(&best_room, sizeof(best_room)));
-		if (best_room == *input->end_room_ptr)
+		if (best_room == input->end_room_ptr)
 			end_room_reached = 1;
 		else
 			adj_room_elem = best_room->connection_lst;
@@ -57,7 +57,7 @@ static t_valid_path		*find_shortest_path(t_input *input, t_list **path)
 	valid_path = (t_valid_path *)ft_memalloc(sizeof(*valid_path));
 	valid_path->path = path;
 	valid_path->num_of_conn_to_end =
-								(*input->start_room_ptr)->num_of_conn_to_end;
+								input->start_room_ptr->num_of_conn_to_end;
 	return (valid_path);
 }
 

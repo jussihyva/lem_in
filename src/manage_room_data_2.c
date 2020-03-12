@@ -6,25 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:57:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 11:33:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 12:48:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static void			set_start_end_ptr(t_input *input, t_room **room_array)
-{
-	size_t		id;
-
-	id = -1;
-	while (++id < input->num_of_rooms)
-	{
-		if ((*input->start_room_ptr)->id == room_array[id]->id)
-			input->start_room_ptr = &room_array[id];
-		if ((*input->end_room_ptr)->id == room_array[id]->id)
-			input->end_room_ptr = &room_array[id];
-	}
-}
 
 static void			add_room_to_array(t_room **room_array, t_list *elem,
 																size_t index)
@@ -60,7 +46,6 @@ t_room				**create_room_array_2(t_input *input)
 		elem = elem->next;
 	}
 	room_array[input->num_of_rooms] = NULL;
-	set_start_end_ptr(input, room_array);
 	return (room_array);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 10:16:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 12:43:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void					add_new_rooms(t_input *input, t_list *elem,
 	t_list			*tmp_elem;
 
 	next_room = *(t_room **)elem->content;
-	if (next_room != *input->end_room_ptr)
+	if (next_room != input->end_room_ptr)
 	{
 		if (!next_room->num_of_conn_to_end)
 		{
@@ -95,7 +95,7 @@ void						calc_distance(t_input *input)
 
 	new_room_element_lst =
 						(t_list **)ft_memalloc(sizeof(*new_room_element_lst));
-	room = *input->end_room_ptr;
+	room = input->end_room_ptr;
 	elem = room->connection_lst;
 	c = 0;
 	while (elem)

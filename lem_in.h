@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 11:24:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 12:39:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef struct				s_input
 	char			*input_file;
 	t_list			**valid_input_lines;
 	size_t			number_of_ants;
-	t_room			**start_room_ptr;
-	t_room			**end_room_ptr;
+	t_room			*start_room_ptr;
+	t_room			*end_room_ptr;
 	t_list			*room_lst;
 	t_room			**room_array;
 	size_t			num_of_rooms;
@@ -98,7 +98,7 @@ typedef struct				s_report
 	t_opt			opt;
 	t_list			**lst_of_valid_paths;
 	size_t			connection_counter;
-	t_room			**end_room_ptr;
+	t_room			*end_room_ptr;
 	t_ant			*ant_array;
 	size_t			number_of_paths;
 	size_t			number_of_ants;
