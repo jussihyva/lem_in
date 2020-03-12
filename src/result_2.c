@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 10:49:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 12:42:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		move_ant_next_room(t_report *report, size_t c)
 	all_ants_at_the_end = 0;
 	elem = report->ant_array[c].current_room_elem->next;
 	next_room = *(t_room **)elem->content;
-	if (!next_room->ant || next_room == *report->end_room_ptr)
+	if (!next_room->ant || next_room == report->end_room_ptr)
 	{
 		all_ants_at_the_end = 0;
 		elem = report->ant_array[c].current_room_elem;
@@ -43,7 +43,7 @@ static int		move_ant_next_room(t_report *report, size_t c)
 		elem = report->ant_array[c].current_room_elem->next;
 		report->ant_array[c].current_room_elem = elem;
 		room = *(t_room **)elem->content;
-		if (room != *report->end_room_ptr)
+		if (room != report->end_room_ptr)
 			room->ant = &report->ant_array[c];
 		ft_printf("%s-%s ", report->ant_array[c].name, room->name);
 	}
@@ -68,7 +68,7 @@ void			print_instructions(t_report *report)
 		{
 			elem = report->ant_array[c].current_room_elem;
 			room = *(t_room **)elem->content;
-			if (room != *report->end_room_ptr)
+			if (room != report->end_room_ptr)
 				all_ants_at_the_end &= move_ant_next_room(report, c);
 			if (c + 1 == report->number_of_ants)
 				ft_printf("\n");

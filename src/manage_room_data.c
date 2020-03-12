@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/10 11:39:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 12:37:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 			input->error = invalid_room_name;
 		room_ptr = add_room(splitted_line, input);
 		if (read_status == e_read_start_room_data)
-			input->start_room_ptr = room_ptr;
+			input->start_room_ptr = *room_ptr;
 		else if (read_status == e_read_end_room_data)
-			input->end_room_ptr = room_ptr;
+			input->end_room_ptr = *room_ptr;
 	}
 	else
 		input->error = invalid_room_data;
