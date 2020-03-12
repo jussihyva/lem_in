@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/11 17:17:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/12 10:16:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 static void					add_new_rooms(t_input *input, t_list *elem,
 					t_list **new_room_element_lst, size_t connection_counter)
 {
-	t_room			*new_room;
 	t_room			*next_room;
 	t_list			*new_elem;
 	t_list			*tmp_elem;
 
-	next_room = input->room_array[*(size_t *)elem->content];
+	next_room = *(t_room **)elem->content;
 	if (next_room != *input->end_room_ptr)
 	{
 		if (!next_room->num_of_conn_to_end)
@@ -29,8 +28,7 @@ static void					add_new_rooms(t_input *input, t_list *elem,
 			new_elem = next_room->connection_lst;
 			while (new_elem)
 			{
-				new_room = *(t_room **)new_elem->content;
-				tmp_elem = ft_lstnew(&new_room->id, sizeof(&new_room->id));
+				tmp_elem = ft_lstnew(new_elem->content, new_elem->content_size);
 				ft_lstadd(new_room_element_lst, tmp_elem);
 				new_elem = new_elem->next;
 			}
@@ -102,8 +100,7 @@ void						calc_distance(t_input *input)
 	c = 0;
 	while (elem)
 	{
-		room = *(t_room **)elem->content;
-		tmp_elem = ft_lstnew(&room->id, sizeof(&room->id));
+		tmp_elem = ft_lstnew(elem->content, sizeof(elem->content_size));
 		ft_lstadd_e(new_room_element_lst, tmp_elem);
 		elem = elem->next;
 		c++;
