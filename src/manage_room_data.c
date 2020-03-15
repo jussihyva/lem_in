@@ -51,7 +51,7 @@ t_read_status			read_room_data(char *line, t_input *input,
 	else if (ft_strequ(line, "##end"))
 		read_status = e_read_end_room_data;
 	else if (line[0] == '#')
-		add_line = 0;
+		;
 	else
 	{
 		add_line = 2;

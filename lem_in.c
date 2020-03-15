@@ -18,13 +18,13 @@ static t_read_status	read_num_of_ants(char *line, t_input *input)
 	t_read_status	read_status;
 	t_list			*elem;
 
+	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+	ft_lstadd(input->valid_input_lines, elem);
 	if (line[0] == '#')
 		read_status = e_start_reading;
 	else
 	{
 		read_status = e_read_room_data;
-		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-		ft_lstadd(input->valid_input_lines, elem);
 		endptr = NULL;
 		if (!input->number_of_ants)
 		{
@@ -110,8 +110,7 @@ int						main(int argc, char **argv)
 	read_input_data(&input, e_start_reading, &argc, &argv);
 	return_code = 1;
 	if (input.error != invalid_connection_data && input.error)
-			;
-//		ft_printf("ERROR\n");
+		ft_printf("ERROR\n");
 	else
 	{
 		calc_distance(&input);
@@ -119,13 +118,12 @@ int						main(int argc, char **argv)
 		if (select_paths(&input, report))
 		{
 			transportation(report);
-//			print_result(&input, report);
-//			release_report(report);
+			print_result(&input, report);
+			release_report(report);
 			return_code = 0;
 		}
 		else
-			;
-//			ft_printf("ERROR\n");
+			ft_printf("ERROR\n");
 	}
 	if (input.opt & leaks)
 		system("leaks lem-in");
