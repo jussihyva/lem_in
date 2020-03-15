@@ -35,11 +35,6 @@ static void			set_unsigned_hex_parameter(t_substring *substring)
 		s = ft_ulltoa_base(par_value, 16);
 		if (substring->conv_type == 'X')
 			conv_to_upper(s);
-		if (par_value < 0)
-		{
-			save_parameter(substring, ft_strdup(s + 1));
-			ft_strdel(&s);
-		}
 		else
 			save_parameter(substring, s);
 	}
@@ -71,7 +66,5 @@ char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
 	else
 		*nbr = read_o_u_x_param(substring->param_type->type, ap);
 	substring->par_value = nbr;
-	if (*nbr < 0)
-		substring->par_value_is_neg = 1;
 	return (NULL);
 }

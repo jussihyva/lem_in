@@ -59,9 +59,7 @@ int						convert_substrings(t_list **list, va_list *ap,
 	t_list			*elem;
 	t_substring		*substring;
 	int				attrs;
-	int				max_num_attrs;
 
-	max_num_attrs = 190;
 	attrs = 0;
 	elem = *list;
 	while (elem)

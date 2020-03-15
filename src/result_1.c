@@ -59,23 +59,21 @@ void			print_line(t_input *input, char *line, int add_line)
 
 static void		print_path(t_report *report)
 {
-	t_list			*elem;
+//	t_list			*elem;
 	t_list			*valid_path_elem;
-	t_valid_path	*valid_path;
-	t_list			**path_lst;
+//	t_valid_path	*valid_path;
 
-	path_lst = ((t_list *)report->lst_of_valid_paths)->content;
 	valid_path_elem = *report->lst_of_valid_paths;
 	while (valid_path_elem)
 	{
-		valid_path = *(t_valid_path **)valid_path_elem->content;
-		elem = *valid_path->path;
+//		valid_path = *(t_valid_path **)valid_path_elem->content;
+//		elem = *valid_path->path;
 		ft_printf("#path: ");
-		while (elem)
-		{
-			ft_printf(" %10s", (*(t_room **)elem->content)->name);
-			elem = elem->next;
-		}
+//		while (elem)
+//		{
+//			ft_printf(" %10s", (*(t_room **)elem->content)->name);
+//			elem = elem->next;
+//		}
 		ft_printf("\n");
 		valid_path_elem = valid_path_elem->next;
 	}

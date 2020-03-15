@@ -18,6 +18,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <stddef.h>
+# include <stdint.h>
 
 enum		e_flag
 {

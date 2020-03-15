@@ -24,11 +24,6 @@ static void				set_unsigned_int_parameter(t_substring *substring)
 		save_parameter(substring, "");
 		ft_strdel(&s);
 	}
-	else if (par_value < 0)
-	{
-		save_parameter(substring, ft_strdup(s + 1));
-		ft_strdel(&s);
-	}
 	else
 		save_parameter(substring, s);
 	free(substring->par_value);
@@ -58,7 +53,5 @@ char					*conv_unsigned_int(va_list *ap,
 	else
 		*nbr = read_o_u_x_param(substring->param_type->type, ap);
 	substring->par_value = nbr;
-	if (*nbr < 0)
-		substring->par_value_is_neg = 1;
 	return (NULL);
 }

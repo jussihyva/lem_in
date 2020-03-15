@@ -82,7 +82,7 @@ void			set_post_filler(t_substring *substring)
 			substring->o_string.post_filler.content_size = num_of_fillers;
 			substring->o_string.post_filler.content = s;
 			while (num_of_fillers--)
-				*(s + num_of_fillers) = ' ';
+				*(s + num_of_fillers) = filler;
 		}
 	}
 	return ;

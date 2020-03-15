@@ -110,7 +110,8 @@ int						main(int argc, char **argv)
 	read_input_data(&input, e_start_reading, &argc, &argv);
 	return_code = 1;
 	if (input.error != invalid_connection_data && input.error)
-		ft_printf("ERROR\n");
+			;
+//		ft_printf("ERROR\n");
 	else
 	{
 		calc_distance(&input);
@@ -118,12 +119,13 @@ int						main(int argc, char **argv)
 		if (select_paths(&input, report))
 		{
 			transportation(report);
-			print_result(&input, report);
-			release_report(report);
+//			print_result(&input, report);
+//			release_report(report);
 			return_code = 0;
 		}
 		else
-			ft_printf("ERROR\n");
+			;
+//			ft_printf("ERROR\n");
 	}
 	if (input.opt & leaks)
 		system("leaks lem-in");

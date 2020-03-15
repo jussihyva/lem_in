@@ -51,15 +51,15 @@ static long long		read_int_param(t_type type, va_list *ap)
 	long long	nbr;
 
 	if (type == hh)
-		nbr = (char)(va_arg(*ap, void *));
+		nbr = (char)(va_arg(*ap, int));
 	else if (type == h)
-		nbr = (short)(va_arg(*ap, void *));
+		nbr = (short)(va_arg(*ap, int));
 	else if (type == l)
 		nbr = (long)(va_arg(*ap, void *));
 	else if (type == ll)
-		nbr = (long long)(va_arg(*ap, void *));
+		nbr = (long long)(va_arg(*ap, long long));
 	else if (type == j)
-		nbr = (intmax_t)(va_arg(*ap, void *));
+		nbr = (intmax_t)(va_arg(*ap, intmax_t));
 	else if (type == z)
 		nbr = (size_t)(va_arg(*ap, void *));
 	else if (type == t)

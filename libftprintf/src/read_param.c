@@ -17,23 +17,23 @@ long long		read_o_u_x_param(t_type type, va_list *ap)
 	long long	nbr;
 
 	if (type == hh)
-		nbr = (unsigned char)(va_arg(*ap, void *));
+		nbr = (unsigned char)(va_arg(*ap, unsigned int));
 	else if (type == h)
-		nbr = (unsigned short)(va_arg(*ap, void *));
+		nbr = (unsigned short)(va_arg(*ap, unsigned int));
 	else if (type == l)
 		nbr = (unsigned long)(va_arg(*ap, void *));
 	else if (type == ll)
-		nbr = (unsigned long long)(va_arg(*ap, void *));
+		nbr = (unsigned long long)(va_arg(*ap, unsigned long long));
 	else if (type == j)
-		nbr = (uintmax_t)(va_arg(*ap, void *));
+		nbr = (uintmax_t)(va_arg(*ap, uintmax_t));
 	else if (type == z)
 		nbr = (size_t)(va_arg(*ap, void *));
 	else if (type == t)
 		nbr = (ptrdiff_t)(va_arg(*ap, void *));
 	else if (type == L)
-		nbr = (unsigned char)(va_arg(*ap, void *));
+		nbr = (unsigned char)(va_arg(*ap, unsigned int));
 	else
-		nbr = (unsigned char)(va_arg(*ap, void *));
+		nbr = (unsigned char)(va_arg(*ap, unsigned int));
 	return (nbr);
 }
 
