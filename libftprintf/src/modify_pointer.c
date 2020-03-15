@@ -24,11 +24,6 @@ static void		set_pointer_parameter(t_substring *substring)
 		save_parameter(substring, "");
 		ft_strdel(&s);
 	}
-	else if (par_value < 0)
-	{
-		save_parameter(substring, ft_strdup(s + 1));
-		ft_strdel(&s);
-	}
 	else
 		save_parameter(substring, s);
 	free(substring->par_value);

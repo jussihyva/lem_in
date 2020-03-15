@@ -37,7 +37,7 @@ char				*conv_character(va_list *ap, t_substring *substring,
 {
 	(*attrs)++;
 	substring->par_value = ft_strnew(1);
-	((char *)(substring->par_value))[0] = (char)va_arg(*ap, void *);
+	((char *)(substring->par_value))[0] = (char)va_arg(*ap, int);
 	if (!((char *)(substring->par_value))[0])
 		substring->o_string.add_null = 1;
 	return (NULL);

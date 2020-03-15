@@ -17,7 +17,7 @@ void				transportation(t_report *report)
 	t_list			*elem;
 	t_list			*valid_path_elem;
 	t_valid_path	*valid_path;
-	t_room			*room;
+//	t_room			*room;
 
 	valid_path_elem = *report->lst_of_valid_paths;
 	while (valid_path_elem)
@@ -26,12 +26,12 @@ void				transportation(t_report *report)
 		ft_printf("%15s %20s\n", "Number of steps", "Path");
 		ft_printf("%15d ", valid_path->num_of_conn_to_end);
 		elem = *valid_path->path;
-		while (elem)
-		{
-			room = *(t_room **)elem->content;
-			ft_printf("%10s", room->name);
-			elem = elem->next;
-		}
+//		while (elem)
+//		{
+//			room = *(t_room **)elem->content;
+//			ft_printf("%10s", room->name);
+//			elem = elem->next;
+//		}
 		ft_printf("\n");
 		valid_path_elem = valid_path_elem->next;
 	}
