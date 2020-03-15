@@ -70,13 +70,11 @@ t_read_status			read_connection_data(char *line, t_input *input,
 {
 	t_list			*elem;
 
+	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+	ft_lstadd(input->valid_input_lines, elem);
 	if (line[0] == '#')
 		read_status = e_read_connection_data;
 	else
-	{
 		read_status = validate_connection_data(line, input, read_status);
-		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-		ft_lstadd(input->valid_input_lines, elem);
-	}
 	return (read_status);
 }
