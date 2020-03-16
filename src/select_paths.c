@@ -12,6 +12,19 @@
 
 #include "lem_in.h"
 
+static void				update_best_room(t_room *next_room, t_room *best_room,
+														t_validity *validity)
+{
+	if (next_room->num_of_conn_to_end < best_room->num_of_conn_to_end)
+	{
+		best_room = next_room;
+		*validity = valid_room;
+	}
+	else if (next_room->num_of_conn_to_end == best_room->num_of_conn_to_end)
+		*validity = many_alternatives;
+	return ;
+}
+
 static t_room			*get_next_best_room(t_list *adj_room_elem,
 									t_room *end_room_ptr, t_validity *validity)
 {
@@ -27,17 +40,7 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 														!next_room->is_visited))
 		{
 			if (best_room)
-			{
-				if (next_room->num_of_conn_to_end <
-												best_room->num_of_conn_to_end)
-				{
-					best_room = next_room;
-					*validity = valid_room;
-				}
-				else if (next_room->num_of_conn_to_end ==
-												best_room->num_of_conn_to_end)
-					*validity = many_alternatives;
-			}
+				update_best_room(next_room, best_room, validity);
 			else
 			{
 				best_room = next_room;
