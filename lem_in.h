@@ -87,9 +87,17 @@ typedef struct				s_input
 	size_t			num_of_rooms;
 }							t_input;
 
+typedef enum				e_validity
+{
+	no_room = 0,
+	valid_room,
+	many_alternatives
+}							t_validity;
+
 typedef struct				s_valid_path
 {
 	t_list			**path;
+	t_validity		validity;
 	size_t			num_of_conn_to_end;
 	size_t			*visited_rooms;
 }							t_valid_path;
