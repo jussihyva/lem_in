@@ -12,7 +12,7 @@
 
 NAME		=	lem-in
 CC			=	clang
-C_FLAGS		=	-g -Wall -Werror -Wextra
+C_FLAGS		=	-Wall -Werror -Wextra -g
 
 MAIN_SRC	=	lem_in.c
 HEADER		=	lem_in.h

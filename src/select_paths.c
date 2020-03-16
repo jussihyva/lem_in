@@ -140,7 +140,13 @@ int						select_paths(t_input *input, t_report *report)
 	t_list			*adj_room_elem;
 	t_validity		validity;
 
-	num_of_paths = 3;
+	num_of_paths = 0;
+	elem = input->start_room_ptr->connection_lst;
+	while (elem)
+	{
+		num_of_paths++;
+		elem = elem->next;
+	}
 	report->number_of_paths = 0;
 	valid_path = find_shortest_path(input, num_of_paths - 1);
 	while (valid_path && num_of_paths)
