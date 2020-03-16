@@ -5,10 +5,11 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(lldb) Launch",
-			"type": "cppdbg",
+			"name": ".NET Core Launch (remote console)",
+			"type": "coreclr",
 			"request": "launch",
-			"program": "${workspaceFolder}/lem-in",
+//			"preLaunchTask": "build",
+			"program": "/home/pi/dotnet/dotnet",
 			"args": ["-v", "-f", "${workspaceFolder}/test/maps_01/5.map"],
 //			"args": ["-v", "-f", "${workspaceFolder}/test/maps_01/6.map"],
 //			"args": ["-f", "${workspaceFolder}/../Downloads/lem_map_10k25d"],
@@ -17,11 +18,19 @@
 //			"args": ["-f", "${workspaceFolder}/test/maps_01/10_lots_of_comments.map"],
 //			"args": ["-v", "-f", "${workspaceFolder}/test/maps_01/9_path_depth_9_ants.map"],
 //			"args": ["-l"],
+			"cwd": "/home/pi/Desktop/rpitest",
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}",
-			"environment": [],
-			"externalConsole": false,
-			"MIMode": "lldb"
+//			"console": "internalConsole",
+			"pipeTransport": {
+				"pipeCwd": "${workspaceFolder}",
+				"pipeProgram": "${env:ChocolateyInstall}\\bin\\PLINK.EXE",
+				"pipeArgs": [
+					"-pw",
+					"raspberry",
+					"root@crowpi.lan"
+				],
+				"debuggerPath": "/home/pi/vsdbg/vsdbg"
+			}
 		}
 	]
 }
