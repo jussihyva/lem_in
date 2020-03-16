@@ -6,7 +6,7 @@
 	"configurations": [
 		{
 			"name": ".NET Core Launch (remote console)",
-			"type": "coreclr",
+			"type": "lldb-vscode",
 			"request": "launch",
 //			"preLaunchTask": "build",
 			"program": "/home/pi/dotnet/dotnet",
@@ -20,7 +20,7 @@
 //			"args": ["-l"],
 			"cwd": "/home/pi/Desktop/rpitest",
 			"stopAtEntry": false,
-//			"console": "internalConsole",
+			"console": "internalConsole",
 			"pipeTransport": {
 				"pipeCwd": "${workspaceFolder}",
 				"pipeProgram": "${env:ChocolateyInstall}\\bin\\PLINK.EXE",

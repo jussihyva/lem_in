@@ -18,9 +18,13 @@ static void				update_best_room(t_room **next_room, t_room **best_room,
 	if ((*next_room)->num_of_conn_to_end < (*best_room)->num_of_conn_to_end)
 	{
 		*best_room = *next_room;
-		*validity = valid_room;
+		if (((*next_room)->num_of_conn_to_end + 1) <
+											(*best_room)->num_of_conn_to_end)
+			*validity = valid_room;
 	}
-	else if ((*next_room)->num_of_conn_to_end == (*best_room)->num_of_conn_to_end)
+	else if ((((*next_room)->num_of_conn_to_end - 1) <=
+											(*best_room)->num_of_conn_to_end) &&
+											(*best_room)->num_of_conn_to_start > 1)
 		*validity = many_alternatives;
 	return ;
 }
@@ -30,12 +34,15 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 {
 	t_room		*best_room;
 	t_room		*next_room;
+	size_t		num_of_conn_to_start;
 
+	num_of_conn_to_start = ((t_room *)adj_room_elem)->num_of_conn_to_start;
 	best_room = NULL;
 	*validity = no_room;
 	while (adj_room_elem)
 	{
 		next_room = *(t_room **)adj_room_elem->content;
+		next_room->num_of_conn_to_start = num_of_conn_to_start;
 		if ((next_room == end_room_ptr) || (next_room->num_of_conn_to_end &&
 														!next_room->is_visited))
 		{
@@ -93,6 +100,7 @@ static t_valid_path		*find_shortest_path(t_input *input, int forced)
 	ft_lstadd_e(path, ft_lstnew(&input->start_room_ptr,
 											sizeof(input->start_room_ptr)));
 	adj_room_elem = input->start_room_ptr->connection_lst;
+	((t_room *)adj_room_elem)->num_of_conn_to_start = 1;
 	validity = create_path(input, path, adj_room_elem, forced);
 	if (validity != no_room)
 	{
