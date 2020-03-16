@@ -55,6 +55,7 @@ typedef struct				s_room
 	int				coord_y;
 	size_t			id;
 	t_list			*connection_lst;
+	size_t			num_of_conn_to_start;
 	size_t			num_of_conn_to_end;
 	t_ant			*ant;
 	int				is_visited;
