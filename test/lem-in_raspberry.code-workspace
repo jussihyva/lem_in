@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "/home/pi/lem_in"
+		}
+	],
+	"settings": {
+		"git.autofetch": true,
+		"files.autoSave": "onFocusChange"
+	}
+}

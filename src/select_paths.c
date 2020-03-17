@@ -23,7 +23,7 @@ static void				update_best_room(t_room **next_room, t_room **best_room,
 			*validity = valid_room;
 	}
 	else if (((*next_room)->num_of_conn_to_end <=
-									(*best_room)->num_of_conn_to_end + 1 &&
+									(*best_room)->num_of_conn_to_end + 2 &&
 										(*next_room)->num_of_conn_to_start != 1))
 		*validity = many_alternatives;
 	return ;
@@ -191,11 +191,22 @@ int						select_paths(t_input *input, t_report *report)
 			{
 				elem->prev ? elem->prev->next = elem->next : 0;
 				elem->next ? elem->next->prev = elem->prev : 0;
-				if (elem->prev)
+				if (!elem->prev)
 					*report->lst_of_valid_paths = tmp_elem;
 				ft_lstdel(valid_path->path, del_path);
 				free(valid_path->path);
 				free(valid_path);
+				report->number_of_paths--;
+			}
+			else
+			{
+				valid_path->num_of_conn_to_end = -1;
+				path_elem = *valid_path->path;
+				while (path_elem)
+				{
+					valid_path->num_of_conn_to_end++;
+					path_elem = path_elem->next;
+				}
 			}
 			elem = tmp_elem;
 		}
