@@ -13,7 +13,7 @@
 #include "lem_in.h"
 
 static void				update_best_room(t_room **next_room, t_room **best_room,
-														t_validity *validity)
+											t_validity *validity, size_t offset)
 {
 	if ((*next_room)->num_of_conn_to_end < (*best_room)->num_of_conn_to_end)
 	{
@@ -23,14 +23,14 @@ static void				update_best_room(t_room **next_room, t_room **best_room,
 			*validity = valid_room;
 	}
 	else if (((*next_room)->num_of_conn_to_end <=
-									(*best_room)->num_of_conn_to_end + 2 &&
-										(*next_room)->num_of_conn_to_start != 1))
+									(*best_room)->num_of_conn_to_end + offset - 1 &&
+									(*next_room)->num_of_conn_to_start != 1))
 		*validity = many_alternatives;
 	return ;
 }
 
 static t_room			*get_next_best_room(t_list *adj_room_elem,
-									t_room *end_room_ptr, t_validity *validity)
+					t_room *end_room_ptr, t_validity *validity, size_t offset)
 {
 	t_room		*best_room;
 	t_room		*next_room;
@@ -47,7 +47,7 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 														!next_room->is_visited))
 		{
 			if (best_room)
-				update_best_room(&next_room, &best_room, validity);
+				update_best_room(&next_room, &best_room, validity, offset);
 			else
 			{
 				best_room = next_room;
@@ -60,7 +60,7 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 }
 
 static t_validity		create_path(t_input *input, t_list **path,
-											t_list *adj_room_elem, int forced)
+											t_list *adj_room_elem, size_t offset)
 {
 	int				end_room_reached;
 	t_room			*best_room;
@@ -71,9 +71,9 @@ static t_validity		create_path(t_input *input, t_list **path,
 	{
 		validity = no_room;
 		best_room = get_next_best_room(adj_room_elem, input->end_room_ptr,
-																&validity);
+															&validity, offset);
 		if ((validity == valid_room) ||
-									(!forced && validity == many_alternatives))
+									(!offset && validity == many_alternatives))
 		{
 			validity = valid_room;
 			best_room->is_visited = 1;
@@ -89,7 +89,7 @@ static t_validity		create_path(t_input *input, t_list **path,
 	return (validity);
 }
 
-static t_valid_path		*find_shortest_path(t_input *input, int forced)
+static t_valid_path		*find_shortest_path(t_input *input, size_t offset)
 {
 	t_valid_path	*valid_path;
 	t_list			**path;
@@ -102,7 +102,7 @@ static t_valid_path		*find_shortest_path(t_input *input, int forced)
 											sizeof(input->start_room_ptr)));
 	adj_room_elem = input->start_room_ptr->connection_lst;
 	input->start_room_ptr->is_visited = 1;
-	validity = create_path(input, path, adj_room_elem, forced);
+	validity = create_path(input, path, adj_room_elem, offset);
 	if (validity != no_room)
 	{
 		valid_path = (t_valid_path *)ft_memalloc(sizeof(*valid_path));
@@ -154,6 +154,7 @@ int						select_paths(t_input *input, t_report *report)
 	t_list			*path_elem;
 	t_list			*adj_room_elem;
 	t_validity		validity;
+	size_t			offset;
 
 	num_of_paths = 0;
 	elem = input->start_room_ptr->connection_lst;
@@ -162,9 +163,9 @@ int						select_paths(t_input *input, t_report *report)
 		num_of_paths++;
 		elem = elem->next;
 	}
-//	num_of_paths = 3;
 	report->number_of_paths = 0;
-	valid_path = find_shortest_path(input, num_of_paths - 1);
+	offset = 2;
+	valid_path = find_shortest_path(input, offset);
 	while (valid_path && num_of_paths)
 	{
 		ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
@@ -173,7 +174,7 @@ int						select_paths(t_input *input, t_report *report)
 		print_path(report);
 		num_of_paths--;
 		if (num_of_paths)
-			valid_path = find_shortest_path(input, num_of_paths);
+			valid_path = find_shortest_path(input, offset);
 	}
 	elem = *(t_list **)report->lst_of_valid_paths;
 	while (elem)
