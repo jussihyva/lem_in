@@ -147,5 +147,6 @@ t_room						*get_room_2(char *name, t_input *input);
 t_room						**create_room_array_2(t_input *input);
 void						set_error(t_input *input, char *line,
 											t_input_error error, char *text);
+void						print_path(t_report *report);
 
 #endif

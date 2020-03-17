@@ -16,6 +16,7 @@ static void					add_new_rooms(t_input *input, t_list *elem,
 					t_list **new_room_element_lst, size_t connection_counter)
 {
 	t_room			*next_room;
+	t_room			*new_room;
 	t_list			*new_elem;
 	t_list			*tmp_elem;
 
@@ -28,6 +29,9 @@ static void					add_new_rooms(t_input *input, t_list *elem,
 			new_elem = next_room->connection_lst;
 			while (new_elem)
 			{
+				new_room = *(t_room **)new_elem->content;
+				if (new_room == input->start_room_ptr)
+					next_room->num_of_conn_to_start = 1;
 				tmp_elem = ft_lstnew(new_elem->content, new_elem->content_size);
 				ft_lstadd(new_room_element_lst, tmp_elem);
 				new_elem = new_elem->next;
