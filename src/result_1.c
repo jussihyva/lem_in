@@ -121,5 +121,6 @@ void			print_result(t_input *input, t_report *report)
 	print_instructions(report);
 	if (report->opt && report->opt & verbose)
 		print_path(report);
+	ft_printf("#paths: %d\n", report->number_of_paths);
 	return ;
 }
