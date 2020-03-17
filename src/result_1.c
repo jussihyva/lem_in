@@ -57,7 +57,7 @@ void			print_line(t_input *input, char *line, int add_line)
 	return ;
 }
 
-static void		print_path(t_report *report)
+void		print_path(t_report *report)
 {
 	t_list			*elem;
 	t_list			*valid_path_elem;

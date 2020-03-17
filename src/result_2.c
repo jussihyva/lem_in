@@ -71,13 +71,15 @@ static int		move_ant_next_room(t_report *report, size_t c)
 
 void			print_instructions(t_report *report)
 {
-	size_t					c;
-	t_list					*elem;
-	t_room					*room;
-	int						all_ants_at_the_end;
+	size_t			c;
+	t_list			*elem;
+	t_room			*room;
+	int				all_ants_at_the_end;
+	size_t			line_c;
 
 	put_ants_to_valid_path(report);
 	ft_printf("\n");
+	line_c = 0;
 	all_ants_at_the_end = 0;
 	while (!all_ants_at_the_end)
 	{
@@ -90,8 +92,12 @@ void			print_instructions(t_report *report)
 			if (room != report->end_room_ptr)
 				all_ants_at_the_end &= move_ant_next_room(report, c);
 			if (c + 1 == report->number_of_ants)
+			{
+				line_c++;
 				ft_printf("\n");
+			}
 		}
 	}
+	ft_printf("#lines: %d\n", line_c);
 	return ;
 }
