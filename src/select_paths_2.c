@@ -6,61 +6,11 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/03/18 08:01:28 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/18 17:17:13 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-t_valid_path			*create_valid_path(t_list **path, t_validity validity)
-{
-	t_valid_path	*valid_path;
-	t_list			*path_elem;
-
-	valid_path = (t_valid_path *)ft_memalloc(sizeof(*valid_path));
-	valid_path->path = path;
-	valid_path->validity = validity;
-	valid_path->num_of_conn_to_end = -1;
-	path_elem = *valid_path->path;
-	while (path_elem)
-	{
-		valid_path->num_of_conn_to_end++;
-		path_elem = path_elem->next;
-	}
-	return (valid_path);
-}
-
-void					update_valid_path(t_valid_path *valid_path)
-{
-	t_list			*path_elem;
-
-	valid_path->num_of_conn_to_end = -1;
-	path_elem = *valid_path->path;
-	while (path_elem)
-	{
-		valid_path->num_of_conn_to_end++;
-		path_elem = path_elem->next;
-	}
-	return ;
-}
-
-void					delete_valid_path(t_report *report, t_list *elem)
-{
-	t_list			*tmp_elem;
-	t_valid_path	*valid_path;
-
-	tmp_elem = elem->next;
-	valid_path = *(t_valid_path **)elem->content;
-	elem->prev ? elem->prev->next = elem->next : 0;
-	elem->next ? elem->next->prev = elem->prev : 0;
-	if (!elem->prev)
-		*report->lst_of_valid_paths = tmp_elem;
-	ft_lstdel(valid_path->path, del_path);
-	free(valid_path->path);
-	free(valid_path);
-	report->number_of_paths--;
-	return ;
-}
 
 size_t					count_max_num_of_paths(t_input *input)
 {
@@ -68,24 +18,75 @@ size_t					count_max_num_of_paths(t_input *input)
 	size_t			max_num_of_paths;
 	t_list			*elem;
 
-	max_num_of_paths = input->number_of_ants;
-	elem = input->start_room_ptr->connection_lst;
-	num_of_paths = 0;
-	while (elem)
+	if ((max_num_of_paths = input->number_of_ants))
 	{
-		num_of_paths++;
-		elem = elem->next;
+		elem = input->start_room_ptr->connection_lst;
+		num_of_paths = 0;
+		while (elem)
+		{
+			num_of_paths++;
+			elem = elem->next;
+		}
+		if (num_of_paths < max_num_of_paths)
+			max_num_of_paths = num_of_paths;
+		elem = input->end_room_ptr->connection_lst;
+		num_of_paths = 0;
+		while (elem)
+		{
+			num_of_paths++;
+			elem = elem->next;
+		}
+		if (num_of_paths < max_num_of_paths)
+			max_num_of_paths = num_of_paths;
 	}
-	if (num_of_paths < max_num_of_paths)
-		max_num_of_paths = num_of_paths;
-	elem = input->end_room_ptr->connection_lst;
-	num_of_paths = 0;
-	while (elem)
-	{
-		num_of_paths++;
-		elem = elem->next;
-	}
-	if (num_of_paths < max_num_of_paths)
-		max_num_of_paths = num_of_paths;
+	else
+		input->error = num_of_ants_error;
 	return (max_num_of_paths);
+}
+
+static t_valid_path		*find_shortest_path(t_input *input, int offset)
+{
+	t_valid_path	*valid_path;
+	t_list			**path;
+	t_list			*adj_room_elem;
+	t_validity		validity;
+
+	path = (t_list **)ft_memalloc(sizeof(*path));
+	ft_lstadd_e(path, ft_lstnew(&input->start_room_ptr,
+											sizeof(input->start_room_ptr)));
+	adj_room_elem = input->start_room_ptr->connection_lst;
+	input->start_room_ptr->is_visited = 1;
+	validity = add_rooms_to_path(input, path, offset);
+	if (validity != no_room)
+		valid_path = create_valid_path(path, validity);
+	else
+	{
+		valid_path = NULL;
+		ft_lstdel_1(path);
+		free(path);
+	}
+	return (valid_path);
+}
+
+void					preliminary_path_selection(t_input *input,
+						t_report *report, size_t max_num_of_paths, int *offset)
+{
+	t_valid_path	*valid_path;
+
+	while (report->number_of_paths < max_num_of_paths)
+	{
+		valid_path = find_shortest_path(input, *offset);
+		if (valid_path)
+		{
+			report->number_of_paths++;
+			valid_path->id = report->number_of_paths;
+			ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
+															sizeof(valid_path)));
+			if (report->opt && report->opt & verbose)
+				print_path(report);
+		}
+		else
+			break ;
+	}
+	return ;
 }

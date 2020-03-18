@@ -6,7 +6,7 @@
 #    By: pi <pi@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/03/18 06:45:17 by pi               ###   ########.fr        #
+#    Updated: 2020/03/18 17:03:03 by pi               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_FILES	=	ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 				manage_room_data.c manage_room_data_1.c manage_room_data_2.c \
 				result_1.c result_2.c manage_connection_data.c ft_step_args.c \
 				calc_distance.c memory.c transportation.c ants.c \
-				select_paths_1.c select_paths_2.c
+				select_paths_1.c select_paths_2.c select_paths_3.c
 
 OBJ_FOLDER	=	obj
 OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(patsubst %.c, %.o, $(SRC_FILES)))

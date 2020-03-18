@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 13:37:23 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/18 17:15:53 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,10 @@ t_valid_path				*create_valid_path(t_list **path,
 void						delete_valid_path(t_report *report, t_list *elem);
 void						update_valid_path(t_valid_path *valid_path);
 size_t						count_max_num_of_paths(t_input *input);
+void						preliminary_path_selection(t_input *input,
+							t_report *report, size_t max_num_of_paths,
+							int *offset);
+t_validity					add_rooms_to_path(t_input *input, t_list **path,
+																	int offset);
 
 #endif
