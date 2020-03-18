@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   result_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/11 17:02:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/18 13:41:32 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,16 @@ void		print_path(t_report *report)
 	{
 		valid_path = *(t_valid_path **)valid_path_elem->content;
 		elem = *valid_path->path;
-		ft_printf("#path: ");
+		ft_printf("#path: %d Rooms: %d     ", valid_path->id, valid_path->num_of_conn_to_end);
 		while (elem)
 		{
-			ft_printf(" %10s", (*(t_room **)elem->content)->name);
+			ft_printf(" %5s", (*(t_room **)elem->content)->name);
 			elem = elem->next;
 		}
 		ft_printf("\n");
 		valid_path_elem = valid_path_elem->next;
 	}
+	ft_printf("#\n");
 	return ;
 }
 

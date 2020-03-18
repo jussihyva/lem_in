@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 07:31:40 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/18 13:37:23 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ typedef struct				s_room
 	int				coord_y;
 	size_t			id;
 	t_list			*connection_lst;
-	size_t			num_of_conn_to_start;
-	size_t			num_of_conn_to_end;
+	int				num_of_conn_to_start;
+	int				num_of_conn_to_end;
 	t_ant			*ant;
 	int				is_visited;
 }							t_room;
@@ -97,9 +97,10 @@ typedef enum				e_validity
 
 typedef struct				s_valid_path
 {
+	size_t			id;
 	t_list			**path;
 	t_validity		validity;
-	size_t			num_of_conn_to_end;
+	int				num_of_conn_to_end;
 	size_t			*visited_rooms;
 }							t_valid_path;
 
