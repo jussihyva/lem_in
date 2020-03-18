@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 13:57:35 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/18 17:16:45 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 	return (best_room);
 }
 
-static t_validity		add_rooms_to_path(t_input *input, t_list **path,
+t_validity				add_rooms_to_path(t_input *input, t_list **path,
 																	int offset)
 {
 	t_room			*best_room;
@@ -92,30 +92,6 @@ static t_validity		add_rooms_to_path(t_input *input, t_list **path,
 	return (validity);
 }
 
-static t_valid_path		*find_shortest_path(t_input *input, int offset)
-{
-	t_valid_path	*valid_path;
-	t_list			**path;
-	t_list			*adj_room_elem;
-	t_validity		validity;
-
-	path = (t_list **)ft_memalloc(sizeof(*path));
-	ft_lstadd_e(path, ft_lstnew(&input->start_room_ptr,
-											sizeof(input->start_room_ptr)));
-	adj_room_elem = input->start_room_ptr->connection_lst;
-	input->start_room_ptr->is_visited = 1;
-	validity = add_rooms_to_path(input, path, offset);
-	if (validity != no_room)
-		valid_path = create_valid_path(path, validity);
-	else
-	{
-		valid_path = NULL;
-		ft_lstdel_1(path);
-		free(path);
-	}
-	return (valid_path);
-}
-
 int						select_paths(t_input *input, t_report *report)
 {
 	t_valid_path	*valid_path;
@@ -124,54 +100,45 @@ int						select_paths(t_input *input, t_report *report)
 	t_list			*tmp_elem;
 	int				offset;
 
-	max_num_of_paths = count_max_num_of_paths(input);
-	report->number_of_paths = 0;
-	offset = max_num_of_paths;
-	while (report->number_of_paths < max_num_of_paths)
+	if ((max_num_of_paths = count_max_num_of_paths(input)))
 	{
-		valid_path = find_shortest_path(input, offset);
-		if (valid_path)
+		offset = max_num_of_paths - 2;
+		report->number_of_paths = 0;
+		preliminary_path_selection(input, report, max_num_of_paths, &offset);
+		offset--;
+		while (offset >= -1)
 		{
-			report->number_of_paths++;
-			valid_path->id = report->number_of_paths;
-			ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
-															sizeof(valid_path)));
+			elem = *(t_list **)report->lst_of_valid_paths;
+			while (elem)
+			{
+				valid_path = *(t_valid_path **)elem->content;
+				if (valid_path->validity == many_alternatives)
+				{
+					tmp_elem = elem->next;
+					valid_path->validity = add_rooms_to_path(input,
+													valid_path->path, offset);
+					if (valid_path->validity == no_room)
+						delete_valid_path(report, elem);
+					else
+						update_valid_path(valid_path);
+					elem = tmp_elem;
+				}
+				else
+					elem = elem->next;
+			}
 			if (report->opt && report->opt & verbose)
 				print_path(report);
+			offset--;
 		}
+		if (report->number_of_paths)
+			put_ants_to_paths(report);
 		else
-			break ;
-	}
-	offset--;
-	while (offset >= -1)
-	{
-		elem = *(t_list **)report->lst_of_valid_paths;
-		while (elem)
 		{
-			valid_path = *(t_valid_path **)elem->content;
-			if (valid_path->validity == many_alternatives)
-			{
-				tmp_elem = elem->next;
-				valid_path->validity = add_rooms_to_path(input, valid_path->path, offset);
-				if (valid_path->validity == no_room)
-					delete_valid_path(report, elem);
-				else
-					update_valid_path(valid_path);
-				elem = tmp_elem;
-			}
-			else
-				elem = elem->next;
+			input->error = no_path_available;
+			return (0);
 		}
-		if (report->opt && report->opt & verbose)
-			print_path(report);
-		offset--;
+		return (1);
 	}
-	if (report->number_of_paths)
-		put_ants_to_paths(report);
 	else
-	{
-		input->error = no_path_available;
 		return (0);
-	}
-	return (1);
 }
