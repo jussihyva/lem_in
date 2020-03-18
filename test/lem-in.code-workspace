@@ -6,6 +6,7 @@
 	],
 	"settings": {
 		"git.autofetch": true,
-		"files.autoSave": "onFocusChange"
+		"files.autoSave": "onFocusChange",
+		"editor.insertSpaces": false
 	}
 }
