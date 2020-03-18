@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 17:16:45 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/18 19:47:57 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,7 @@ t_validity				add_rooms_to_path(t_input *input, t_list **path,
 
 int						select_paths(t_input *input, t_report *report)
 {
-	t_valid_path	*valid_path;
 	size_t			max_num_of_paths;
-	t_list			*elem;
-	t_list			*tmp_elem;
 	int				offset;
 
 	if ((max_num_of_paths = count_max_num_of_paths(input)))
@@ -105,31 +102,7 @@ int						select_paths(t_input *input, t_report *report)
 		offset = max_num_of_paths - 2;
 		report->number_of_paths = 0;
 		preliminary_path_selection(input, report, max_num_of_paths, &offset);
-		offset--;
-		while (offset >= -1)
-		{
-			elem = *(t_list **)report->lst_of_valid_paths;
-			while (elem)
-			{
-				valid_path = *(t_valid_path **)elem->content;
-				if (valid_path->validity == many_alternatives)
-				{
-					tmp_elem = elem->next;
-					valid_path->validity = add_rooms_to_path(input,
-													valid_path->path, offset);
-					if (valid_path->validity == no_room)
-						delete_valid_path(report, elem);
-					else
-						update_valid_path(valid_path);
-					elem = tmp_elem;
-				}
-				else
-					elem = elem->next;
-			}
-			if (report->opt && report->opt & verbose)
-				print_path(report);
-			offset--;
-		}
+		finalize_path_selection(input, report, &offset);
 		if (report->number_of_paths)
 			put_ants_to_paths(report);
 		else

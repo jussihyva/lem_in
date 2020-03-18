@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_connection_data.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 14:32:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/18 19:54:05 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ static void				add_connection(t_input *input, char **splitted_line,
 	else if (room1 && room2)
 	{
 		elem = ft_lstnew(&room1, sizeof(&room1));
+		room1->num_of_connections++;
 		ft_lstadd(&room2->connection_lst, elem);
 		elem = ft_lstnew(&room2, sizeof(&room2));
+		room2->num_of_connections++;
 		ft_lstadd(&room1->connection_lst, elem);
 	}
 	else

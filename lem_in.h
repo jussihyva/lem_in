@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 17:15:53 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/18 19:58:33 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct				s_room
 	t_list			*connection_lst;
 	int				num_of_conn_to_start;
 	int				num_of_conn_to_end;
+	size_t			num_of_connections;
 	t_ant			*ant;
 	int				is_visited;
 }							t_room;
@@ -160,5 +161,7 @@ void						preliminary_path_selection(t_input *input,
 							int *offset);
 t_validity					add_rooms_to_path(t_input *input, t_list **path,
 																	int offset);
+void						finalize_path_selection(t_input *input,
+							t_report *report, int *offset);
 
 #endif
