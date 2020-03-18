@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/03/18 17:17:13 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/18 19:58:56 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,14 @@
 
 size_t					count_max_num_of_paths(t_input *input)
 {
-	size_t			num_of_paths;
 	size_t			max_num_of_paths;
-	t_list			*elem;
 
 	if ((max_num_of_paths = input->number_of_ants))
 	{
-		elem = input->start_room_ptr->connection_lst;
-		num_of_paths = 0;
-		while (elem)
-		{
-			num_of_paths++;
-			elem = elem->next;
-		}
-		if (num_of_paths < max_num_of_paths)
-			max_num_of_paths = num_of_paths;
-		elem = input->end_room_ptr->connection_lst;
-		num_of_paths = 0;
-		while (elem)
-		{
-			num_of_paths++;
-			elem = elem->next;
-		}
-		if (num_of_paths < max_num_of_paths)
-			max_num_of_paths = num_of_paths;
+		if (input->start_room_ptr->num_of_connections < max_num_of_paths)
+			max_num_of_paths = input->start_room_ptr->num_of_connections;
+		if (input->end_room_ptr->num_of_connections < max_num_of_paths)
+			max_num_of_paths = input->end_room_ptr->num_of_connections;
 	}
 	else
 		input->error = num_of_ants_error;
@@ -89,4 +73,34 @@ void					preliminary_path_selection(t_input *input,
 			break ;
 	}
 	return ;
+}
+
+void					finalize_path_selection(t_input *input,
+						t_report *report, int *offset)
+{
+	t_list			*elem;
+	t_list			*tmp_elem;
+	t_valid_path	*valid_path;
+
+	while (--(*offset) >= -1)
+	{
+		elem = *(t_list **)report->lst_of_valid_paths;
+		while (elem)
+		{
+			tmp_elem = elem->next;
+			valid_path = *(t_valid_path **)elem->content;
+			if (valid_path->validity == many_alternatives)
+			{
+				valid_path->validity = add_rooms_to_path(input,
+													valid_path->path, *offset);
+				if (valid_path->validity == no_room)
+					delete_valid_path(report, elem);
+				else
+					update_valid_path(valid_path);
+			}
+			elem = tmp_elem;
+		}
+		if (report->opt && report->opt & verbose)
+			print_path(report);
+	}
 }
