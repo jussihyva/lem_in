@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   select_paths.c                                     :+:      :+:    :+:   */
+/*   select_paths_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 20:07:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/18 07:58:06 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,12 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 }
 
 static t_validity		create_path(t_input *input, t_list **path,
-											t_list *adj_room_elem, size_t offset)
+										t_list *adj_room_elem, size_t offset)
 {
-	int				end_room_reached;
 	t_room			*best_room;
 	t_validity		validity;
 
-	end_room_reached = 0;
-	while (!end_room_reached)
+	while (1 == 1)
 	{
 		validity = no_room;
 		best_room = get_next_best_room(adj_room_elem, input->end_room_ptr,
@@ -79,9 +77,8 @@ static t_validity		create_path(t_input *input, t_list **path,
 			best_room->is_visited = 1;
 			ft_lstadd_e(path, ft_lstnew(&best_room, sizeof(best_room)));
 			if (best_room == input->end_room_ptr)
-				end_room_reached = 1;
-			else
-				adj_room_elem = best_room->connection_lst;
+				break ;
+			adj_room_elem = best_room->connection_lst;
 		}
 		else
 			break ;
@@ -94,7 +91,6 @@ static t_valid_path		*find_shortest_path(t_input *input, size_t offset)
 	t_valid_path	*valid_path;
 	t_list			**path;
 	t_list			*adj_room_elem;
-	t_list			*path_elem;
 	t_validity		validity;
 
 	path = (t_list **)ft_memalloc(sizeof(*path));
@@ -104,18 +100,7 @@ static t_valid_path		*find_shortest_path(t_input *input, size_t offset)
 	input->start_room_ptr->is_visited = 1;
 	validity = create_path(input, path, adj_room_elem, offset);
 	if (validity != no_room)
-	{
-		valid_path = (t_valid_path *)ft_memalloc(sizeof(*valid_path));
-		valid_path->path = path;
-		valid_path->validity = validity;
-		valid_path->num_of_conn_to_end = -1;
-		path_elem = *valid_path->path;
-		while (path_elem)
-		{
-			valid_path->num_of_conn_to_end++;
-			path_elem = path_elem->next;
-		}
-	}
+		valid_path = create_valid_path(path, validity);
 	else
 	{
 		valid_path = NULL;
@@ -125,30 +110,10 @@ static t_valid_path		*find_shortest_path(t_input *input, size_t offset)
 	return (valid_path);
 }
 
-static void				put_ants_to_paths(t_report *report)
-{
-	t_list			*elem;
-	t_valid_path	*valid_path;
-	size_t			c;
-	char			*ant_id;
-
-	elem = *(t_list **)report->lst_of_valid_paths;
-	valid_path = *(t_valid_path **)elem->content;
-	c = -1;
-	while (++c < report->number_of_ants)
-	{
-		ant_id = ft_itoa(c + 1);
-		report->ant_array[c].name = ft_strjoin("L", ant_id);
-		ft_strdel(&ant_id);
-		report->ant_array[c].path = valid_path->path;
-	}
-	return ;
-}
-
 int						select_paths(t_input *input, t_report *report)
 {
 	t_valid_path	*valid_path;
-	size_t			num_of_paths;
+	size_t			max_num_of_paths;
 	t_list			*elem;
 	t_list			*tmp_elem;
 	t_list			*path_elem;
@@ -156,25 +121,19 @@ int						select_paths(t_input *input, t_report *report)
 	t_validity		validity;
 	size_t			offset;
 
-	num_of_paths = 0;
-	elem = input->start_room_ptr->connection_lst;
-	while (elem)
-	{
-		num_of_paths++;
-		elem = elem->next;
-	}
+	max_num_of_paths = count_max_num_of_paths(input);
 	report->number_of_paths = 0;
 	offset = 2;
-	valid_path = find_shortest_path(input, offset);
-	while (valid_path && num_of_paths)
+	while (report->number_of_paths < max_num_of_paths)
 	{
-		ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
-														sizeof(valid_path)));
-		report->number_of_paths++;
-		print_path(report);
-		num_of_paths--;
-		if (num_of_paths)
-			valid_path = find_shortest_path(input, offset);
+		valid_path = find_shortest_path(input, offset);
+		if (valid_path)
+		{
+			ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
+															sizeof(valid_path)));
+			report->number_of_paths++;
+			print_path(report);
+		}
 	}
 	elem = *(t_list **)report->lst_of_valid_paths;
 	while (elem)
@@ -182,33 +141,16 @@ int						select_paths(t_input *input, t_report *report)
 		valid_path = *(t_valid_path **)elem->content;
 		if (valid_path->validity == many_alternatives)
 		{
+			tmp_elem = elem->next;
 			path_elem = *valid_path->path;
 			while (path_elem->next)
 				path_elem = path_elem->next;
 			adj_room_elem = (*(t_room **)path_elem->content)->connection_lst;
 			validity = create_path(input, valid_path->path, adj_room_elem, 0);
-			tmp_elem = elem->next;
 			if (validity == no_room)
-			{
-				elem->prev ? elem->prev->next = elem->next : 0;
-				elem->next ? elem->next->prev = elem->prev : 0;
-				if (!elem->prev)
-					*report->lst_of_valid_paths = tmp_elem;
-				ft_lstdel(valid_path->path, del_path);
-				free(valid_path->path);
-				free(valid_path);
-				report->number_of_paths--;
-			}
+				delete_valid_path(report, elem);
 			else
-			{
-				valid_path->num_of_conn_to_end = -1;
-				path_elem = *valid_path->path;
-				while (path_elem)
-				{
-					valid_path->num_of_conn_to_end++;
-					path_elem = path_elem->next;
-				}
-			}
+				update_valid_path(valid_path);
 			elem = tmp_elem;
 		}
 		else

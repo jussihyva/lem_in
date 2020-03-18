@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 18:38:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/18 07:31:40 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,11 @@ t_room						**create_room_array_2(t_input *input);
 void						set_error(t_input *input, char *line,
 											t_input_error error, char *text);
 void						print_path(t_report *report);
+void						put_ants_to_paths(t_report *report);
+t_valid_path				*create_valid_path(t_list **path,
+														t_validity validity);
+void						delete_valid_path(t_report *report, t_list *elem);
+void						update_valid_path(t_valid_path *valid_path);
+size_t						count_max_num_of_paths(t_input *input);
 
 #endif
