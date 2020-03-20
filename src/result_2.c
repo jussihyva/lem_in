@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   result_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 20:16:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/20 07:45:54 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,6 @@ void			set_error(t_input *input, char *line, t_input_error error,
 	}
 	else
 		input->error = error;
-	return ;
-}
-
-static void		put_ants_to_valid_path(t_report *report)
-{
-	t_list					*elem;
-	size_t					c;
-
-	elem = *(t_list **)report->ant_array[0].path;
-	c = -1;
-	while (++c < report->number_of_ants)
-		report->ant_array[c].current_room_elem = elem;
 	return ;
 }
 
@@ -77,7 +65,6 @@ void			print_instructions(t_report *report)
 	int				all_ants_at_the_end;
 	size_t			line_c;
 
-	put_ants_to_valid_path(report);
 	ft_printf("\n");
 	line_c = 0;
 	all_ants_at_the_end = 0;
@@ -98,6 +85,6 @@ void			print_instructions(t_report *report)
 			}
 		}
 	}
-	ft_printf("#lines: %d\n", line_c);
+	ft_printf("#lines: %d\n", line_c - 1);
 	return ;
 }
