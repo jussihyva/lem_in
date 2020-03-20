@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 19:58:33 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/20 06:41:40 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct				s_valid_path
 	t_list			**path;
 	t_validity		validity;
 	int				num_of_conn_to_end;
+	size_t			num_of_ants;
 	size_t			*visited_rooms;
 }							t_valid_path;
 
