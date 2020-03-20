@@ -6,15 +6,17 @@
 #    By: pi <pi@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/03/18 17:03:03 by pi               ###   ########.fr        #
+#    Updated: 2020/03/20 13:32:28 by pi               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	lem-in
+NAME_2		=	checker
 CC			=	clang
 C_FLAGS		=	-Wall -Werror -Wextra -g
 
 MAIN_SRC	=	lem_in.c
+MAIN_2_SRC	=	checker.c
 HEADER		=	lem_in.h
 INCLUDES	=	-I ./ -I libft -I libftprintf/src
 LIB			=	-L libft -l ft -L libftprintf -l ftprintf
@@ -29,10 +31,13 @@ SRC_FILES	=	ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 OBJ_FOLDER	=	obj
 OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(patsubst %.c, %.o, $(SRC_FILES)))
 
-all: $(NAME)
+all: $(NAME) $(NAME_2)
 
 $(NAME): $(OBJ_FILES) $(MAIN_SRC) $(HEADER) | $(OBJ_FOLDER)
 	@$(CC) $(C_FLAGS) -o $(NAME) $(MAIN_SRC) $(OBJ_FILES) $(INCLUDES) $(LIB)
+
+$(NAME_2): $(OBJ_FILES) $(MAIN_2_SRC) $(HEADER) | $(OBJ_FOLDER)
+	@$(CC) $(C_FLAGS) -o $(NAME_2) $(MAIN_2_SRC) $(OBJ_FILES) $(INCLUDES) $(LIB)
 
 $(OBJ_FILES): $(OBJ_FOLDER)/%.o: $(SRC_FOLDER)/%.c $(HEADER) | $(OBJ_FOLDER)
 	@$(CC) $(C_FLAGS) $(INCLUDES) -c -o $@ $<
