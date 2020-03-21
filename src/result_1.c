@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 13:41:32 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/21 07:22:30 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,10 @@ t_report		*initialize_report(t_input *input)
 	return (report);
 }
 
-void			print_result(t_input *input, t_report *report)
+void			print_input_lines(t_input *input)
 {
-	size_t		c;
-	t_room		**room;
 	t_list		*elem;
 
-	room = input->room_array;
-	if (input->opt & verbose)
-	{
-		c = -1;
-		while (room[++c])
-			print_room_data(room[c]);
-	}
 	elem = *input->valid_input_lines;
 	while (elem->next)
 		elem = elem->next;
@@ -118,6 +109,22 @@ void			print_result(t_input *input, t_report *report)
 		ft_putendl((char *)elem->content);
 		elem = elem->prev;
 	}
+	return ;
+}
+
+void			print_result(t_input *input, t_report *report)
+{
+	size_t		c;
+	t_room		**room;
+
+	room = input->room_array;
+	if (input->opt & verbose)
+	{
+		c = -1;
+		while (room[++c])
+			print_room_data(room[c]);
+	}
+	print_input_lines(input);
 	print_path(report);
 	print_instructions(report);
 	if (report->opt && report->opt & verbose)

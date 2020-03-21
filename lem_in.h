@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/20 06:41:40 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/21 08:01:49 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 # include "stdint.h"
 # include "errno.h"
 # include <fcntl.h>
+# include <stdio.h>
 
 typedef enum				e_read_status
 {
-	e_start_reading,
+	e_read_num_of_ants,
 	e_num_of_ants,
 	e_comment,
 	e_read_start_room_data,
@@ -80,6 +81,7 @@ typedef struct				s_input
 	t_input_error	error;
 	t_opt			opt;
 	char			*input_file;
+	size_t			input_line_cnt;
 	t_list			**valid_input_lines;
 	size_t			number_of_ants;
 	t_room			*start_room_ptr;
@@ -164,5 +166,9 @@ t_validity					add_rooms_to_path(t_input *input, t_list **path,
 																	int offset);
 void						finalize_path_selection(t_input *input,
 							t_report *report, int *offset);
+void						read_input_data(t_input *input, int *argc,
+																char ***argv);
+void						print_error(t_input *input);
+void						print_input_lines(t_input *input);
 
 #endif

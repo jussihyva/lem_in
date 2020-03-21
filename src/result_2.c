@@ -6,11 +6,23 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/20 07:45:54 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/21 08:05:52 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void			print_error(t_input *input)
+{
+	if (input->opt && input->opt & errors)
+	{
+		print_input_lines(input);
+		ft_printf("ERROR: %d\n", input->error);
+	}
+	else
+		ft_printf("ERROR\n");
+	return ;
+}
 
 void			set_error(t_input *input, char *line, t_input_error error,
 																	char *text)
@@ -20,7 +32,8 @@ void			set_error(t_input *input, char *line, t_input_error error,
 
 	if (input->opt && input->opt & errors)
 	{
-		error_line = ft_strjoin(text, line);
+		error_line = (char *)ft_memalloc(sizeof(char) * 10000);
+		ft_sprintf(error_line, "%s (line %d): %s", text, input->input_line_cnt, line, 0);
 		elem = ft_lstnew(error_line, sizeof(char) *
 												ft_strlen(error_line));
 		ft_lstadd(input->valid_input_lines, elem);
