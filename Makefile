@@ -6,7 +6,7 @@
 #    By: pi <pi@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/03/20 13:32:28 by pi               ###   ########.fr        #
+#    Updated: 2020/03/20 19:00:35 by pi               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDES	=	-I ./ -I libft -I libftprintf/src
 LIB			=	-L libft -l ft -L libftprintf -l ftprintf
 
 SRC_FOLDER	=	src
-SRC_FILES	=	ft_read_opt.c ft_strtoi.c ft_arraydel.c \
+SRC_FILES	=	input.c ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 				manage_room_data.c manage_room_data_1.c manage_room_data_2.c \
 				result_1.c result_2.c manage_connection_data.c ft_step_args.c \
 				calc_distance.c memory.c transportation.c ants.c \

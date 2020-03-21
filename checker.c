@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 13:27:08 by pi                #+#    #+#             */
-/*   Updated: 2020/03/20 13:30:11 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/21 06:58:48 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int			main(int argc, char **argv)
 {
-	int		return_code;
+	int			return_code;
+	t_input		input;
 
-	(void)argc;
-	(void)argv;
 	return_code = 0;
+	read_input_data(&input, &argc, &argv);
+	if (input.error)
+		print_error(&input);
 	return (return_code);
 }
