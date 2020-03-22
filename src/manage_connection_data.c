@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 19:54:05 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 08:19:46 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,26 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 	return (read_status);
 }
 
-t_read_status			read_connection_data(char *line, t_input *input,
-													t_read_status read_status)
+void					read_connection_data(char *line, t_input *input,
+										t_read_status *read_status, t_app app)
 {
 	t_list			*elem;
 
 	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
 	ft_lstadd(input->valid_input_lines, elem);
 	if (line[0] == '#')
-		read_status = e_read_connection_data;
+		;
+	else if (line[0] == '\0')
+	{
+		if (app == e_checker)
+			*read_status = e_read_move_instructions;
+		else
+		{
+			input->error = invalid_connection_data;
+			set_error(input, line, input->error, "#ERROR ");
+		}
+	}
 	else
-		read_status = validate_connection_data(line, input, read_status);
-	return (read_status);
+		*read_status = validate_connection_data(line, input, *read_status);
+	return ;
 }

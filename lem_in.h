@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/21 08:01:49 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 08:15:50 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum				e_read_status
 	e_read_end_room_data,
 	e_read_room_data,
 	e_read_connection_data,
+	e_read_move_instructions,
 	e_stop_reading
 }							t_read_status;
 
@@ -120,14 +121,20 @@ typedef struct				s_report
 	size_t			number_of_ants;
 }							t_report;
 
+typedef enum				e_app
+{
+	e_lem_in,
+	e_checker
+}							t_app;
+
 void						ft_read_opt(t_input *input, int *argc,
 																char ***argv);
 int							ft_strtoi(const char *str, char **endptr,
 																	int base);
 t_read_status				read_room_data(char *line, t_input *input,
 													t_read_status read_status);
-t_read_status				read_connection_data(char *line, t_input *input,
-													t_read_status read_status);
+void						read_connection_data(char *line, t_input *input,
+										t_read_status *read_status, t_app app);
 void						ft_arraydel(char **array);
 void						print_result(t_input *input, t_report *report);
 void						ft_step_args(int *argc, char ***argv);
@@ -167,7 +174,7 @@ t_validity					add_rooms_to_path(t_input *input, t_list **path,
 void						finalize_path_selection(t_input *input,
 							t_report *report, int *offset);
 void						read_input_data(t_input *input, int *argc,
-																char ***argv);
+													char ***argv, t_app app);
 void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
 
