@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/21 08:05:52 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 08:19:00 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void			set_error(t_input *input, char *line, t_input_error error,
 	if (input->opt && input->opt & errors)
 	{
 		error_line = (char *)ft_memalloc(sizeof(char) * 10000);
-		ft_sprintf(error_line, "%s (line %d): %s", text, input->input_line_cnt, line, 0);
+		ft_sprintf(error_line, "%s (line %d): %s", text, input->input_line_cnt, line);
 		elem = ft_lstnew(error_line, sizeof(char) *
-												ft_strlen(error_line));
+												(ft_strlen(error_line) + 1));
 		ft_lstadd(input->valid_input_lines, elem);
 		ft_strdel(&error_line);
 	}

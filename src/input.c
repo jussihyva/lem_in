@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/21 07:52:22 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 08:25:58 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,18 @@
 static int				is_valid_line(t_input *input, char *line,
 													t_read_status read_status)
 {
-	int			result;
-
-	result = 1;
 	if (read_status == e_read_num_of_ants)
 	{
 		if (line[0] == '\0')
-			result = 0;
-		else if (line[0] == '#' && line[1] == '#')
-			result = 0;
-		if (!result)
-		{
 			input->error = num_of_ants_error;
-			set_error(input, line, num_of_ants_error, "#ERROR ");
-		}
 	}
-	return (result);
+	if (input->error)
+	{
+		set_error(input, line, input->error, "#ERROR ");
+		return (0);
+	}
+	else
+		return (1);
 }
 
 static void				read_num_of_ants(char *line, t_input *input,
@@ -64,7 +60,7 @@ static void				read_num_of_ants(char *line, t_input *input,
 }
 
 static void				parse_line(char *line, t_input *input,
-													t_read_status *read_status)
+										t_read_status *read_status, t_app app)
 {
 	if (*read_status == e_read_num_of_ants)
 		read_num_of_ants(line, input, read_status);
@@ -75,7 +71,12 @@ static void				parse_line(char *line, t_input *input,
 					*read_status == e_read_end_room_data)
 			*read_status = read_room_data(line, input, *read_status);
 		if (*read_status == e_read_connection_data)
-			*read_status = read_connection_data(line, input, *read_status);
+			read_connection_data(line, input, read_status, app);
+		if (*read_status == e_read_move_instructions)
+		{
+			input->error = num_of_ants_error;
+			set_error(input, line, num_of_ants_error, "#ERROR ");
+		}
 	}
 	return ;
 }
@@ -91,11 +92,13 @@ static void				init_input_structure(t_input *input)
 	input->valid_input_lines =
 					(t_list **)ft_memalloc(sizeof(*input->valid_input_lines));
 	input->number_of_ants = 0;
+	input->num_of_rooms = 0;
 	input->input_line_cnt = 0;
 	return ;
 }
 
-void					read_input_data(t_input *input, int *argc, char ***argv)
+void					read_input_data(t_input *input, int *argc, char ***argv,
+																	t_app app)
 {
 	t_read_status	read_status;
 	char			*line;
@@ -119,7 +122,7 @@ void					read_input_data(t_input *input, int *argc, char ***argv)
 												read_status != e_stop_reading)
 		{
 			input->input_line_cnt++;
-			parse_line(line, input, &read_status);
+			parse_line(line, input, &read_status, app);
 			ft_strdel(&line);
 		}
 		ft_strdel(&line);

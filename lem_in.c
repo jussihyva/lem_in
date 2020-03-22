@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/21 07:32:39 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/21 13:23:50 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int						main(int argc, char **argv)
 	t_input			input;
 	t_report		*report;
 
-	read_input_data(&input, &argc, &argv);
+	read_input_data(&input, &argc, &argv, e_lem_in);
 	return_code = 1;
 	if (input.error != invalid_connection_data && input.error)
 		print_error(&input);
