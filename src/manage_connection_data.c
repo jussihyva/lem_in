@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/22 08:19:46 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 18:51:43 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void					read_connection_data(char *line, t_input *input,
 	else if (line[0] == '\0')
 	{
 		if (app == e_checker)
-			*read_status = e_read_move_instructions;
+			*read_status = e_read_instruction_data;
 		else
 		{
 			input->error = invalid_connection_data;

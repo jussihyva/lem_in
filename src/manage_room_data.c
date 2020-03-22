@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   manage_room_data.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 12:37:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/22 19:49:14 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+static void				add_input_line(t_input *input, char *line, int add_line)
+{
+	t_list			*elem;
+	char			*mod_line;
+
+	if (add_line)
+	{
+		if (add_line == 1)
+		{
+			elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+			ft_lstadd(input->valid_input_lines, elem);
+		}
+		else
+		{
+			mod_line = (char *)ft_memalloc(sizeof(*mod_line) * 100);
+			ft_sprintf(mod_line, "%s %d %d",
+							(*((t_room **)input->room_lst->content))->name,
+							(*((t_room **)input->room_lst->content))->coord_x,
+							(*((t_room **)input->room_lst->content))->coord_y);
+			elem = ft_lstnew(mod_line, sizeof(*mod_line) *
+													(ft_strlen(mod_line) + 1));
+			ft_lstadd(input->valid_input_lines, elem);
+			ft_strdel(&mod_line);
+		}
+	}
+	return ;
+}
 
 static t_read_status	validate_room_data(char *line, t_input *input,
 													t_read_status read_status)
@@ -40,32 +68,33 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 	return (read_status);
 }
 
-t_read_status			read_room_data(char *line, t_input *input,
-													t_read_status read_status)
+void					read_room_data(char *line, t_input *input,
+										t_read_status *read_status, t_app app)
 {
 	int				add_line;
 
 	add_line = 1;
 	if (ft_strequ(line, "##start"))
-		read_status = e_read_start_room_data;
+		*read_status = e_read_start_room_data;
 	else if (ft_strequ(line, "##end"))
-		read_status = e_read_end_room_data;
+		*read_status = e_read_end_room_data;
 	else if (line[0] == '#')
 		;
 	else
 	{
 		add_line = 2;
-		read_status = validate_room_data(line, input, read_status);
+		*read_status = validate_room_data(line, input, *read_status);
 		if (input->error == invalid_room_data)
 		{
 			add_line = 1;
 			input->room_array = create_room_array_2(input);
 			ft_lstdel(&input->room_lst, del_path);
 			input->error = 0;
-			read_status = e_read_connection_data;
-			return (read_status);
+			*read_status = e_read_connection_data;
+			read_connection_data(line, input, read_status, app);
+			return ;
 		}
 	}
-	print_line(input, line, add_line);
-	return (read_status);
+	add_input_line(input, line, add_line);
+	return ;
 }

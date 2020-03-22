@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/22 08:15:50 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 19:47:57 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum				e_read_status
 	e_read_end_room_data,
 	e_read_room_data,
 	e_read_connection_data,
-	e_read_move_instructions,
+	e_read_instruction_data,
 	e_stop_reading
 }							t_read_status;
 
@@ -67,6 +67,8 @@ typedef struct				s_room
 typedef enum				e_input_error
 {
 	file_open_failure = 1,
+	empty_line,
+	unknown_order,
 	num_of_ants_error,
 	faulty_room_data,
 	invalid_room_name,
@@ -89,6 +91,7 @@ typedef struct				s_input
 	t_room			*end_room_ptr;
 	t_list			*room_lst;
 	t_room			**room_array;
+	t_list			**instruction_line_lst;
 	size_t			num_of_rooms;
 }							t_input;
 
@@ -131,8 +134,8 @@ void						ft_read_opt(t_input *input, int *argc,
 																char ***argv);
 int							ft_strtoi(const char *str, char **endptr,
 																	int base);
-t_read_status				read_room_data(char *line, t_input *input,
-													t_read_status read_status);
+void						read_room_data(char *line, t_input *input,
+										t_read_status *read_status, t_app app);
 void						read_connection_data(char *line, t_input *input,
 										t_read_status *read_status, t_app app);
 void						ft_arraydel(char **array);
@@ -142,8 +145,6 @@ void						calc_distance(t_input *input);
 void						del_report(void *room, size_t size);
 void						del_path(void *room, size_t size);
 void						ft_lstdel_1(t_list **lst_ptr);
-void						print_line(t_input *input, char *line,
-																int add_line);
 void						is_road_to_start_room(t_room *room, t_input *input,
 															t_report *report);
 void						release_report(t_report *report);
@@ -177,5 +178,7 @@ void						read_input_data(t_input *input, int *argc,
 													char ***argv, t_app app);
 void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
+void						read_instruction_data(char *line, t_input *input,
+													t_read_status *read_status);
 
 #endif
