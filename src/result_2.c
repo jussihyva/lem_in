@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/22 08:19:00 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 19:44:59 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void			print_instructions(t_report *report)
 			room = *(t_room **)elem->content;
 			if (room != report->end_room_ptr)
 				all_ants_at_the_end &= move_ant_next_room(report, c);
-			if (c + 1 == report->number_of_ants)
+			if (c + 1 == report->number_of_ants && !all_ants_at_the_end)
 			{
 				line_c++;
 				ft_printf("\n");

@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/22 08:25:58 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 19:39:30 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 static int				is_valid_line(t_input *input, char *line,
 													t_read_status read_status)
 {
-	if (read_status == e_read_num_of_ants)
+	t_list			*elem;
+
+	if (line[0] == '\0')
 	{
-		if (line[0] == '\0')
-			input->error = num_of_ants_error;
+		if (read_status != e_read_connection_data)
+			input->error = empty_line;
 	}
 	if (input->error)
 	{
+		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+		ft_lstadd(input->valid_input_lines, elem);
 		set_error(input, line, input->error, "#ERROR ");
 		return (0);
 	}
@@ -38,23 +42,20 @@ static void				read_num_of_ants(char *line, t_input *input,
 
 	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
 	ft_lstadd(input->valid_input_lines, elem);
-	if (is_valid_line(input, line, *read_status))
+	if (line[0] == '#')
+		;
+	else
 	{
-		if (line[0] == '#')
-			;
-		else
+		*read_status = e_read_room_data;
+		endptr = NULL;
+		number_of_ants = ft_strtoi(line, &endptr, 10);
+		if (errno || *endptr)
 		{
-			*read_status = e_read_room_data;
-			endptr = NULL;
-			number_of_ants = ft_strtoi(line, &endptr, 10);
-			if (errno || *endptr)
-			{
-				input->error = num_of_ants_error;
-				set_error(input, line, num_of_ants_error, "#ERROR ");
-			}
-			else if (!input->number_of_ants)
-				input->number_of_ants = number_of_ants;
+			input->error = num_of_ants_error;
+			set_error(input, line, num_of_ants_error, "#ERROR ");
 		}
+		else if (!input->number_of_ants)
+			input->number_of_ants = number_of_ants;
 	}
 	return ;
 }
@@ -62,20 +63,20 @@ static void				read_num_of_ants(char *line, t_input *input,
 static void				parse_line(char *line, t_input *input,
 										t_read_status *read_status, t_app app)
 {
-	if (*read_status == e_read_num_of_ants)
-		read_num_of_ants(line, input, read_status);
-	else
+	if (is_valid_line(input, line, *read_status))
 	{
-		if (*read_status == e_read_room_data ||
-					*read_status == e_read_start_room_data ||
-					*read_status == e_read_end_room_data)
-			*read_status = read_room_data(line, input, *read_status);
-		if (*read_status == e_read_connection_data)
-			read_connection_data(line, input, read_status, app);
-		if (*read_status == e_read_move_instructions)
+		if (*read_status == e_read_num_of_ants)
+			read_num_of_ants(line, input, read_status);
+		else
 		{
-			input->error = num_of_ants_error;
-			set_error(input, line, num_of_ants_error, "#ERROR ");
+			if (*read_status == e_read_room_data ||
+						*read_status == e_read_start_room_data ||
+						*read_status == e_read_end_room_data)
+				read_room_data(line, input, read_status, app);
+			else if (*read_status == e_read_connection_data)
+				read_connection_data(line, input, read_status, app);
+			else if (*read_status == e_read_instruction_data)
+				read_instruction_data(line, input, read_status);
 		}
 	}
 	return ;
@@ -91,6 +92,8 @@ static void				init_input_structure(t_input *input)
 	input->end_room_ptr = NULL;
 	input->valid_input_lines =
 					(t_list **)ft_memalloc(sizeof(*input->valid_input_lines));
+	input->instruction_line_lst =
+				(t_list **)ft_memalloc(sizeof(*input->instruction_line_lst));
 	input->number_of_ants = 0;
 	input->num_of_rooms = 0;
 	input->input_line_cnt = 0;

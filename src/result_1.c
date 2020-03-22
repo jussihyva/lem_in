@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/21 07:22:30 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/22 19:47:13 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,6 @@ static void		print_room_data(t_room *room)
 		ft_printf("%65s %5d\n", (*(t_room **)elem->content)->name,
 							(*(t_room **)elem->content)->num_of_conn_to_end);
 		elem = elem->next;
-	}
-	return ;
-}
-
-void			print_line(t_input *input, char *line, int add_line)
-{
-	t_list			*elem;
-	char			*mod_line;
-
-	if (add_line)
-	{
-		if (add_line == 1)
-		{
-			elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-			ft_lstadd(input->valid_input_lines, elem);
-		}
-		else
-		{
-			mod_line = (char *)ft_memalloc(sizeof(*mod_line) * 100);
-			ft_sprintf(mod_line, "%s %d %d",
-							(*((t_room **)input->room_lst->content))->name,
-							(*((t_room **)input->room_lst->content))->coord_x,
-							(*((t_room **)input->room_lst->content))->coord_y);
-			elem = ft_lstnew(mod_line, sizeof(*mod_line) *
-													(ft_strlen(mod_line) + 1));
-			ft_lstadd(input->valid_input_lines, elem);
-			ft_strdel(&mod_line);
-		}
 	}
 	return ;
 }
