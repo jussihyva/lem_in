@@ -6,26 +6,69 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/22 19:37:45 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 07:35:59 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void					read_instruction_data(char *line, t_input *input,
-													t_read_status *read_status)
+static int				add_instruction(char *instruction_string,
+																t_input *input)
 {
-	t_list			*elem;
+	char		**instruction_array;
+	size_t		num_of_elem;
+	int			result;
+	t_room		*room;
 
-	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-	ft_lstadd(input->valid_input_lines, elem);
-	if (*input->instruction_line_lst)
+	instruction_array = ft_strsplit(instruction_string, '-');
+	num_of_elem = 0;
+	while (instruction_array[num_of_elem])
+		num_of_elem++;
+	if (num_of_elem == 2)
 	{
-		;
+		room = get_room(instruction_array[1], input);
+		ft_printf("%10s ", instruction_string);
+		result = 1;
 	}
 	else
+		result = 0;
+	return (result);
+}
+
+static int				split_instruction_line(char *line, t_input *input)
+{
+	char		**instruction_string_array;
+	size_t		c;
+	int			result;
+
+	instruction_string_array = ft_strsplit(line, ' ');
+	result = 1;
+	c = -1;
+	while (instruction_string_array[++c] && result)
+		result = add_instruction(instruction_string_array[c], input);
+	ft_printf("\n");
+	ft_arraydel(instruction_string_array);
+	return (result);
+}
+
+void					read_instruction_data(char *line, t_input *input)
+{
+	t_list					*elem;
+	t_instruction_line		*instruction_line;
+
+	if (line[0] == '#')
+		;
+	else
 	{
-		ft_printf("First line(%d): %s\n", *read_status, line);
+		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+		ft_lstadd(input->valid_input_lines, elem);
+		instruction_line =
+				(t_instruction_line *)ft_memalloc(sizeof(*instruction_line));
+		if (split_instruction_line(line, input))
+		{
+			elem = ft_lstnew(&instruction_line, sizeof(instruction_line));
+			ft_lstadd(input->instruction_line_lst, elem);
+		}
 	}
 	return ;
 }

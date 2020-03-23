@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_room_data_1.c                               :+:      :+:    :+:   */
+/*   room_data_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 09:48:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 11:23:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/23 07:34:34 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,4 @@ t_room				**add_room(char **splitted_line, t_input *input)
 		input->room_lst = room_elem;
 	input->num_of_rooms++;
 	return (room_elem->content);
-}
-
-t_room				*get_room_1(char *name, t_input *input)
-{
-	t_room		*room;
-	size_t		c;
-
-	room = NULL;
-	c = -1;
-	while (++c < input->num_of_rooms)
-	{
-		if (!ft_strcmp(input->room_array[c]->name, name))
-		{
-			room = input->room_array[c];
-			break ;
-		}
-	}
-	return (room);
 }

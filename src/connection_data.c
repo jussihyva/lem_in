@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_connection_data.c                           :+:      :+:    :+:   */
+/*   connection_data.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/22 18:51:43 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 08:45:11 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void				add_connection(t_input *input, char **splitted_line,
 	t_room			*room1;
 	t_room			*room2;
 
-	room1 = get_room_2(splitted_line[0], input);
-	room2 = get_room_2(splitted_line[1], input);
+	room1 = get_room(splitted_line[0], input);
+	room2 = get_room(splitted_line[1], input);
 	if (room1 == room2)
 		set_error(input, line, 0, "#WARNING: ");
 	else if (room1 && room2)

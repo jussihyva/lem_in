@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/22 19:47:57 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 08:53:19 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,17 @@ typedef struct				s_room
 	t_ant			*ant;
 	int				is_visited;
 }							t_room;
+
+typedef struct				s_instruction
+{
+	t_ant			ant;
+	t_room			*room;
+}							t_instruction;
+
+typedef struct				s_instruction_line
+{
+	t_list			**instruction_lst;
+}							t_instruction_line;
 
 typedef enum				e_input_error
 {
@@ -155,8 +166,7 @@ t_report					*initialize_report(t_input *input);
 void						transportation(t_report *report);
 void						print_instructions(t_report *report);
 t_room						**add_room(char **splitted_line, t_input *input);
-t_room						*get_room_1(char *name, t_input *input);
-t_room						*get_room_2(char *name, t_input *input);
+t_room						*get_room(char *name, t_input *input);
 t_room						**create_room_array_2(t_input *input);
 void						set_error(t_input *input, char *line,
 											t_input_error error, char *text);
@@ -178,7 +188,6 @@ void						read_input_data(t_input *input, int *argc,
 													char ***argv, t_app app);
 void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
-void						read_instruction_data(char *line, t_input *input,
-													t_read_status *read_status);
+void						read_instruction_data(char *line, t_input *input);
 
 #endif

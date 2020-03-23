@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/20 08:17:27 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 09:00:56 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,34 @@ static void			add_ants(t_report *report, size_t *c,
 	}
 	return ;
 }
+
+// t_ant				*get_ant(char *name, t_input *input)
+// {
+// 	t_ant		*ant;
+// 	size_t		low;
+// 	size_t		middle;
+// 	size_t		high;
+// 	int			result;
+
+// 	ant = NULL;
+// 	low = 0;
+// 	high = input->number_of_ants - 1;
+// 	while (low <= high)
+// 	{
+// 		middle = (high + low) / 2;
+// 		result = ft_strcmp(name, input->ant_array[middle].name);
+// 		if (!result)
+// 		{
+// 			ant = &input->ant_array[middle];
+// 			break ;
+// 		}
+// 		else if (result < 0)
+// 			high = middle - 1;
+// 		else
+// 			low = middle + 1;
+// 	}
+// 	return (ant);
+// }
 
 void				put_ants_to_paths(t_report *report)
 {
