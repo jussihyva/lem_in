@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/18 19:47:57 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 12:48:58 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int						select_paths(t_input *input, t_report *report)
 		preliminary_path_selection(input, report, max_num_of_paths, &offset);
 		finalize_path_selection(input, report, &offset);
 		if (report->number_of_paths)
-			put_ants_to_paths(report);
+			put_ants_to_paths(input, report);
 		else
 		{
 			input->error = no_path_available;

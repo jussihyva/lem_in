@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 10:02:11 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 13:33:51 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,13 @@ void		print_path(t_report *report)
 t_report		*initialize_report(t_input *input)
 {
 	t_report		*report;
-	size_t			c;
 
 	report = (t_report *)ft_memalloc(sizeof(*report));
 	report->error = 0;
 	report->opt = input->opt;
 	report->lst_of_valid_paths =
 				(t_list **)ft_memalloc(sizeof(*report->lst_of_valid_paths));
-	report->ant_array = (t_ant **)ft_memalloc(sizeof(*report->ant_array) *
-														input->number_of_ants);
-	c = -1;
-	while (++c < input->number_of_ants)
-		report->ant_array[c] = (t_ant *)ft_memalloc(sizeof(**report->ant_array));
-	report->ant_array[c] = (t_ant *)ft_memalloc(sizeof(**report->ant_array));
+	report->ant_array = input->ant_array;
 	report->number_of_ants = input->number_of_ants;
 	report->end_room_ptr = input->end_room_ptr;
 	return (report);
