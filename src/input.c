@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/23 08:55:50 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 13:21:01 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,18 @@ static void				read_num_of_ants(char *line, t_input *input,
 	else
 	{
 		*read_status = e_read_room_data;
-		endptr = NULL;
 		number_of_ants = ft_strtoi(line, &endptr, 10);
 		if (errno || *endptr)
 		{
 			input->error = num_of_ants_error;
 			set_error(input, line, num_of_ants_error, "#ERROR ");
 		}
-		else if (!input->number_of_ants)
-			input->number_of_ants = number_of_ants;
+		else
+		{
+			if (!input->number_of_ants)
+				input->number_of_ants = number_of_ants;
+			create_ants(input);
+		}
 	}
 	return ;
 }
