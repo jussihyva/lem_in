@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_room_data_2.c                               :+:      :+:    :+:   */
+/*   room_data_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:57:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/22 08:16:59 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 07:35:45 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_room				**create_room_array_2(t_input *input)
 	return (room_array);
 }
 
-t_room				*get_room_2(char *name, t_input *input)
+t_room				*get_room(char *name, t_input *input)
 {
 	t_room		*room;
 	size_t		low;

@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/22 19:39:30 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 08:55:50 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void				parse_line(char *line, t_input *input,
 			else if (*read_status == e_read_connection_data)
 				read_connection_data(line, input, read_status, app);
 			else if (*read_status == e_read_instruction_data)
-				read_instruction_data(line, input, read_status);
+				read_instruction_data(line, input);
 		}
 	}
 	return ;
