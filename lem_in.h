@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 08:53:19 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 09:12:24 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ typedef struct				s_report
 	t_list			**lst_of_valid_paths;
 	size_t			connection_counter;
 	t_room			*end_room_ptr;
-	t_ant			*ant_array;
+	t_ant			**ant_array;
 	size_t			number_of_paths;
 	size_t			number_of_ants;
 }							t_report;

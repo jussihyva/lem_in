@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/09 19:18:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/03/23 09:15:25 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void			release_report(t_report *report)
 	report->lst_of_valid_paths = NULL;
 	c = -1;
 	while (++c < report->number_of_ants)
-		ft_strdel(&report->ant_array[c].name);
+		ft_strdel(&report->ant_array[c]->name);
 	free(report->ant_array);
 	report->ant_array = NULL;
 	free(report);
