@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/23 09:00:56 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 10:02:31 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static void			add_ants(t_report *report, size_t *c,
 	while (ants_to_add--)
 	{
 		ant_id = ft_itoa(*c + 1);
-		report->ant_array[*c].name = ft_strjoin("L", ant_id);
+		report->ant_array[*c]->name = ft_strjoin("L", ant_id);
 		ft_strdel(&ant_id);
-		report->ant_array[*c].path = selected_valid_path->path;
-		path_elem = *(t_list **)report->ant_array[*c].path;
-		report->ant_array[*c].current_room_elem = path_elem;
+		report->ant_array[*c]->path = selected_valid_path->path;
+		path_elem = *(t_list **)report->ant_array[*c]->path;
+		report->ant_array[*c]->current_room_elem = path_elem;
 		selected_valid_path->num_of_ants++;
 		(*c)++;
 	}

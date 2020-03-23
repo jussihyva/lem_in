@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/22 19:44:59 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/23 09:15:02 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,20 @@ static int		move_ant_next_room(t_report *report, size_t c)
 	int						all_ants_at_the_end;
 
 	all_ants_at_the_end = 0;
-	elem = report->ant_array[c].current_room_elem->next;
+	elem = report->ant_array[c]->current_room_elem->next;
 	next_room = *(t_room **)elem->content;
 	if (!next_room->ant || next_room == report->end_room_ptr)
 	{
 		all_ants_at_the_end = 0;
-		elem = report->ant_array[c].current_room_elem;
+		elem = report->ant_array[c]->current_room_elem;
 		room = *(t_room **)elem->content;
 		room->ant = NULL;
-		elem = report->ant_array[c].current_room_elem->next;
-		report->ant_array[c].current_room_elem = elem;
+		elem = report->ant_array[c]->current_room_elem->next;
+		report->ant_array[c]->current_room_elem = elem;
 		room = *(t_room **)elem->content;
 		if (room != report->end_room_ptr)
-			room->ant = &report->ant_array[c];
-		ft_printf("%s-%s ", report->ant_array[c].name, room->name);
+			room->ant = report->ant_array[c];
+		ft_printf("%s-%s ", report->ant_array[c]->name, room->name);
 	}
 	return (all_ants_at_the_end);
 }
@@ -87,7 +87,7 @@ void			print_instructions(t_report *report)
 		c = -1;
 		while (++c < report->number_of_ants)
 		{
-			elem = report->ant_array[c].current_room_elem;
+			elem = report->ant_array[c]->current_room_elem;
 			room = *(t_room **)elem->content;
 			if (room != report->end_room_ptr)
 				all_ants_at_the_end &= move_ant_next_room(report, c);
