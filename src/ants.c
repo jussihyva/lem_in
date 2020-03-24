@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/23 13:30:37 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/24 08:50:40 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,17 @@ void				create_ants(t_input *input)
 t_ant				*get_ant(char *name, t_input *input)
 {
 	t_ant		*ant;
-	size_t		low;
-	size_t		middle;
-	size_t		high;
-	int			result;
+	size_t		c;
 
 	ant = NULL;
-	low = 0;
-	high = input->number_of_ants - 1;
-	while (low <= high)
+	c = -1;
+	while (++c < input->number_of_ants)
 	{
-		middle = (high + low) / 2;
-		result = ft_strcmp(name, input->ant_array[middle]->name);
-		if (!result)
+		if (!ft_strcmp(input->ant_array[c]->name, name))
 		{
-			ant = input->ant_array[middle];
+			ant = input->ant_array[c];
 			break ;
 		}
-		else if (result < 0)
-			high = middle - 1;
-		else
-			low = middle + 1;
 	}
 	return (ant);
 }

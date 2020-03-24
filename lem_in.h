@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 13:19:11 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/24 09:25:58 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct				s_room
 
 typedef struct				s_instruction
 {
-	t_ant			ant;
+	t_ant			*ant;
 	t_room			*room;
 }							t_instruction;
 
