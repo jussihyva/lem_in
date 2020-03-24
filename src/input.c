@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/23 13:21:01 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/24 08:32:31 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ static void				read_num_of_ants(char *line, t_input *input,
 	char			*endptr;
 	t_list			*elem;
 	size_t			number_of_ants;
+	char			*newline;
 
-	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-	ft_lstadd(input->valid_input_lines, elem);
 	if (line[0] == '#')
-		;
+	{
+		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+		ft_lstadd(input->valid_input_lines, elem);
+	}
 	else
 	{
 		*read_status = e_read_room_data;
@@ -52,11 +54,16 @@ static void				read_num_of_ants(char *line, t_input *input,
 		{
 			input->error = num_of_ants_error;
 			set_error(input, line, num_of_ants_error, "#ERROR ");
+			elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+			ft_lstadd(input->valid_input_lines, elem);
 		}
 		else
 		{
 			if (!input->number_of_ants)
 				input->number_of_ants = number_of_ants;
+			newline = ft_itoa(input->number_of_ants);
+			elem = ft_lstnew(newline, sizeof(*newline) * (ft_strlen(newline) + 1));
+			ft_lstadd(input->valid_input_lines, elem);
 			create_ants(input);
 		}
 	}

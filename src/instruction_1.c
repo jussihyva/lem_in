@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/23 13:33:07 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/24 08:35:25 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int				add_instruction(char *instruction_string,
 	{
 		room = get_room(instruction_array[1], input);
 		ant = get_ant(instruction_array[0], input);
-//		ft_printf("%3s+%s ", ant->name, room->name);
 		ft_printf(" %10s", instruction_string);
+		ft_printf("(%p)", ant);
 		result = 1;
 	}
 	else
