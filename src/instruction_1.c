@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/24 14:34:47 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/24 15:32:09 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,13 @@ static int				add_instruction(char *instruction_string,
 	return (result);
 }
 
-static int				split_instruction_line(char *line, t_input *input)
+static void				split_instruction_line(char *line, t_input *input)
 {
 	t_list					*elem;
 	char					**instruction_string_array;
 	size_t					c;
 	int						result;
-//	t_list					**instruction_lst;
 	t_instruction_line		*instruction_line;
-	char					*ant_name;
-	char					*room_name;
 
 	instruction_line = (t_instruction_line *)ft_memalloc(sizeof(*instruction_line));
 	instruction_line->instruction_lst = (t_list **)ft_memalloc(sizeof(*instruction_line->instruction_lst));
@@ -60,20 +57,11 @@ static int				split_instruction_line(char *line, t_input *input)
 											instruction_line->instruction_lst);
 	if (*instruction_line->instruction_lst)
 	{
-		elem = *instruction_line->instruction_lst;
-		while (elem)
-		{
-			ant_name = ((t_instruction *)elem->content)->ant->name;
-			room_name = ((t_instruction *)elem->content)->room->name;
-			ft_printf("%5s-%-3s", ant_name, room_name);
-			elem = elem->next;
-		}
-		ft_printf("\n");
 		elem = ft_lstnew(instruction_line, sizeof(*instruction_line));
 		ft_lstadd(input->instruction_line_lst, elem);
 	}
 	ft_arraydel(instruction_string_array);
-	return (result);
+	return ;
 }
 
 void					read_instruction_data(char *line, t_input *input)
@@ -90,34 +78,22 @@ void					read_instruction_data(char *line, t_input *input)
 	{
 		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
 		ft_lstadd(input->valid_input_lines, elem);
-//		instruction_line =
-//				(t_instruction_line *)ft_memalloc(sizeof(*instruction_line));
-		if (split_instruction_line(line, input))
+		split_instruction_line(line, input);
+		instruction_line_elem = *input->instruction_line_lst;
+		if (instruction_line_elem)
 		{
-			;
-//			elem = ft_lstnew(&instruction_line, sizeof(instruction_line));
-//			ft_lstadd(input->instruction_line_lst, elem);
+			instruction_line = (t_instruction_line *)instruction_line_elem->content;
+			elem = *instruction_line->instruction_lst;
+			while (elem)
+			{
+				ant_name = ((t_instruction *)elem->content)->ant->name;
+				room_name = ((t_instruction *)elem->content)->room->name;
+				ft_printf("%5s-%-3s", ant_name, room_name);
+				elem = elem->next;
+			}
+			ft_printf("\n");
+			instruction_line_elem = instruction_line_elem->next;
 		}
-	}
-	instruction_line_elem = *input->instruction_line_lst;
-	if (instruction_line_elem)
-	{
-		instruction_line = (t_instruction_line *)instruction_line_elem->content;
-//		elem = *(t_list **)instruction_line_elem->content;
-		ft_printf("ELEM1: %p", instruction_line);
-		elem = *instruction_line->instruction_lst;
-		ft_printf("ELEM2: %p", elem);
-		while (elem)
-		{
-			ant_name = ((t_instruction *)elem->content)->ant->name;
-			room_name = ((t_instruction *)elem->content)->room->name;
-			ft_printf("%5s-%-3s", ant_name, room_name);
-			elem = elem->next;
-		}
-		ft_printf("\n");
-	// 	elem = ft_lstnew(instruction_lst, sizeof(*instruction_lst));
-	// 	ft_lstadd(input->instruction_line_lst, elem);
-		instruction_line_elem = instruction_line_elem->next;
 	}
 	return ;
 }
