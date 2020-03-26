@@ -6,11 +6,39 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/26 09:04:58 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 09:58:55 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int						validate_instructions(t_input *input)
+{
+	t_list					*instruction_line_elem;
+	t_list					*elem;
+	t_instruction_line		*instruction_line;
+	t_ant					*ant;
+	t_room					*room;
+	int						result;
+
+	result = 1;
+	instruction_line_elem = *input->instruction_line_lst;
+	while (instruction_line_elem && result)
+	{
+		instruction_line = (t_instruction_line *)instruction_line_elem->content;
+		elem = *instruction_line->instruction_lst;
+		while (elem && result)
+		{
+			ant = ((t_instruction *)elem->content)->ant;
+			room = ((t_instruction *)elem->content)->room;
+			if (!move_ant(ant, room))
+				result = 0;
+			elem = elem->next;
+		}
+		instruction_line_elem = instruction_line_elem->next;
+	}
+	return (result);
+}
 
 void					print_instruction(t_input *input)
 {

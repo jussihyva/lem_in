@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 09:03:28 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 10:15:42 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 			input->error = invalid_room_name;
 		room_ptr = add_room(splitted_line, input);
 		if (read_status == e_read_start_room_data)
+		{
 			input->start_room_ptr = *room_ptr;
+			update_ants(input->ant_array, input->start_room_ptr);
+		}
 		else if (read_status == e_read_end_room_data)
 			input->end_room_ptr = *room_ptr;
 	}
