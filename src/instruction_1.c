@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/26 09:58:55 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 12:11:37 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int						validate_instructions(t_input *input)
 		{
 			ant = ((t_instruction *)elem->content)->ant;
 			room = ((t_instruction *)elem->content)->room;
-			if (!move_ant(ant, room))
+			if (ant && room && !move_ant(ant, room))
 				result = 0;
 			elem = elem->next;
 		}
@@ -53,7 +53,8 @@ void					print_instruction(t_input *input)
 	{
 		instruction_line = (t_instruction_line *)instruction_line_elem->content;
 		elem = *instruction_line->instruction_lst;
-		while (elem)
+		while (elem && ((t_instruction *)elem->content)->ant &&
+										((t_instruction *)elem->content)->room)
 		{
 			ant_name = ((t_instruction *)elem->content)->ant->name;
 			room_name = ((t_instruction *)elem->content)->room->name;

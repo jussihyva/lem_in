@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 09:15:02 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 12:31:53 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void			set_error(t_input *input, char *line, t_input_error error,
 	return ;
 }
 
-static int		move_ant_next_room(t_report *report, size_t c)
+static int		move_ant_next_room(t_report *report, size_t c,
+														int *first_instruction)
 {
 	t_list					*elem;
 	t_room					*room;
@@ -65,7 +66,13 @@ static int		move_ant_next_room(t_report *report, size_t c)
 		room = *(t_room **)elem->content;
 		if (room != report->end_room_ptr)
 			room->ant = report->ant_array[c];
-		ft_printf("%s-%s ", report->ant_array[c]->name, room->name);
+		if (*first_instruction)
+		{
+			ft_printf("%s-%s", report->ant_array[c]->name, room->name);
+			*first_instruction = 0;
+		}
+		else
+			ft_printf(" %s-%s", report->ant_array[c]->name, room->name);
 	}
 	return (all_ants_at_the_end);
 }
@@ -77,10 +84,12 @@ void			print_instructions(t_report *report)
 	t_room			*room;
 	int				all_ants_at_the_end;
 	size_t			line_c;
+	int				first_instruction;
 
 	ft_printf("\n");
 	line_c = 0;
 	all_ants_at_the_end = 0;
+	first_instruction = 1;
 	while (!all_ants_at_the_end)
 	{
 		all_ants_at_the_end = 1;
@@ -90,11 +99,13 @@ void			print_instructions(t_report *report)
 			elem = report->ant_array[c]->current_room_elem;
 			room = *(t_room **)elem->content;
 			if (room != report->end_room_ptr)
-				all_ants_at_the_end &= move_ant_next_room(report, c);
+				all_ants_at_the_end &= move_ant_next_room(report, c,
+															&first_instruction);
 			if (c + 1 == report->number_of_ants && !all_ants_at_the_end)
 			{
 				line_c++;
 				ft_printf("\n");
+				first_instruction = 1;
 			}
 		}
 	}
