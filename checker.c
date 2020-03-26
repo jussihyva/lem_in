@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 13:27:08 by pi                #+#    #+#             */
-/*   Updated: 2020/03/26 09:04:03 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 09:57:23 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int			main(int argc, char **argv)
 	if (input.error)
 		print_error(&input);
 	else
+	{
 		print_instruction(&input);
+		validate_instructions(&input);
+	}
 	return (return_code);
 }
