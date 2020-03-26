@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/26 10:17:50 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 11:50:26 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ void						create_ants(t_input *input);
 void						print_instruction(t_input *input);
 int							move_ant(t_ant *ant, t_room *next_room);
 int							validate_instructions(t_input *input);
-void						update_ants(t_ant **ant_array, t_room *start_room_ptr);
+void						update_ants(t_ant **ant_array, size_t number_of_ants,
+														t_room *start_room_ptr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/26 10:20:03 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 11:56:02 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,14 @@ void				create_ants(t_input *input)
 	return ;
 }
 
-void				update_ants(t_ant **ant_array, t_room *start_room_ptr)
+void				update_ants(t_ant **ant_array, size_t number_of_ants,
+														t_room *start_room_ptr)
 {
-	(void)ant_array;
-	(void)start_room_ptr;
+	size_t		c;
+
+	c = -1;
+	while (++c < number_of_ants)
+		ant_array[c]->current_room = start_room_ptr;
 	return ;
 }
 
@@ -107,25 +111,21 @@ void				put_ants_to_paths(t_input *input, t_report *report)
 
 int					move_ant(t_ant *ant, t_room *next_room)
 {
-//	t_list		*elem;
+	t_list		*elem;
 	t_room		*current_room;
 	int			result;
 
-	(void)ant;
-	(void)next_room;
 	result = 0;
-	result = 1;
 	current_room = (t_room *)ant->current_room;
-	ft_printf("%p\n", current_room);
-//	elem = current_room->connection_lst;
-//	while (elem && !result)
-//	{
-		// if ((t_room *)elem->content == next_room)
-		// {
-		// 	result = 1;
-		// 	ant->current_room = next_room;;
-		// }
-//		elem = elem->next;
-//	}
+	elem = current_room->connection_lst;
+	while (elem && !result)
+	{
+		if (*(t_room **)elem->content == next_room)
+		{
+			result = 1;
+			ant->current_room = next_room;;
+		}
+		elem = elem->next;
+	}
 	return (result);
 }
