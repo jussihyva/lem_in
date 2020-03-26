@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/24 09:25:58 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 09:20:35 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct				s_ant
 {
 	t_list			**path;
 	t_list			*current_room_elem;
+	void			*current_room;
 	char			*name;
 }							t_ant;
 
@@ -192,5 +193,6 @@ void						print_input_lines(t_input *input);
 void						read_instruction_data(char *line, t_input *input);
 t_ant						*get_ant(char *name, t_input *input);
 void						create_ants(t_input *input);
+void						print_instruction(t_input *input);
 
 #endif

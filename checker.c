@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 13:27:08 by pi                #+#    #+#             */
-/*   Updated: 2020/03/22 08:20:58 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 09:04:03 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ int			main(int argc, char **argv)
 	read_input_data(&input, &argc, &argv, e_checker);
 	if (input.error)
 		print_error(&input);
+	else
+		print_instruction(&input);
 	return (return_code);
 }

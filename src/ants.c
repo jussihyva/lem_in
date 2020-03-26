@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/24 08:50:40 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/26 09:21:02 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void				create_ants(t_input *input)
 		input->ant_array[c] = (t_ant *)ft_memalloc(sizeof(**input->ant_array));
 		ant_id = ft_itoa(c + 1);
 		input->ant_array[c]->name = ft_strjoin("L", ant_id);
+		input->ant_array[c]->current_room = input->start_room_ptr;
 		ft_strdel(&ant_id);
 	}
 	input->ant_array[c] = (t_ant *)ft_memalloc(sizeof(**input->ant_array));
