@@ -49,33 +49,25 @@ void			print_instructions(t_report *report)
 {
 	size_t			c;
 	t_list			*elem;
-	t_room			*room;
 	int				all_ants_at_the_end;
 	size_t			line_c;
-	int				first_instruction;
+	int				first;
 
-	ft_printf("\n");
 	line_c = 0;
 	all_ants_at_the_end = 0;
-	first_instruction = 1;
 	while (!all_ants_at_the_end)
 	{
+		ft_printf("\n");
+		first = 1;
 		all_ants_at_the_end = 1;
 		c = -1;
 		while (++c < report->number_of_ants)
 		{
 			elem = report->ant_array[c]->current_room_elem;
-			room = *(t_room **)elem->content;
-			if (room != report->end_room_ptr)
-				all_ants_at_the_end &= move_ant_next_room(report, c,
-															&first_instruction);
-			if (c + 1 == report->number_of_ants && !all_ants_at_the_end)
-			{
-				line_c++;
-				ft_printf("\n");
-				first_instruction = 1;
-			}
+			if (*(t_room **)elem->content != report->end_room_ptr)
+				all_ants_at_the_end &= move_ant_next_room(report, c, &first);
 		}
+		line_c++;
 	}
 	ft_printf("#lines: %d\n", line_c - 1);
 	return ;
