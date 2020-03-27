@@ -38,5 +38,6 @@ int						main(int argc, char **argv)
 	}
 	if (input.opt & leaks)
 		system("leaks lem-in");
+	release_input(&input);
 	return (return_code);
 }
