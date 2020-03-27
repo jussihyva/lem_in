@@ -47,7 +47,7 @@ $(OBJ_FOLDER):
 	@mkdir $(OBJ_FOLDER)
 
 norm:
-	@norminette $(MAIN_SRC) $(HEADER) $(SRC_FOLDER)
+	norminette $(MAIN_SRC) $(HEADER) $(SRC_FOLDER)
 
 clean:
 	@\rm -rf $(NAME).dSYM

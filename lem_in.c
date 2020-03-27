@@ -28,7 +28,6 @@ int						main(int argc, char **argv)
 		report = initialize_report(&input);
 		if (select_paths(&input, report))
 		{
-			transportation(report);
 			print_result(&input, report);
 			release_report(report);
 			return_code = 0;
