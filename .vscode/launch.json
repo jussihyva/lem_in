@@ -5,11 +5,11 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(lldb) Launch",
-			"type": "lldb-vscode",
+			"name": "(gdb) Launch",
+			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/lem-in",
-			"args": ["-v", "-f", "${workspaceFolder}/test/maps_01/5.map"],
+			"args": ["-f", "${workspaceFolder}/test/maps_01/5.map"],
 //			"args": ["-v", "-f", "${workspaceFolder}/test/maps_01/6.map"],
 //			"args": ["-f", "${workspaceFolder}/../Downloads/lem_map_10k25d"],
 //			"args": ["-f", "${workspaceFolder}/../lem-in_test/lem-in_maps/big_maps/map100k-m"],
@@ -17,11 +17,11 @@
 //			"args": ["-f", "${workspaceFolder}/test/maps_01/10_lots_of_comments.map"],
 //			"args": ["-v", "-f", "${workspaceFolder}/test/maps_01/9_path_depth_9_ants.map"],
 //			"args": ["-l"],
-//			"stopAtEntry": false,
+			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-//			"environment": [],
-//			"externalConsole": false,
-//			"MIMode": "lldb"
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "lldb"
 		}
 	]
 }

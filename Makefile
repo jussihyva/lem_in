@@ -13,7 +13,7 @@
 NAME		=	lem-in
 NAME_2		=	checker
 CC			=	clang
-C_FLAGS		=	-Wall -Werror -Wextra -g
+C_FLAGS		=	-g -Wall -Werror -Wextra
 
 MAIN_SRC	=	lem_in.c
 MAIN_2_SRC	=	checker.c

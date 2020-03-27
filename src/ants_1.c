@@ -41,9 +41,10 @@ void				create_ants(t_input *input, size_t number_of_ants)
 		input->number_of_ants = number_of_ants;
 	newline = ft_itoa(input->number_of_ants);
 	elem = ft_lstnew(newline, sizeof(*newline) * (ft_strlen(newline) + 1));
+	ft_strdel(&newline);
 	ft_lstadd(input->valid_input_lines, elem);
 	input->ant_array = (t_ant **)ft_memalloc(sizeof(*input->ant_array) *
-												(input->number_of_ants + 1));
+														input->number_of_ants);
 	c = -1;
 	while (++c < input->number_of_ants)
 	{
@@ -53,7 +54,6 @@ void				create_ants(t_input *input, size_t number_of_ants)
 		input->ant_array[c]->current_room = input->start_room_ptr;
 		ft_strdel(&ant_id);
 	}
-	input->ant_array[c] = (t_ant *)ft_memalloc(sizeof(**input->ant_array));
 	return ;
 }
 

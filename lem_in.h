@@ -161,6 +161,7 @@ void						ft_lstdel_1(t_list **lst_ptr);
 void						is_road_to_start_room(t_room *room, t_input *input,
 															t_report *report);
 void						release_report(t_report *report);
+void						release_input(t_input *input);
 void						validate_adj_rooms(size_t *connection_counter,
 												t_input *input, t_room *room);
 int							select_paths(t_input *input, t_report *report);
