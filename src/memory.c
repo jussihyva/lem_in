@@ -90,7 +90,6 @@ void			release_input(t_input *input)
 		ft_lstdel(&input->room_array[c]->connection_lst, del_path);
 		free(input->room_array[c]);
 	}
-//	ft_lstdel(&input->room_lst, del_path);
 	free(input->input_file);
 	input->input_file = NULL;
 	free(input->room_array);
