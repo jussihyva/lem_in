@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/03/18 19:58:56 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 08:49:00 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void					preliminary_path_selection(t_input *input,
 			report->number_of_paths++;
 			valid_path->id = report->number_of_paths;
 			ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
-															sizeof(valid_path)));
+														sizeof(valid_path)));
 			if (report->opt && report->opt & verbose)
 				print_path(report);
 		}
@@ -89,7 +89,7 @@ void					finalize_path_selection(t_input *input,
 		{
 			tmp_elem = elem->next;
 			valid_path = *(t_valid_path **)elem->content;
-			if (valid_path->validity == many_alternatives)
+			if (valid_path->validity == many)
 			{
 				valid_path->validity = add_rooms_to_path(input,
 													valid_path->path, *offset);

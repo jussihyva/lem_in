@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/26 12:11:37 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 09:11:51 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int						validate_instructions(t_input *input)
 	t_list					*instruction_line_elem;
 	t_list					*elem;
 	t_instruction_line		*instruction_line;
-	t_ant					*ant;
-	t_room					*room;
+	t_instruction			*instruction;
 	int						result;
 
 	result = 1;
@@ -29,9 +28,8 @@ int						validate_instructions(t_input *input)
 		elem = *instruction_line->instruction_lst;
 		while (elem && result)
 		{
-			ant = ((t_instruction *)elem->content)->ant;
-			room = ((t_instruction *)elem->content)->room;
-			if (ant && room && !move_ant(ant, room))
+			instruction = (t_instruction *)elem->content;
+			if (!move_ant(instruction))
 				result = 0;
 			elem = elem->next;
 		}
@@ -101,7 +99,8 @@ static void				split_instruction_line(char *line, t_input *input)
 	int						result;
 	t_instruction_line		instruction_line;
 
-	instruction_line.instruction_lst = (t_list **)ft_memalloc(sizeof(*instruction_line.instruction_lst));
+	instruction_line.instruction_lst =
+			(t_list **)ft_memalloc(sizeof(*instruction_line.instruction_lst));
 	instruction_string_array = ft_strsplit(line, ' ');
 	result = 1;
 	c = -1;

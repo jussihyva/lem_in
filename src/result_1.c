@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 13:33:51 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 08:04:54 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		print_room_data(t_room *room)
 	return ;
 }
 
-void		print_path(t_report *report)
+void			print_path(t_report *report)
 {
 	t_list			*elem;
 	t_list			*valid_path_elem;
@@ -40,7 +40,8 @@ void		print_path(t_report *report)
 	{
 		valid_path = *(t_valid_path **)valid_path_elem->content;
 		elem = *valid_path->path;
-		ft_printf("#path: %d Rooms: %d     ", valid_path->id, valid_path->num_of_conn_to_end);
+		ft_printf("#path: %d Rooms: %d     ", valid_path->id,
+												valid_path->num_of_conn_to_end);
 		while (elem)
 		{
 			ft_printf(" %5s", (*(t_room **)elem->content)->name);

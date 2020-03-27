@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 09:48:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 07:34:34 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 10:10:17 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ t_room				**add_room(char **splitted_line, t_input *input)
 	t_list		*room_elem;
 	t_room		**room_ptr;
 
+	if (splitted_line[0][0] == 'L')
+		input->error = invalid_room_name;
 	room_ptr = (t_room **)ft_memalloc(sizeof(*room_ptr));
 	create_new_room(splitted_line, input, room_ptr);
 	room_elem = ft_lstnew(room_ptr, sizeof(*room_ptr));
