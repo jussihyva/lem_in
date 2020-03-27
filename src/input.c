@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/24 08:32:31 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 09:41:21 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void				read_num_of_ants(char *line, t_input *input,
 	char			*endptr;
 	t_list			*elem;
 	size_t			number_of_ants;
-	char			*newline;
 
 	if (line[0] == '#')
 	{
@@ -58,14 +57,7 @@ static void				read_num_of_ants(char *line, t_input *input,
 			ft_lstadd(input->valid_input_lines, elem);
 		}
 		else
-		{
-			if (!input->number_of_ants)
-				input->number_of_ants = number_of_ants;
-			newline = ft_itoa(input->number_of_ants);
-			elem = ft_lstnew(newline, sizeof(*newline) * (ft_strlen(newline) + 1));
-			ft_lstadd(input->valid_input_lines, elem);
-			create_ants(input);
-		}
+			create_ants(input, number_of_ants);
 	}
 	return ;
 }
@@ -73,6 +65,7 @@ static void				read_num_of_ants(char *line, t_input *input,
 static void				parse_line(char *line, t_input *input,
 										t_read_status *read_status, t_app app)
 {
+	input->input_line_cnt++;
 	if (is_valid_line(input, line, *read_status))
 	{
 		if (*read_status == e_read_num_of_ants)
@@ -89,6 +82,7 @@ static void				parse_line(char *line, t_input *input,
 				read_instruction_data(line, input);
 		}
 	}
+	ft_strdel(&line);
 	return ;
 }
 
@@ -121,10 +115,9 @@ void					read_input_data(t_input *input, int *argc, char ***argv,
 	ft_step_args(argc, argv);
 	init_input_structure(input);
 	ft_read_opt(input, argc, argv);
+	fd = 0;
 	if (input->opt & map_file)
 		fd = open(input->input_file, O_RDONLY);
-	else
-		fd = 0;
 	line = NULL;
 	if (fd < 0)
 		input->error = file_open_failure;
@@ -133,11 +126,7 @@ void					read_input_data(t_input *input, int *argc, char ***argv,
 		read_status = e_read_num_of_ants;
 		while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
 												read_status != e_stop_reading)
-		{
-			input->input_line_cnt++;
 			parse_line(line, input, &read_status, app);
-			ft_strdel(&line);
-		}
 		ft_strdel(&line);
 	}
 	return ;

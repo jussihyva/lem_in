@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/26 11:50:26 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 09:59:28 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef enum				e_validity
 {
 	no_room = 0,
 	valid_room,
-	many_alternatives
+	many
 }							t_validity;
 
 typedef struct				s_valid_path
@@ -192,11 +192,13 @@ void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
 void						read_instruction_data(char *line, t_input *input);
 t_ant						*get_ant(char *name, t_input *input);
-void						create_ants(t_input *input);
+void						create_ants(t_input *input, size_t number_of_ants);
 void						print_instruction(t_input *input);
-int							move_ant(t_ant *ant, t_room *next_room);
+int							move_ant(t_instruction *instruction);
 int							validate_instructions(t_input *input);
-void						update_ants(t_ant **ant_array, size_t number_of_ants,
-														t_room *start_room_ptr);
+void						update_ants(t_ant **ant_array,
+								size_t number_of_ants, t_room *start_room_ptr);
+int							move_ant_next_room(t_report *report, size_t c,
+														int *first_instruction);
 
 #endif

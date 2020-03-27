@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/26 12:31:53 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 10:00:30 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void			set_error(t_input *input, char *line, t_input_error error,
 	if (input->opt && input->opt & errors)
 	{
 		error_line = (char *)ft_memalloc(sizeof(char) * 10000);
-		ft_sprintf(error_line, "%s (line %d): %s", text, input->input_line_cnt, line);
+		ft_sprintf(error_line, "%s (line %d): %s", text, input->input_line_cnt,
+																		line);
 		elem = ft_lstnew(error_line, sizeof(char) *
 												(ft_strlen(error_line) + 1));
 		ft_lstadd(input->valid_input_lines, elem);
@@ -42,39 +43,6 @@ void			set_error(t_input *input, char *line, t_input_error error,
 	else
 		input->error = error;
 	return ;
-}
-
-static int		move_ant_next_room(t_report *report, size_t c,
-														int *first_instruction)
-{
-	t_list					*elem;
-	t_room					*room;
-	t_room					*next_room;
-	int						all_ants_at_the_end;
-
-	all_ants_at_the_end = 0;
-	elem = report->ant_array[c]->current_room_elem->next;
-	next_room = *(t_room **)elem->content;
-	if (!next_room->ant || next_room == report->end_room_ptr)
-	{
-		all_ants_at_the_end = 0;
-		elem = report->ant_array[c]->current_room_elem;
-		room = *(t_room **)elem->content;
-		room->ant = NULL;
-		elem = report->ant_array[c]->current_room_elem->next;
-		report->ant_array[c]->current_room_elem = elem;
-		room = *(t_room **)elem->content;
-		if (room != report->end_room_ptr)
-			room->ant = report->ant_array[c];
-		if (*first_instruction)
-		{
-			ft_printf("%s-%s", report->ant_array[c]->name, room->name);
-			*first_instruction = 0;
-		}
-		else
-			ft_printf(" %s-%s", report->ant_array[c]->name, room->name);
-	}
-	return (all_ants_at_the_end);
 }
 
 void			print_instructions(t_report *report)

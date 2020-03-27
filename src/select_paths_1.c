@@ -6,7 +6,7 @@
 /*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 12:48:58 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/27 08:47:59 by pi               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void				update_best_room(t_room **next_room, t_room **best_room,
 	else if (((*next_room)->num_of_conn_to_end <=
 									(*best_room)->num_of_conn_to_end + offset &&
 									(*next_room)->num_of_conn_to_start != 1))
-		*validity = many_alternatives;
+		*validity = many;
 	return ;
 }
 
@@ -71,19 +71,16 @@ t_validity				add_rooms_to_path(t_input *input, t_list **path,
 	while (path_elem->next)
 		path_elem = path_elem->next;
 	adj_room_elem = (*(t_room **)path_elem->content)->connection_lst;
-	while (1 == 1)
+	best_room = NULL;
+	while (best_room != input->end_room_ptr)
 	{
-		validity = no_room;
 		best_room = get_next_best_room(adj_room_elem, input->end_room_ptr,
 															&validity, offset);
-		if ((validity == valid_room) ||
-									(offset == -1 && validity == many_alternatives))
+		if ((validity == valid_room) || (offset == -1 && validity == many))
 		{
 			validity = valid_room;
 			best_room->is_visited = 1;
 			ft_lstadd_e(path, ft_lstnew(&best_room, sizeof(best_room)));
-			if (best_room == input->end_room_ptr)
-				break ;
 			adj_room_elem = best_room->connection_lst;
 		}
 		else
