@@ -75,14 +75,7 @@ void			release_input(t_input *input)
 	ft_lstdel(input->instruction_line_lst, del_input);
 	free(input->instruction_line_lst);
 	input->instruction_line_lst = NULL;
-	c = -1;
-	while (++c < input->number_of_ants)
-	{
-		ft_strdel(&input->ant_array[c]->name);
-		free(input->ant_array[c]);
-	}
 	free(input->ant_array);
-	input->ant_array = NULL;
 	c = -1;
 	while (++c < input->num_of_rooms)
 	{
@@ -91,8 +84,6 @@ void			release_input(t_input *input)
 		free(input->room_array[c]);
 	}
 	free(input->input_file);
-	input->input_file = NULL;
 	free(input->room_array);
-	input->room_array = NULL;
 	return ;
 }
