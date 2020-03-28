@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   result_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/27 10:00:30 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/28 21:33:56 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,20 @@ void			print_instructions(t_report *report)
 		line_c++;
 	}
 	ft_printf("#lines: %d\n", line_c - 1);
+	return ;
+}
+
+void			print_result(t_input *input, t_result *result)
+{
+	t_list			*elem;
+	t_report		*report;
+
+	elem = *result->report_lst;
+	while (elem)
+	{
+		report = (t_report *)elem->content;
+		print_report(input, report);
+		elem = elem->next;
+	}
 	return ;
 }
