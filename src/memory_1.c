@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/28 11:25:19 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/28 17:46:08 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,9 @@ void			del_input(void *elem, size_t size)
 
 void			release_report(t_report *report)
 {
-	size_t		c;
-
 	ft_lstdel(report->lst_of_valid_paths, del_report);
 	free(report->lst_of_valid_paths);
 	report->lst_of_valid_paths = NULL;
-	c = -1;
-	while (++c < report->number_of_ants)
-	{
-		ft_strdel(&report->ant_array[c]->name);
-		free(report->ant_array[c]);
-	}
-	free(report->ant_array);
-	report->ant_array = NULL;
 	free(report);
 	report = NULL;
 	return ;
@@ -75,7 +65,14 @@ void			release_input(t_input *input)
 	ft_lstdel(input->instruction_line_lst, del_input);
 	free(input->instruction_line_lst);
 	input->instruction_line_lst = NULL;
+	c = -1;
+	while (++c < input->number_of_ants)
+	{
+		ft_strdel(&input->ant_array[c]->name);
+		free(input->ant_array[c]);
+	}
 	free(input->ant_array);
+	input->ant_array = NULL;
 	c = -1;
 	while (++c < input->num_of_rooms)
 	{
