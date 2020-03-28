@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/21 13:23:50 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/28 18:00:42 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ int						main(int argc, char **argv)
 	t_report		*report;
 	t_result		result;
 	t_list			*elem;
+	t_list			*tmp_elem;
+	t_list			*algorithm_lst;
+	t_list			*algorithm_elem;
 
+	algorithm_lst = NULL;
 	result.report_lst = (t_list **)ft_memalloc(sizeof(*result.report_lst));
 	read_input_data(&input, &argc, &argv, e_lem_in);
 	return_code = 1;
@@ -28,17 +32,34 @@ int						main(int argc, char **argv)
 	else
 	{
 		calc_distance(&input);
-		report = initialize_report(&input);
-		if (select_paths(&input, report))
+		algorithm_elem = ft_lstnew(&select_paths, sizeof(select_paths));
+		ft_lstadd(&algorithm_lst, algorithm_elem);
+		algorithm_elem = ft_lstnew(&select_paths, sizeof(select_paths));
+		ft_lstadd(&algorithm_lst, algorithm_elem);
+		algorithm_elem = algorithm_lst;
+		while (algorithm_elem)
 		{
-			print_result(&input, report);
-			return_code = 0;
+			report = initialize_report(&input);
+			if (select_paths(&input, report))
+			{
+				print_result(&input, report);
+				return_code = 0;
+			}
+			else
+				print_error(&input);
+			elem = ft_lstnew(report, sizeof(*report));
+			ft_lstadd(result.report_lst, elem);
+			free(report);
+			algorithm_elem = algorithm_elem->next;
 		}
-		else
-			print_error(&input);
-		elem = ft_lstnew(report, sizeof(*report));
-		ft_lstadd(result.report_lst, elem);
-		free(report);
+	}
+	elem = algorithm_lst;
+	while (elem)
+	{
+		tmp_elem = elem->next;
+		free(elem->content);
+		free(elem);
+		elem = tmp_elem;
 	}
 	release_result(&result);
 	release_input(&input);
