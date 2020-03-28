@@ -137,6 +137,11 @@ typedef struct				s_report
 	size_t			number_of_ants;
 }							t_report;
 
+typedef struct				s_result
+{
+	t_list			**report_lst;
+}							t_result;
+
 typedef enum				e_app
 {
 	e_lem_in,
@@ -201,5 +206,6 @@ void						update_ants(t_ant **ant_array,
 								size_t number_of_ants, t_room *start_room_ptr);
 int							move_ant_next_room(t_report *report, size_t c,
 														int *first_instruction);
+void						release_result(t_result *result);
 
 #endif

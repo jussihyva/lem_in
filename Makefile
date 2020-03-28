@@ -25,9 +25,9 @@ SRC_FOLDER	=	src
 SRC_FILES	=	input.c ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 				room_data_1.c room_data_2.c room_data_3.c \
 				result_1.c result_2.c connection_data.c ft_step_args.c \
-				calc_distance.c memory.c transportation.c ants_1.c ants_2.c \
+				calc_distance.c transportation.c ants_1.c ants_2.c \
 				select_paths_1.c select_paths_2.c select_paths_3.c \
-				instruction_1.c
+				instruction_1.c memory_1.c memory_2.c
 
 OBJ_FOLDER	=	obj
 OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(patsubst %.c, %.o, $(SRC_FILES)))
