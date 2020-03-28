@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   result_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/27 08:04:54 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/28 21:27:25 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void			print_input_lines(t_input *input)
 	return ;
 }
 
-void			print_result(t_input *input, t_report *report)
+void			print_report(t_input *input, t_report *report)
 {
 	size_t		c;
 	t_room		**room;

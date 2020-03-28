@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/27 09:59:28 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/28 21:32:46 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,11 @@ typedef struct				s_report
 	size_t			number_of_ants;
 }							t_report;
 
+typedef struct				s_algorithm
+{
+	void			*(*function)(t_input *input, t_report *report);
+}							t_algorithm;
+
 typedef struct				s_result
 {
 	t_list			**report_lst;
@@ -157,7 +162,7 @@ void						read_room_data(char *line, t_input *input,
 void						read_connection_data(char *line, t_input *input,
 										t_read_status *read_status, t_app app);
 void						ft_arraydel(char **array);
-void						print_result(t_input *input, t_report *report);
+void						print_report(t_input *input, t_report *report);
 void						ft_step_args(int *argc, char ***argv);
 void						calc_distance(t_input *input);
 void						del_report(void *room, size_t size);
@@ -207,5 +212,6 @@ void						update_ants(t_ant **ant_array,
 int							move_ant_next_room(t_report *report, size_t c,
 														int *first_instruction);
 void						release_result(t_result *result);
+void						print_result(t_input *input, t_result *result);
 
 #endif
