@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 12:28:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:54:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 }
 
 void					read_room_data(char *line, t_input *input,
-										t_read_status *read_status, t_app app)
+													t_read_status *read_status)
 {
 	int				add_line;
 
@@ -87,7 +87,7 @@ void					read_room_data(char *line, t_input *input,
 			ft_lstdel(&input->room_lst, del_path);
 			input->error = 0;
 			*read_status = e_read_connection_data;
-			read_connection_data(line, input, read_status, app);
+			read_connection_data(line, input, read_status);
 			return ;
 		}
 	}
