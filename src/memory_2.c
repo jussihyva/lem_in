@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/28 11:24:35 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/29 06:07:57 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:08:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,12 @@ static void		release_room_array(t_input *input)
 
 void			release_input(t_input *input)
 {
-	size_t		c;
-
 	ft_lstdel(input->algorithm_lst, del_path);
 	free(input->algorithm_lst);
 	ft_lstdel(input->valid_input_lines, del_path);
 	free(input->valid_input_lines);
 	ft_lstdel(input->instruction_line_lst, del_input);
 	free(input->instruction_line_lst);
-	c = -1;
-	if (input->ant_array)
-	{
-		while (++c < input->number_of_ants)
-		{
-			ft_strdel(&input->ant_array[c]->name);
-			free(input->ant_array[c]);
-		}
-		free(input->ant_array);
-	}
 	release_room_array(input);
 	free(input->input_file);
 	return ;

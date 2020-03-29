@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 14:08:48 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 18:32:54 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ typedef struct				s_valid_path
 	size_t			*visited_rooms;
 }							t_valid_path;
 
-typedef struct				s_report
+typedef struct				s_output
 {
 	int				error;
 	t_opt			opt;
@@ -137,16 +137,16 @@ typedef struct				s_report
 	size_t			number_of_paths;
 	t_ant			**ant_array;
 	size_t			number_of_ants;
-}							t_report;
+}							t_output;
 
 typedef struct				s_algorithm
 {
-	void			*(*function)(t_input *input, t_report *report);
+	void			*(*function)(t_input *input, t_output *output);
 }							t_algorithm;
 
 typedef struct				s_result
 {
-	t_list			**report_lst;
+	t_list			**output_lst;
 }							t_result;
 
 typedef enum				e_app
@@ -164,53 +164,53 @@ void						read_room_data(char *line, t_input *input,
 void						read_connection_data(char *line, t_input *input,
 										t_read_status *read_status, t_app app);
 void						ft_arraydel(char **array);
-void						print_report(t_input *input, t_report *report);
+void						print_output(t_input *input, t_output *output);
 void						ft_step_args(int *argc, char ***argv);
 void						calc_distance(t_input *input);
-void						del_report(void *room, size_t size);
+void						del_output(void *room, size_t size);
 void						del_path(void *room, size_t size);
 void						ft_lstdel_1(t_list **lst_ptr);
 void						is_road_to_start_room(t_room *room, t_input *input,
-															t_report *report);
-void						release_report(t_report *report);
+															t_output *output);
+void						release_output(t_output *output);
 void						release_input(t_input *input);
 void						validate_adj_rooms(size_t *connection_counter,
 												t_input *input, t_room *room);
-int							select_paths(t_input *input, t_report *report);
-t_report					*initialize_report(t_input *input);
-void						transportation(t_report *report);
-void						print_instructions(t_report *report);
+int							select_paths(t_input *input, t_output *output);
+t_output					*initialize_output(t_input *input);
+void						transportation(t_output *output);
+void						print_instructions(t_output *output);
 t_room						**add_room(char **splitted_line, t_input *input);
 t_room						*get_room(char *name, t_input *input);
 t_room						**create_room_array_2(t_input *input);
 void						set_error(t_input *input, char *line,
 											t_input_error error, char *text);
-void						print_path(t_report *report);
-void						put_ants_to_paths(t_report *report);
+void						print_path(t_output *output);
+void						put_ants_to_paths(t_output *output);
 t_valid_path				*create_valid_path(t_list **path,
 														t_validity validity);
-void						delete_valid_path(t_report *report, t_list *elem);
+void						delete_valid_path(t_output *output, t_list *elem);
 void						update_valid_path(t_valid_path *valid_path);
 size_t						count_max_num_of_paths(t_input *input);
 void						preliminary_path_selection(t_input *input,
-							t_report *report, size_t max_num_of_paths,
-							int *offset);
+									t_output *output, size_t max_num_of_paths,
+																int *offset);
 t_validity					add_rooms_to_path(t_input *input, t_list **path,
 																	int offset);
 void						finalize_path_selection(t_input *input,
-							t_report *report, int *offset);
+												t_output *output, int *offset);
 void						read_input_data(t_input *input, t_result *result,
 											int *argc, char ***argv, t_app app);
 void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
 void						read_instruction_data(char *line, t_input *input,
-															t_report *report);
-t_ant						*get_ant(char *name, t_report *report);
-void						create_ants(t_report *report);
+															t_output *output);
+t_ant						*get_ant(char *name, t_output *output);
+void						create_ants(t_output *output);
 void						print_instruction(t_input *input);
 int							move_ant(t_instruction *instruction);
 int							validate_instructions(t_input *input);
-int							move_ant_next_room(t_report *report, size_t c,
+int							move_ant_next_room(t_output *output, size_t c,
 														int *first_instruction);
 void						release_result(t_result *result);
 void						print_result(t_input *input, t_result *result);

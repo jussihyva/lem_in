@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 13:44:38 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:14:36 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void				prepare_input_data(t_input *input)
 	c = -1;
 	while (++c < input->num_of_rooms)
 		input->room_array[c]->is_visited = 0;
-	update_ants(input->ant_array, input->number_of_ants, input->start_room_ptr);
 	return ;
 }
 
@@ -27,7 +26,7 @@ static int				run_algorithms(t_input *input, t_result *result)
 {
 	t_list			*algorithm_elem;
 	int				return_code;
-	t_report		*report;
+	t_output		*output;
 	t_algorithm		algorithm;
 	t_list			*elem;
 
@@ -36,17 +35,17 @@ static int				run_algorithms(t_input *input, t_result *result)
 	while (algorithm_elem)
 	{
 		prepare_input_data(input);
-		report = initialize_report(input);
+		output = initialize_output(input);
 		algorithm = *(t_algorithm *)algorithm_elem->content;
-		if (algorithm.function(input, report))
+		if (algorithm.function(input, output))
 		{
-			elem = ft_lstnew(report, sizeof(*report));
-			ft_lstadd(result->report_lst, elem);
-			free(report);
+			elem = ft_lstnew(output, sizeof(*output));
+			ft_lstadd(result->output_lst, elem);
+			free(output);
 			return_code = 0;
 		}
 		else
-			release_report(report);
+			release_output(output);
 		algorithm_elem = algorithm_elem->next;
 	}
 	return (return_code);
@@ -58,7 +57,7 @@ int						main(int argc, char **argv)
 	t_input			input;
 	t_result		result;
 
-	result.report_lst = (t_list **)ft_memalloc(sizeof(*result.report_lst));
+	result.output_lst = (t_list **)ft_memalloc(sizeof(*result.output_lst));
 	read_input_data(&input, &result, &argc, &argv, e_lem_in);
 	return_code = 1;
 	if (input.error != invalid_connection_data && input.error)
