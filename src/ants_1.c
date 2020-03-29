@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 18:54:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:28:07 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void				create_ants(t_output *output)
 	c = -1;
 	while (++c < output->number_of_ants)
 	{
-		output->ant_array[c] = (t_ant *)ft_memalloc(sizeof(**output->ant_array));
+		output->ant_array[c] =
+							(t_ant *)ft_memalloc(sizeof(**output->ant_array));
 		ant_id = ft_itoa(c + 1);
 		output->ant_array[c]->name = ft_strjoin("L", ant_id);
 		output->ant_array[c]->current_room = output->start_room_ptr;

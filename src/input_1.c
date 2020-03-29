@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 18:42:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:52:54 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int				is_valid_line(t_input *input, char *line,
 }
 
 static void				parse_line(char *line, t_input *input, t_output *output,
-										t_read_status *read_status, t_app app)
+													t_read_status *read_status)
 {
 	input->input_line_cnt++;
 	if (is_valid_line(input, line, *read_status))
@@ -51,9 +51,9 @@ static void				parse_line(char *line, t_input *input, t_output *output,
 			if (*read_status == e_read_room_data ||
 						*read_status == e_read_start_room_data ||
 						*read_status == e_read_end_room_data)
-				read_room_data(line, input, read_status, app);
+				read_room_data(line, input, read_status);
 			else if (*read_status == e_read_connection_data)
-				read_connection_data(line, input, read_status, app);
+				read_connection_data(line, input, read_status);
 			else if (*read_status == e_read_instruction_data)
 				read_instruction_data(line, input, output);
 		}
@@ -62,8 +62,9 @@ static void				parse_line(char *line, t_input *input, t_output *output,
 	return ;
 }
 
-static void				init_input_structure(t_input *input)
+void					init_input_structure(t_input *input, t_app app)
 {
+	input->app = app;
 	input->error = 0;
 	input->input_file = NULL;
 	input->opt = 0;
@@ -77,7 +78,6 @@ static void				init_input_structure(t_input *input)
 	input->algorithm_lst =
 				(t_list **)ft_memalloc(sizeof(*input->algorithm_lst));
 	input->number_of_ants = 0;
-//	input->ant_array = NULL;
 	input->room_array = NULL;
 	input->input_file = NULL;
 	input->num_of_rooms = 0;
@@ -85,23 +85,15 @@ static void				init_input_structure(t_input *input)
 	return ;
 }
 
-void					read_input_data(t_input *input, t_result *result,
-											int *argc, char ***argv, t_app app)
+void					read_input_data(t_input *input, t_output *output,
+											int *argc, char ***argv)
 {
 	t_read_status	read_status;
 	char			*line;
 	int				ret;
 	int				fd;
-	t_output		*output;
-	t_list			*elem;
 
-	elem = *result->output_lst;
-	if (elem)
-		output = (t_output *)elem->content;
-	else
-		output = NULL;
 	ft_step_args(argc, argv);
-	init_input_structure(input);
 	select_algorithms(input->algorithm_lst);
 	ft_read_opt(input, argc, argv);
 	fd = 0;
@@ -115,7 +107,7 @@ void					read_input_data(t_input *input, t_result *result,
 		read_status = e_read_num_of_ants;
 		while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
 												read_status != e_stop_reading)
-			parse_line(line, input, output, &read_status, app);
+			parse_line(line, input, output, &read_status);
 		ft_strdel(&line);
 	}
 	return ;

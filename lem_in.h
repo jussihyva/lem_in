@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 18:32:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:53:11 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include "errno.h"
 # include <fcntl.h>
 # include <stdio.h>
+
+typedef enum				e_app
+{
+	e_lem_in,
+	e_checker
+}							t_app;
 
 typedef enum				e_read_status
 {
@@ -93,12 +99,12 @@ typedef enum				e_input_error
 
 typedef struct				s_input
 {
+	t_app			app;
 	t_input_error	error;
 	t_opt			opt;
 	char			*input_file;
 	size_t			input_line_cnt;
 	t_list			**valid_input_lines;
-//	t_ant			**ant_array;
 	size_t			number_of_ants;
 	t_room			*start_room_ptr;
 	t_room			*end_room_ptr;
@@ -149,20 +155,14 @@ typedef struct				s_result
 	t_list			**output_lst;
 }							t_result;
 
-typedef enum				e_app
-{
-	e_lem_in,
-	e_checker
-}							t_app;
-
 void						ft_read_opt(t_input *input, int *argc,
 																char ***argv);
 int							ft_strtoi(const char *str, char **endptr,
 																	int base);
 void						read_room_data(char *line, t_input *input,
-										t_read_status *read_status, t_app app);
+													t_read_status *read_status);
 void						read_connection_data(char *line, t_input *input,
-										t_read_status *read_status, t_app app);
+													t_read_status *read_status);
 void						ft_arraydel(char **array);
 void						print_output(t_input *input, t_output *output);
 void						ft_step_args(int *argc, char ***argv);
@@ -199,8 +199,8 @@ t_validity					add_rooms_to_path(t_input *input, t_list **path,
 																	int offset);
 void						finalize_path_selection(t_input *input,
 												t_output *output, int *offset);
-void						read_input_data(t_input *input, t_result *result,
-											int *argc, char ***argv, t_app app);
+void						read_input_data(t_input *input, t_output *output,
+													int *argc, char ***argv);
 void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
 void						read_instruction_data(char *line, t_input *input,
@@ -219,5 +219,6 @@ void						read_num_of_ants(char *line, t_input *input,
 													t_read_status *read_status);
 void						add_valid_input_line(t_list **valid_input_lines,
 																	char *line);
+void						init_input_structure(t_input *input, t_app app);
 
 #endif

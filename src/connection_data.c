@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 13:41:01 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:55:11 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static t_read_status	validate_connection_data(char *line, t_input *input,
 }
 
 void					read_connection_data(char *line, t_input *input,
-										t_read_status *read_status, t_app app)
+										t_read_status *read_status)
 {
 	t_list			*elem;
 
@@ -78,7 +78,7 @@ void					read_connection_data(char *line, t_input *input,
 		;
 	else if (line[0] == '\0')
 	{
-		if (app == e_checker)
+		if (input->app == e_checker)
 			*read_status = e_read_instruction_data;
 		else
 		{
