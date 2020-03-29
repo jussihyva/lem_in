@@ -6,26 +6,26 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 12:20:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/29 12:35:51 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:11:32 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_report		*initialize_report(t_input *input)
+t_output		*initialize_output(t_input *input)
 {
-	t_report		*report;
+	t_output		*output;
 
-	report = (t_report *)ft_memalloc(sizeof(*report));
-	report->error = 0;
-	report->opt = input->opt;
-	report->lst_of_valid_paths =
-				(t_list **)ft_memalloc(sizeof(*report->lst_of_valid_paths));
-	report->number_of_ants = input->number_of_ants;
-	report->end_room_ptr = input->end_room_ptr;
-	report->start_room_ptr = input->start_room_ptr;
+	output = (t_output *)ft_memalloc(sizeof(*output));
+	output->error = 0;
+	output->opt = input->opt;
+	output->lst_of_valid_paths =
+				(t_list **)ft_memalloc(sizeof(*output->lst_of_valid_paths));
+	output->number_of_ants = input->number_of_ants;
+	output->end_room_ptr = input->end_room_ptr;
+	output->start_room_ptr = input->start_room_ptr;
 //	report->ant_array = input->ant_array;
-	create_ants(input, report);
-	return (report);
+	create_ants(output);
+	return (output);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 13:47:56 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 18:42:45 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int				is_valid_line(t_input *input, char *line,
 		return (1);
 }
 
-static void				parse_line(char *line, t_input *input, t_result *result,
+static void				parse_line(char *line, t_input *input, t_output *output,
 										t_read_status *read_status, t_app app)
 {
 	input->input_line_cnt++;
@@ -55,7 +55,7 @@ static void				parse_line(char *line, t_input *input, t_result *result,
 			else if (*read_status == e_read_connection_data)
 				read_connection_data(line, input, read_status, app);
 			else if (*read_status == e_read_instruction_data)
-				read_instruction_data(line, input, result);
+				read_instruction_data(line, input, output);
 		}
 	}
 	ft_strdel(&line);
@@ -92,7 +92,14 @@ void					read_input_data(t_input *input, t_result *result,
 	char			*line;
 	int				ret;
 	int				fd;
+	t_output		*output;
+	t_list			*elem;
 
+	elem = *result->output_lst;
+	if (elem)
+		output = (t_output *)elem->content;
+	else
+		output = NULL;
 	ft_step_args(argc, argv);
 	init_input_structure(input);
 	select_algorithms(input->algorithm_lst);
@@ -108,7 +115,7 @@ void					read_input_data(t_input *input, t_result *result,
 		read_status = e_read_num_of_ants;
 		while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
 												read_status != e_stop_reading)
-			parse_line(line, input, result, &read_status, app);
+			parse_line(line, input, output, &read_status, app);
 		ft_strdel(&line);
 	}
 	return ;

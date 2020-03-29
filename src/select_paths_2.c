@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_paths_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/03/27 08:49:00 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 18:59:48 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ static t_valid_path		*find_shortest_path(t_input *input, int offset)
 }
 
 void					preliminary_path_selection(t_input *input,
-						t_report *report, size_t max_num_of_paths, int *offset)
+						t_output *output, size_t max_num_of_paths, int *offset)
 {
 	t_valid_path	*valid_path;
 
-	while (report->number_of_paths < max_num_of_paths)
+	while (output->number_of_paths < max_num_of_paths)
 	{
 		valid_path = find_shortest_path(input, *offset);
 		if (valid_path)
 		{
-			report->number_of_paths++;
-			valid_path->id = report->number_of_paths;
-			ft_lstadd(report->lst_of_valid_paths, ft_lstnew(&valid_path,
+			output->number_of_paths++;
+			valid_path->id = output->number_of_paths;
+			ft_lstadd(output->lst_of_valid_paths, ft_lstnew(&valid_path,
 														sizeof(valid_path)));
-			if (report->opt && report->opt & verbose)
-				print_path(report);
+			if (output->opt && output->opt & verbose)
+				print_path(output);
 		}
 		else
 			break ;
@@ -76,7 +76,7 @@ void					preliminary_path_selection(t_input *input,
 }
 
 void					finalize_path_selection(t_input *input,
-						t_report *report, int *offset)
+						t_output *output, int *offset)
 {
 	t_list			*elem;
 	t_list			*tmp_elem;
@@ -84,7 +84,7 @@ void					finalize_path_selection(t_input *input,
 
 	while (--(*offset) >= -1)
 	{
-		elem = *(t_list **)report->lst_of_valid_paths;
+		elem = *(t_list **)output->lst_of_valid_paths;
 		while (elem)
 		{
 			tmp_elem = elem->next;
@@ -94,13 +94,13 @@ void					finalize_path_selection(t_input *input,
 				valid_path->validity = add_rooms_to_path(input,
 													valid_path->path, *offset);
 				if (valid_path->validity == no_room)
-					delete_valid_path(report, elem);
+					delete_valid_path(output, elem);
 				else
 					update_valid_path(valid_path);
 			}
 			elem = tmp_elem;
 		}
-		if (report->opt && report->opt & verbose)
-			print_path(report);
+		if (output->opt && output->opt & verbose)
+			print_path(output);
 	}
 }

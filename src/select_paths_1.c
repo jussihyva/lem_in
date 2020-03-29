@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 12:43:11 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 18:57:22 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_validity				add_rooms_to_path(t_input *input, t_list **path,
 	return (validity);
 }
 
-int						select_paths(t_input *input, t_report *report)
+int						select_paths(t_input *input, t_output *output)
 {
 	size_t			max_num_of_paths;
 	int				offset;
@@ -97,11 +97,11 @@ int						select_paths(t_input *input, t_report *report)
 	if ((max_num_of_paths = count_max_num_of_paths(input)))
 	{
 		offset = max_num_of_paths - 2;
-		report->number_of_paths = 0;
-		preliminary_path_selection(input, report, max_num_of_paths, &offset);
-		finalize_path_selection(input, report, &offset);
-		if (report->number_of_paths)
-			put_ants_to_paths(report);
+		output->number_of_paths = 0;
+		preliminary_path_selection(input, output, max_num_of_paths, &offset);
+		finalize_path_selection(input, output, &offset);
+		if (output->number_of_paths)
+			put_ants_to_paths(output);
 		else
 		{
 			input->error = no_path_available;

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 06:04:12 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:20:25 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			del_path(void *room, size_t size)
 	return ;
 }
 
-void			del_report(void *elem, size_t size)
+void			del_output(void *elem, size_t size)
 {
 	t_valid_path	*valid_path;
 
@@ -33,13 +33,25 @@ void			del_report(void *elem, size_t size)
 	return ;
 }
 
-void			release_report(t_report *report)
+void			release_output(t_output *output)
 {
-	ft_lstdel(report->lst_of_valid_paths, del_report);
-	free(report->lst_of_valid_paths);
-	report->lst_of_valid_paths = NULL;
-	free(report);
-	report = NULL;
+	size_t		c;
+
+	ft_lstdel(output->lst_of_valid_paths, del_output);
+	free(output->lst_of_valid_paths);
+	output->lst_of_valid_paths = NULL;
+	c = -1;
+	if (output->ant_array)
+	{
+		while (++c < output->number_of_ants)
+		{
+			ft_strdel(&output->ant_array[c]->name);
+			free(output->ant_array[c]);
+		}
+		free(output->ant_array);
+	}
+	free(output);
+	output = NULL;
 	return ;
 }
 
@@ -47,17 +59,17 @@ void			release_result(t_result *result)
 {
 	t_list			*elem;
 	t_list			*tmp_elem;
-	t_report		*report;
+	t_output		*output;
 
-	elem = *result->report_lst;
+	elem = *result->output_lst;
 	while (elem)
 	{
 		tmp_elem = elem->next;
-		report = (t_report *)elem->content;
-		release_report(report);
+		output = (t_output *)elem->content;
+		release_output(output);
 		free(elem);
 		elem = tmp_elem;
 	}
-	free(result->report_lst);
+	free(result->output_lst);
 	return ;
 }

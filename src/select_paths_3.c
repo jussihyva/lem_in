@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_paths_3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 17:01:51 by pi                #+#    #+#             */
-/*   Updated: 2020/03/18 17:02:30 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 19:00:41 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void					update_valid_path(t_valid_path *valid_path)
 	return ;
 }
 
-void					delete_valid_path(t_report *report, t_list *elem)
+void					delete_valid_path(t_output *output, t_list *elem)
 {
 	t_list			*tmp_elem;
 	t_valid_path	*valid_path;
@@ -54,10 +54,10 @@ void					delete_valid_path(t_report *report, t_list *elem)
 	elem->prev ? elem->prev->next = elem->next : 0;
 	elem->next ? elem->next->prev = elem->prev : 0;
 	if (!elem->prev)
-		*report->lst_of_valid_paths = tmp_elem;
+		*output->lst_of_valid_paths = tmp_elem;
 	ft_lstdel(valid_path->path, del_path);
 	free(valid_path->path);
 	free(valid_path);
-	report->number_of_paths--;
+	output->number_of_paths--;
 	return ;
 }

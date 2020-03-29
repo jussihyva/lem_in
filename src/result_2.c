@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/28 21:33:56 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 18:50:25 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void			set_error(t_input *input, char *line, t_input_error error,
 	return ;
 }
 
-void			print_instructions(t_report *report)
+void			print_instructions(t_output *output)
 {
 	size_t			c;
 	t_list			*elem;
@@ -61,11 +61,11 @@ void			print_instructions(t_report *report)
 		first = 1;
 		all_ants_at_the_end = 1;
 		c = -1;
-		while (++c < report->number_of_ants)
+		while (++c < output->number_of_ants)
 		{
-			elem = report->ant_array[c]->current_room_elem;
-			if (*(t_room **)elem->content != report->end_room_ptr)
-				all_ants_at_the_end &= move_ant_next_room(report, c, &first);
+			elem = output->ant_array[c]->current_room_elem;
+			if (*(t_room **)elem->content != output->end_room_ptr)
+				all_ants_at_the_end &= move_ant_next_room(output, c, &first);
 		}
 		line_c++;
 	}
@@ -76,13 +76,13 @@ void			print_instructions(t_report *report)
 void			print_result(t_input *input, t_result *result)
 {
 	t_list			*elem;
-	t_report		*report;
+	t_output		*output;
 
-	elem = *result->report_lst;
+	elem = *result->output_lst;
 	while (elem)
 	{
-		report = (t_report *)elem->content;
-		print_report(input, report);
+		output = (t_output *)elem->content;
+		print_output(input, output);
 		elem = elem->next;
 	}
 	return ;

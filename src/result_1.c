@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 12:20:33 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 19:19:47 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static void		print_room_data(t_room *room)
 	return ;
 }
 
-void			print_path(t_report *report)
+void			print_path(t_output *output)
 {
 	t_list			*elem;
 	t_list			*valid_path_elem;
 	t_valid_path	*valid_path;
 
-	valid_path_elem = *report->lst_of_valid_paths;
+	valid_path_elem = *output->lst_of_valid_paths;
 	while (valid_path_elem)
 	{
 		valid_path = *(t_valid_path **)valid_path_elem->content;
@@ -69,7 +69,7 @@ void			print_input_lines(t_input *input)
 	return ;
 }
 
-void			print_report(t_input *input, t_report *report)
+void			print_output(t_input *input, t_output *output)
 {
 	size_t		c;
 	t_room		**room;
@@ -82,10 +82,10 @@ void			print_report(t_input *input, t_report *report)
 			print_room_data(room[c]);
 	}
 	print_input_lines(input);
-	print_path(report);
-	print_instructions(report);
-	if (report->opt && report->opt & verbose)
-		print_path(report);
-	ft_printf("#paths: %d\n", report->number_of_paths);
+	print_path(output);
+	print_instructions(output);
+	if (output->opt && output->opt & verbose)
+		print_path(output);
+	ft_printf("#paths: %d\n", output->number_of_paths);
 	return ;
 }

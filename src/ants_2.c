@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 12:24:07 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 18:56:18 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void			print_inst(int *first_instruction, char *ant_name,
 	return ;
 }
 
-int					move_ant_next_room(t_report *report, size_t c,
+int					move_ant_next_room(t_output *output, size_t c,
 														int *first_instruction)
 {
 	t_list					*elem;
@@ -34,20 +34,20 @@ int					move_ant_next_room(t_report *report, size_t c,
 	int						all_ants_at_the_end;
 
 	all_ants_at_the_end = 0;
-	elem = report->ant_array[c]->current_room_elem->next;
+	elem = output->ant_array[c]->current_room_elem->next;
 	next_room = *(t_room **)elem->content;
-	if (!next_room->ant || next_room == report->end_room_ptr)
+	if (!next_room->ant || next_room == output->end_room_ptr)
 	{
 		all_ants_at_the_end = 0;
-		elem = report->ant_array[c]->current_room_elem;
+		elem = output->ant_array[c]->current_room_elem;
 		room = *(t_room **)elem->content;
 		room->ant = NULL;
-		elem = report->ant_array[c]->current_room_elem->next;
-		report->ant_array[c]->current_room_elem = elem;
+		elem = output->ant_array[c]->current_room_elem->next;
+		output->ant_array[c]->current_room_elem = elem;
 		room = *(t_room **)elem->content;
-		if (room != report->end_room_ptr)
-			room->ant = report->ant_array[c];
-		print_inst(first_instruction, report->ant_array[c]->name, room->name);
+		if (room != output->end_room_ptr)
+			room->ant = output->ant_array[c];
+		print_inst(first_instruction, output->ant_array[c]->name, room->name);
 	}
 	return (all_ants_at_the_end);
 }
