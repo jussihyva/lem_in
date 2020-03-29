@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   input_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/27 09:41:21 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 05:55:52 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,12 @@ static void				init_input_structure(t_input *input)
 					(t_list **)ft_memalloc(sizeof(*input->valid_input_lines));
 	input->instruction_line_lst =
 				(t_list **)ft_memalloc(sizeof(*input->instruction_line_lst));
+	input->algorithm_lst =
+				(t_list **)ft_memalloc(sizeof(*input->algorithm_lst));
 	input->number_of_ants = 0;
+	input->ant_array = NULL;
+	input->room_array = NULL;
+	input->input_file = NULL;
 	input->num_of_rooms = 0;
 	input->input_line_cnt = 0;
 	return ;
@@ -114,6 +119,7 @@ void					read_input_data(t_input *input, int *argc, char ***argv,
 
 	ft_step_args(argc, argv);
 	init_input_structure(input);
+	select_algorithms(input->algorithm_lst);
 	ft_read_opt(input, argc, argv);
 	fd = 0;
 	if (input->opt & map_file)

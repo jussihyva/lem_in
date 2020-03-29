@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pi <pi@student.42.fr>                      +#+  +:+       +#+         #
+#    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/03/27 09:00:58 by pi               ###   ########.fr        #
+#    Updated: 2020/03/29 05:32:08 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDES	=	-I ./ -I libft -I libftprintf/src
 LIB			=	-L libft -l ft -L libftprintf -l ftprintf
 
 SRC_FOLDER	=	src
-SRC_FILES	=	input.c ft_read_opt.c ft_strtoi.c ft_arraydel.c \
+SRC_FILES	=	input_1.c input_2.c ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 				room_data_1.c room_data_2.c room_data_3.c \
 				result_1.c result_2.c connection_data.c ft_step_args.c \
 				calc_distance.c transportation.c ants_1.c ants_2.c \
