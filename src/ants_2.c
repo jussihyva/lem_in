@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ants_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/27 09:59:53 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 10:02:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,30 @@ int					move_ant(t_instruction *instruction)
 		elem = elem->next;
 	}
 	return (result);
+}
+
+void				read_num_of_ants(char *line, t_input *input,
+													t_read_status *read_status)
+{
+	char			*endptr;
+	size_t			number_of_ants;
+	char			*newline;
+
+	*read_status = e_read_room_data;
+	number_of_ants = ft_strtoi(line, &endptr, 10);
+	if (errno || *endptr)
+	{
+		add_valid_input_line(input->valid_input_lines, line);
+		set_error(input, line, num_of_ants_error, "#ERROR ");
+	}
+	else
+	{
+		if (!input->number_of_ants)
+			input->number_of_ants = number_of_ants;
+		create_ants(input);
+		newline = ft_itoa(input->number_of_ants);
+		add_valid_input_line(input->valid_input_lines, newline);
+		ft_strdel(&newline);
+	}
+	return ;
 }

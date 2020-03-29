@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 05:31:14 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 09:34:12 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
 void						read_instruction_data(char *line, t_input *input);
 t_ant						*get_ant(char *name, t_input *input);
-void						create_ants(t_input *input, size_t number_of_ants);
+void						create_ants(t_input *input);
 void						print_instruction(t_input *input);
 int							move_ant(t_instruction *instruction);
 int							validate_instructions(t_input *input);
@@ -215,5 +215,9 @@ int							move_ant_next_room(t_report *report, size_t c,
 void						release_result(t_result *result);
 void						print_result(t_input *input, t_result *result);
 void						select_algorithms(t_list **algorithm_lst);
+void						read_num_of_ants(char *line, t_input *input,
+													t_read_status *read_status);
+void						add_valid_input_line(t_list **valid_input_lines,
+																	char *line);
 
 #endif
