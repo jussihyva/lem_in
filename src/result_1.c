@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/28 21:27:25 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 12:20:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,6 @@ void			print_path(t_report *report)
 	}
 	ft_printf("#\n");
 	return ;
-}
-
-t_report		*initialize_report(t_input *input)
-{
-	t_report		*report;
-
-	report = (t_report *)ft_memalloc(sizeof(*report));
-	report->error = 0;
-	report->opt = input->opt;
-	report->lst_of_valid_paths =
-				(t_list **)ft_memalloc(sizeof(*report->lst_of_valid_paths));
-	report->ant_array = input->ant_array;
-	report->number_of_ants = input->number_of_ants;
-	report->end_room_ptr = input->end_room_ptr;
-	return (report);
 }
 
 void			print_input_lines(t_input *input)

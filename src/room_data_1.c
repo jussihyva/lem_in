@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_data_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/27 10:10:56 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 12:28:52 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,7 @@ static t_read_status	validate_room_data(char *line, t_input *input,
 	{
 		room_ptr = add_room(splitted_line, input);
 		if (read_status == e_read_start_room_data)
-		{
 			input->start_room_ptr = *room_ptr;
-			update_ants(input->ant_array, input->number_of_ants,
-														input->start_room_ptr);
-		}
 		else if (read_status == e_read_end_room_data)
 			input->end_room_ptr = *room_ptr;
 	}

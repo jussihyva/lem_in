@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 10:01:04 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 13:47:56 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int				is_valid_line(t_input *input, char *line,
 		return (1);
 }
 
-static void				parse_line(char *line, t_input *input,
+static void				parse_line(char *line, t_input *input, t_result *result,
 										t_read_status *read_status, t_app app)
 {
 	input->input_line_cnt++;
@@ -55,7 +55,7 @@ static void				parse_line(char *line, t_input *input,
 			else if (*read_status == e_read_connection_data)
 				read_connection_data(line, input, read_status, app);
 			else if (*read_status == e_read_instruction_data)
-				read_instruction_data(line, input);
+				read_instruction_data(line, input, result);
 		}
 	}
 	ft_strdel(&line);
@@ -77,7 +77,7 @@ static void				init_input_structure(t_input *input)
 	input->algorithm_lst =
 				(t_list **)ft_memalloc(sizeof(*input->algorithm_lst));
 	input->number_of_ants = 0;
-	input->ant_array = NULL;
+//	input->ant_array = NULL;
 	input->room_array = NULL;
 	input->input_file = NULL;
 	input->num_of_rooms = 0;
@@ -85,8 +85,8 @@ static void				init_input_structure(t_input *input)
 	return ;
 }
 
-void					read_input_data(t_input *input, int *argc, char ***argv,
-																	t_app app)
+void					read_input_data(t_input *input, t_result *result,
+											int *argc, char ***argv, t_app app)
 {
 	t_read_status	read_status;
 	char			*line;
@@ -108,7 +108,7 @@ void					read_input_data(t_input *input, int *argc, char ***argv,
 		read_status = e_read_num_of_ants;
 		while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
 												read_status != e_stop_reading)
-			parse_line(line, input, &read_status, app);
+			parse_line(line, input, result, &read_status, app);
 		ft_strdel(&line);
 	}
 	return ;

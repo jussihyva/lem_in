@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 10:02:26 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 12:24:07 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void				read_num_of_ants(char *line, t_input *input,
 	{
 		if (!input->number_of_ants)
 			input->number_of_ants = number_of_ants;
-		create_ants(input);
+//		create_ants(input);
 		newline = ft_itoa(input->number_of_ants);
 		add_valid_input_line(input->valid_input_lines, newline);
 		ft_strdel(&newline);
