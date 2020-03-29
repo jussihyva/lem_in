@@ -6,11 +6,20 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 05:30:49 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/29 05:30:59 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 09:23:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void				add_valid_input_line(t_list **valid_input_lines, char *line)
+{
+	t_list			*elem;
+
+	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+	ft_lstadd(valid_input_lines, elem);
+	return ;
+}
 
 void				select_algorithms(t_list **algorithm_lst)
 {

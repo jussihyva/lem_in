@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ants_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/27 09:35:36 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 09:38:13 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,11 @@ static void			add_ants(t_input *input, size_t *c,
 	return ;
 }
 
-void				create_ants(t_input *input, size_t number_of_ants)
+void				create_ants(t_input *input)
 {
 	size_t			c;
 	char			*ant_id;
-	char			*newline;
-	t_list			*elem;
 
-	if (!input->number_of_ants)
-		input->number_of_ants = number_of_ants;
-	newline = ft_itoa(input->number_of_ants);
-	elem = ft_lstnew(newline, sizeof(*newline) * (ft_strlen(newline) + 1));
-	ft_strdel(&newline);
-	ft_lstadd(input->valid_input_lines, elem);
 	input->ant_array = (t_ant **)ft_memalloc(sizeof(*input->ant_array) *
 														input->number_of_ants);
 	c = -1;

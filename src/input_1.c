@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 05:55:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 10:01:04 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,6 @@ static int				is_valid_line(t_input *input, char *line,
 		return (1);
 }
 
-static void				read_num_of_ants(char *line, t_input *input,
-													t_read_status *read_status)
-{
-	char			*endptr;
-	t_list			*elem;
-	size_t			number_of_ants;
-
-	if (line[0] == '#')
-	{
-		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-		ft_lstadd(input->valid_input_lines, elem);
-	}
-	else
-	{
-		*read_status = e_read_room_data;
-		number_of_ants = ft_strtoi(line, &endptr, 10);
-		if (errno || *endptr)
-		{
-			input->error = num_of_ants_error;
-			set_error(input, line, num_of_ants_error, "#ERROR ");
-			elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-			ft_lstadd(input->valid_input_lines, elem);
-		}
-		else
-			create_ants(input, number_of_ants);
-	}
-	return ;
-}
-
 static void				parse_line(char *line, t_input *input,
 										t_read_status *read_status, t_app app)
 {
@@ -69,7 +40,12 @@ static void				parse_line(char *line, t_input *input,
 	if (is_valid_line(input, line, *read_status))
 	{
 		if (*read_status == e_read_num_of_ants)
-			read_num_of_ants(line, input, read_status);
+		{
+			if (line[0] == '#')
+				add_valid_input_line(input->valid_input_lines, line);
+			else
+				read_num_of_ants(line, input, read_status);
+		}
 		else
 		{
 			if (*read_status == e_read_room_data ||
