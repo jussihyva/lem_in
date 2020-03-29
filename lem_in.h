@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/28 21:32:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 05:31:14 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct				s_input
 	t_room			**room_array;
 	t_list			**instruction_line_lst;
 	size_t			num_of_rooms;
+	t_list			**algorithm_lst;
 }							t_input;
 
 typedef enum				e_validity
@@ -213,5 +214,6 @@ int							move_ant_next_room(t_report *report, size_t c,
 														int *first_instruction);
 void						release_result(t_result *result);
 void						print_result(t_input *input, t_result *result);
+void						select_algorithms(t_list **algorithm_lst);
 
 #endif
