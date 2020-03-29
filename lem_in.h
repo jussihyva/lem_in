@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 09:34:12 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 14:08:48 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct				s_input
 	char			*input_file;
 	size_t			input_line_cnt;
 	t_list			**valid_input_lines;
-	t_ant			**ant_array;
+//	t_ant			**ant_array;
 	size_t			number_of_ants;
 	t_room			*start_room_ptr;
 	t_room			*end_room_ptr;
@@ -132,6 +132,7 @@ typedef struct				s_report
 	t_opt			opt;
 	t_list			**lst_of_valid_paths;
 	size_t			connection_counter;
+	t_room			*start_room_ptr;
 	t_room			*end_room_ptr;
 	size_t			number_of_paths;
 	t_ant			**ant_array;
@@ -185,7 +186,7 @@ t_room						**create_room_array_2(t_input *input);
 void						set_error(t_input *input, char *line,
 											t_input_error error, char *text);
 void						print_path(t_report *report);
-void						put_ants_to_paths(t_input *input, t_report *report);
+void						put_ants_to_paths(t_report *report);
 t_valid_path				*create_valid_path(t_list **path,
 														t_validity validity);
 void						delete_valid_path(t_report *report, t_list *elem);
@@ -198,18 +199,17 @@ t_validity					add_rooms_to_path(t_input *input, t_list **path,
 																	int offset);
 void						finalize_path_selection(t_input *input,
 							t_report *report, int *offset);
-void						read_input_data(t_input *input, int *argc,
-													char ***argv, t_app app);
+void						read_input_data(t_input *input, t_result *result,
+											int *argc, char ***argv, t_app app);
 void						print_error(t_input *input);
 void						print_input_lines(t_input *input);
-void						read_instruction_data(char *line, t_input *input);
-t_ant						*get_ant(char *name, t_input *input);
-void						create_ants(t_input *input);
+void						read_instruction_data(char *line, t_input *input,
+															t_report *report);
+t_ant						*get_ant(char *name, t_report *report);
+void						create_ants(t_report *report);
 void						print_instruction(t_input *input);
 int							move_ant(t_instruction *instruction);
 int							validate_instructions(t_input *input);
-void						update_ants(t_ant **ant_array,
-								size_t number_of_ants, t_room *start_room_ptr);
 int							move_ant_next_room(t_report *report, size_t c,
 														int *first_instruction);
 void						release_result(t_result *result);

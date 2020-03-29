@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_paths_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/27 08:47:59 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 12:43:11 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int						select_paths(t_input *input, t_report *report)
 		preliminary_path_selection(input, report, max_num_of_paths, &offset);
 		finalize_path_selection(input, report, &offset);
 		if (report->number_of_paths)
-			put_ants_to_paths(input, report);
+			put_ants_to_paths(report);
 		else
 		{
 			input->error = no_path_available;

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 07:03:37 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/29 13:44:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int						main(int argc, char **argv)
 	t_result		result;
 
 	result.report_lst = (t_list **)ft_memalloc(sizeof(*result.report_lst));
-	read_input_data(&input, &argc, &argv, e_lem_in);
+	read_input_data(&input, &result, &argc, &argv, e_lem_in);
 	return_code = 1;
 	if (input.error != invalid_connection_data && input.error)
 		print_error(&input);

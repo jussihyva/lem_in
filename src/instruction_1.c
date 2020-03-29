@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instruction_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/27 09:11:51 by pi               ###   ########.fr       */
+/*   Updated: 2020/03/29 14:08:19 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ void					print_instruction(t_input *input)
 }
 
 static int				add_instruction(char *instruction_string,
-									t_input *input, t_list **instruction_lst)
+					t_input *input, t_report *report, t_list **instruction_lst)
 {
 	t_list				*elem;
 	char				**instruction_array;
 	size_t				num_of_elem;
-	int					result;
+	int					validity_result;
 	t_instruction		instruction;
 
 	instruction_array = ft_strsplit(instruction_string, '-');
@@ -81,17 +81,18 @@ static int				add_instruction(char *instruction_string,
 	if (num_of_elem == 2)
 	{
 		instruction.room = get_room(instruction_array[1], input);
-		instruction.ant = get_ant(instruction_array[0], input);
-		result = 1;
+		instruction.ant = get_ant(instruction_array[0], report);
+		validity_result = 1;
 		elem = ft_lstnew(&instruction, sizeof(instruction));
 		ft_lstadd_e(instruction_lst, elem);
 	}
 	else
-		result = 0;
-	return (result);
+		validity_result = 0;
+	return (validity_result);
 }
 
-static void				split_instruction_line(char *line, t_input *input)
+static void				split_instruction_line(char *line, t_input *input,
+															t_report *report)
 {
 	t_list					*elem;
 	char					**instruction_string_array;
@@ -105,7 +106,7 @@ static void				split_instruction_line(char *line, t_input *input)
 	result = 1;
 	c = -1;
 	while (instruction_string_array[++c] && result)
-		result = add_instruction(instruction_string_array[c], input,
+		result = add_instruction(instruction_string_array[c], input, report,
 											instruction_line.instruction_lst);
 	if (*instruction_line.instruction_lst)
 	{
@@ -116,7 +117,8 @@ static void				split_instruction_line(char *line, t_input *input)
 	return ;
 }
 
-void					read_instruction_data(char *line, t_input *input)
+void					read_instruction_data(char *line, t_input *input,
+															t_report *report)
 {
 	t_list					*elem;
 
@@ -126,7 +128,7 @@ void					read_instruction_data(char *line, t_input *input)
 	{
 		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
 		ft_lstadd(input->valid_input_lines, elem);
-		split_instruction_line(line, input);
+		split_instruction_line(line, input, report);
 	}
 	return ;
 }
