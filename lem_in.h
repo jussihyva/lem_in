@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/30 10:22:56 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 12:25:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ t_room						**create_room_array_2(t_input *input);
 void						set_error(t_input *input, char *line,
 											t_input_error error, char *text);
 void						print_path(t_output *output);
-void						put_ants_to_paths(t_output *output);
+int							put_ants_to_paths(t_output *output);
 t_valid_path				*create_valid_path(t_list **path,
 														t_validity validity);
 void						delete_valid_path(t_output *output, t_list *elem);
