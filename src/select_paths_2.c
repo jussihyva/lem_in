@@ -6,29 +6,25 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 18:59:48 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 06:16:49 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-size_t					count_max_num_of_paths(t_input *input)
+size_t					count_max_num_of_paths(t_output *output)
 {
 	size_t			max_num_of_paths;
 
-	if ((max_num_of_paths = input->number_of_ants))
-	{
-		if (input->start_room_ptr->num_of_connections < max_num_of_paths)
-			max_num_of_paths = input->start_room_ptr->num_of_connections;
-		if (input->end_room_ptr->num_of_connections < max_num_of_paths)
-			max_num_of_paths = input->end_room_ptr->num_of_connections;
-	}
-	else
-		input->error = num_of_ants_error;
+	max_num_of_paths = output->number_of_ants;
+	if (output->start_room_ptr->num_of_connections < max_num_of_paths)
+		max_num_of_paths = output->start_room_ptr->num_of_connections;
+	if (output->end_room_ptr->num_of_connections < max_num_of_paths)
+		max_num_of_paths = output->end_room_ptr->num_of_connections;
 	return (max_num_of_paths);
 }
 
-static t_valid_path		*find_shortest_path(t_input *input, int offset)
+static t_valid_path		*find_shortest_path(t_output *output, int offset)
 {
 	t_valid_path	*valid_path;
 	t_list			**path;
@@ -36,11 +32,11 @@ static t_valid_path		*find_shortest_path(t_input *input, int offset)
 	t_validity		validity;
 
 	path = (t_list **)ft_memalloc(sizeof(*path));
-	ft_lstadd_e(path, ft_lstnew(&input->start_room_ptr,
-											sizeof(input->start_room_ptr)));
-	adj_room_elem = input->start_room_ptr->connection_lst;
-	input->start_room_ptr->is_visited = 1;
-	validity = add_rooms_to_path(input, path, offset);
+	ft_lstadd_e(path, ft_lstnew(&output->start_room_ptr,
+											sizeof(output->start_room_ptr)));
+	adj_room_elem = output->start_room_ptr->connection_lst;
+	output->start_room_ptr->is_visited = 1;
+	validity = add_rooms_to_path(output, path, offset);
 	if (validity != no_room)
 		valid_path = create_valid_path(path, validity);
 	else
@@ -52,14 +48,14 @@ static t_valid_path		*find_shortest_path(t_input *input, int offset)
 	return (valid_path);
 }
 
-void					preliminary_path_selection(t_input *input,
-						t_output *output, size_t max_num_of_paths, int *offset)
+void					preliminary_path_selection(t_output *output,
+										size_t max_num_of_paths, int *offset)
 {
 	t_valid_path	*valid_path;
 
 	while (output->number_of_paths < max_num_of_paths)
 	{
-		valid_path = find_shortest_path(input, *offset);
+		valid_path = find_shortest_path(output, *offset);
 		if (valid_path)
 		{
 			output->number_of_paths++;
@@ -75,8 +71,7 @@ void					preliminary_path_selection(t_input *input,
 	return ;
 }
 
-void					finalize_path_selection(t_input *input,
-						t_output *output, int *offset)
+void					finalize_path_selection(t_output *output, int *offset)
 {
 	t_list			*elem;
 	t_list			*tmp_elem;
@@ -91,7 +86,7 @@ void					finalize_path_selection(t_input *input,
 			valid_path = *(t_valid_path **)elem->content;
 			if (valid_path->validity == many)
 			{
-				valid_path->validity = add_rooms_to_path(input,
+				valid_path->validity = add_rooms_to_path(output,
 													valid_path->path, *offset);
 				if (valid_path->validity == no_room)
 					delete_valid_path(output, elem);

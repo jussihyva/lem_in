@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 19:48:05 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 06:32:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int				run_algorithms(t_input *input, t_result *result)
 		prepare_input_data(input);
 		output = initialize_output(input);
 		algorithm = *(t_algorithm *)algorithm_elem->content;
-		if (algorithm.function(input, output))
+		if (algorithm.function(output))
 		{
 			elem = ft_lstnew(output, sizeof(*output));
 			ft_lstadd(result->output_lst, elem);
@@ -70,6 +70,8 @@ int						main(int argc, char **argv)
 		calc_distance(&input);
 		if (!(return_code = run_algorithms(&input, &result)))
 			print_result(&input, &result);
+		else
+			print_error(&input);
 	}
 	release_result(&result);
 	release_input(&input);
