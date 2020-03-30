@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm_ford_fulkerson.c                         :+:      :+:    :+:   */
+/*   algorithm_ford_fulkerson_1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 05:53:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/30 12:40:29 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 14:55:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void		add_room_to_path(t_list **path, t_room *room)
 
 	elem = ft_lstnew(&room, sizeof(room));
 	ft_lstadd(path, elem);
-	ft_printf("%20s\n", room->name);
 	return ;
 }
 
@@ -52,7 +51,7 @@ static int		get_next_room(t_list **path, t_room *current_room,
 	return (return_code);
 }
 
-int				algorithm_ford_fulkerson(t_output *output)
+int				algorithm_ford_fulkerson_1(t_output *output)
 {
 	t_list			*elem;
 	t_room			*room;
@@ -60,18 +59,19 @@ int				algorithm_ford_fulkerson(t_output *output)
 	t_list			**path;
 	int				return_code;
 
-	path = (t_list **)ft_memalloc(sizeof(*path));
 	room = output->start_room_ptr;
-	if (get_next_room(path, room, room, output->end_room_ptr))
+	path = (t_list **)ft_memalloc(sizeof(*path));
+	while (get_next_room(path, room, room, output->end_room_ptr))
 	{
 		elem = ft_lstnew(&room, sizeof(room));
 		ft_lstadd(path, elem);
-		ft_printf("%20s\n", room->name);
+		valid_path = create_valid_path(path, valid);
+		elem = ft_lstnew(&valid_path, sizeof(valid_path));
+		ft_lstadd(output->lst_of_valid_paths, elem);
+		output->number_of_paths++;
+		path = (t_list **)ft_memalloc(sizeof(*path));
 	}
-	valid_path = create_valid_path(path, valid);
-	elem = ft_lstnew(&valid_path, sizeof(valid_path));
-	ft_lstadd(output->lst_of_valid_paths, elem);
-	output->number_of_paths++;
+	free(path);
 	return_code = put_ants_to_paths(output);
 	return (return_code);
 }
