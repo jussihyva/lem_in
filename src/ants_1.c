@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 19:28:07 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 12:29:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,31 +68,31 @@ t_ant				*get_ant(char *name, t_output *output)
 	return (ant);
 }
 
-void				put_ants_to_paths(t_output *output)
+int					put_ants_to_paths(t_output *output)
 {
 	t_list			*elem;
 	t_valid_path	*valid_path;
 	t_valid_path	*selected_valid_path;
+	int				return_code;
 	size_t			c;
 
+	return_code = 0;
+	selected_valid_path = NULL;
 	c = 0;
-	while (c < output->number_of_ants)
+	while (c < output->number_of_ants && output->number_of_paths)
 	{
 		elem = *(t_list **)output->lst_of_valid_paths;
-		selected_valid_path = *(t_valid_path **)elem->content;
 		while (elem)
 		{
+			return_code = 1;
 			valid_path = *(t_valid_path **)elem->content;
-			if (selected_valid_path)
-			{
-				if (valid_path->num_of_conn_to_end + valid_path->num_of_ants <
-						selected_valid_path->num_of_conn_to_end +
-											selected_valid_path->num_of_ants)
-					selected_valid_path = valid_path;
-			}
+			if (!selected_valid_path || (valid_path->num_of_conn_to_end +
+			valid_path->num_of_ants < selected_valid_path->num_of_conn_to_end +
+											selected_valid_path->num_of_ants))
+				selected_valid_path = valid_path;
 			elem = elem->next;
 		}
 		add_ants(output, &c, selected_valid_path);
 	}
-	return ;
+	return (return_code);
 }

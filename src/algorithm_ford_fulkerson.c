@@ -6,66 +6,72 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 05:53:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/30 11:03:03 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 12:40:29 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-// static int	get_next_room(t_room *current_room, t_room *start_room,
-// 															t_room *end_room)
-// {
-// 	int				return_code;
-// 	t_list			*connection_elem;
-
-// 	connection_elem = room->connection_lst;
-// 	while (connection_elem && room != output->end_room_ptr)
-// 	{
-// 	}
-// }
-
-int			algorithm_ford_fulkerson(t_output *output)
+static void		add_room_to_path(t_list **path, t_room *room)
 {
+	t_list			*elem;
+
+	elem = ft_lstnew(&room, sizeof(room));
+	ft_lstadd(path, elem);
+	ft_printf("%20s\n", room->name);
+	return ;
+}
+
+static int		get_next_room(t_list **path, t_room *current_room,
+										t_room *start_room, t_room *end_room)
+{
+	int				return_code;
 	t_list			*connection_elem;
+	t_room			*next_room;
+
+	return_code = 0;
+	current_room->is_visited = 1;
+	connection_elem = current_room->connection_lst;
+	next_room = NULL;
+	while (connection_elem && !return_code)
+	{
+		next_room = *(t_room **)connection_elem->content;
+		if (next_room == end_room)
+		{
+			add_room_to_path(path, next_room);
+			return_code = 1;
+		}
+		else if (!next_room->is_visited && next_room != start_room)
+		{
+			if ((return_code = get_next_room(path, next_room, start_room,
+																	end_room)))
+				add_room_to_path(path, next_room);
+		}
+		connection_elem = connection_elem->next;
+	}
+	return (return_code);
+}
+
+int				algorithm_ford_fulkerson(t_output *output)
+{
 	t_list			*elem;
 	t_room			*room;
 	t_valid_path	*valid_path;
 	t_list			**path;
-	t_validity		validity;
 	int				return_code;
 
 	path = (t_list **)ft_memalloc(sizeof(*path));
 	room = output->start_room_ptr;
-	ft_printf("%20s\n", room->name);
-	elem = ft_lstnew(&room, sizeof(room));
-	ft_lstadd_e(path, elem);
-	connection_elem = room->connection_lst;
-	while (connection_elem && room != output->end_room_ptr)
+	if (get_next_room(path, room, room, output->end_room_ptr))
 	{
-		room = *(t_room **)connection_elem->content;
-		if (room->is_visited || room == output->start_room_ptr)
-			connection_elem = connection_elem->next;
-		else
-		{
-			ft_printf("%20s\n", room->name);
-			elem = ft_lstnew(&room, sizeof(room));
-			ft_lstadd_e(path, elem);
-			if (room != output->end_room_ptr)
-				room->is_visited = 1;
-			connection_elem = room->connection_lst;
-		}
+		elem = ft_lstnew(&room, sizeof(room));
+		ft_lstadd(path, elem);
+		ft_printf("%20s\n", room->name);
 	}
-	validity = valid;
-	valid_path =create_valid_path(path, validity);
+	valid_path = create_valid_path(path, valid);
 	elem = ft_lstnew(&valid_path, sizeof(valid_path));
 	ft_lstadd(output->lst_of_valid_paths, elem);
 	output->number_of_paths++;
-	if (output->number_of_paths)
-	{
-		put_ants_to_paths(output);
-		return_code = 1;
-	}
-	else
-		return_code = 0;
+	return_code = put_ants_to_paths(output);
 	return (return_code);
 }
