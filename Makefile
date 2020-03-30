@@ -6,7 +6,7 @@
 #    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/03/29 19:59:25 by ubuntu           ###   ########.fr        #
+#    Updated: 2020/03/30 06:38:23 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC_FILES	=	input_1.c input_2.c ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 				result_1.c result_2.c connection_data.c ft_step_args.c \
 				calc_distance.c ants_1.c ants_2.c \
 				select_paths_1.c select_paths_2.c select_paths_3.c \
-				instruction_1.c memory_1.c memory_2.c report.c
+				instruction_1.c memory_1.c memory_2.c report.c \
+				algorithm_ford_fulkerson.c
 
 OBJ_FOLDER	=	obj
 OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(patsubst %.c, %.o, $(SRC_FILES)))

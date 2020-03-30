@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 18:57:22 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 06:25:56 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 	return (best_room);
 }
 
-t_validity				add_rooms_to_path(t_input *input, t_list **path,
+t_validity				add_rooms_to_path(t_output *output, t_list **path,
 																	int offset)
 {
 	t_room			*best_room;
@@ -72,9 +72,9 @@ t_validity				add_rooms_to_path(t_input *input, t_list **path,
 		path_elem = path_elem->next;
 	adj_room_elem = (*(t_room **)path_elem->content)->connection_lst;
 	best_room = NULL;
-	while (best_room != input->end_room_ptr)
+	while (best_room != output->end_room_ptr)
 	{
-		best_room = get_next_best_room(adj_room_elem, input->end_room_ptr,
+		best_room = get_next_best_room(adj_room_elem, output->end_room_ptr,
 															&validity, offset);
 		if ((validity == valid_room) || (offset == -1 && validity == many))
 		{
@@ -89,26 +89,24 @@ t_validity				add_rooms_to_path(t_input *input, t_list **path,
 	return (validity);
 }
 
-int						select_paths(t_input *input, t_output *output)
+int						select_paths(t_output *output)
 {
 	size_t			max_num_of_paths;
 	int				offset;
+	int				return_code;
 
-	if ((max_num_of_paths = count_max_num_of_paths(input)))
+	return_code = 0;
+	if ((max_num_of_paths = count_max_num_of_paths(output)))
 	{
 		offset = max_num_of_paths - 2;
 		output->number_of_paths = 0;
-		preliminary_path_selection(input, output, max_num_of_paths, &offset);
-		finalize_path_selection(input, output, &offset);
+		preliminary_path_selection(output, max_num_of_paths, &offset);
+		finalize_path_selection(output, &offset);
 		if (output->number_of_paths)
-			put_ants_to_paths(output);
-		else
 		{
-			input->error = no_path_available;
-			return (0);
+			put_ants_to_paths(output);
+			return_code = 1;
 		}
-		return (1);
 	}
-	else
-		return (0);
+	return (return_code);
 }

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 19:53:11 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 06:37:13 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ typedef struct				s_output
 
 typedef struct				s_algorithm
 {
-	void			*(*function)(t_input *input, t_output *output);
+	void			*(*function)(t_output *output);
 }							t_algorithm;
 
 typedef struct				s_result
@@ -176,7 +176,7 @@ void						release_output(t_output *output);
 void						release_input(t_input *input);
 void						validate_adj_rooms(size_t *connection_counter,
 												t_input *input, t_room *room);
-int							select_paths(t_input *input, t_output *output);
+int							select_paths(t_output *output);
 t_output					*initialize_output(t_input *input);
 void						transportation(t_output *output);
 void						print_instructions(t_output *output);
@@ -191,14 +191,13 @@ t_valid_path				*create_valid_path(t_list **path,
 														t_validity validity);
 void						delete_valid_path(t_output *output, t_list *elem);
 void						update_valid_path(t_valid_path *valid_path);
-size_t						count_max_num_of_paths(t_input *input);
-void						preliminary_path_selection(t_input *input,
-									t_output *output, size_t max_num_of_paths,
-																int *offset);
-t_validity					add_rooms_to_path(t_input *input, t_list **path,
+size_t						count_max_num_of_paths(t_output *output);
+void						preliminary_path_selection(t_output *output,
+										size_t max_num_of_paths, int *offset);
+t_validity					add_rooms_to_path(t_output *output, t_list **path,
 																	int offset);
-void						finalize_path_selection(t_input *input,
-												t_output *output, int *offset);
+void						finalize_path_selection(t_output *output,
+																int *offset);
 void						read_input_data(t_input *input, t_output *output,
 													int *argc, char ***argv);
 void						print_error(t_input *input);
@@ -220,5 +219,6 @@ void						read_num_of_ants(char *line, t_input *input,
 void						add_valid_input_line(t_list **valid_input_lines,
 																	char *line);
 void						init_input_structure(t_input *input, t_app app);
+int							algorithm_ford_fulkerson(t_output *output);
 
 #endif
