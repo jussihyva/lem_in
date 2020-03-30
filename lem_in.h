@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/30 06:37:13 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 10:22:56 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ typedef enum				e_validity
 {
 	no_room = 0,
 	valid_room,
+	valid,
+	invalid,
 	many
 }							t_validity;
 
