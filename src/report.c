@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 12:20:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/29 19:56:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/30 10:35:09 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_output		*initialize_output(t_input *input)
 	output->number_of_ants = input->number_of_ants;
 	output->end_room_ptr = input->end_room_ptr;
 	output->start_room_ptr = input->start_room_ptr;
+	output->number_of_paths = 0;
 	create_ants(output);
 	return (output);
 }
