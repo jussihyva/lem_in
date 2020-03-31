@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 14:55:23 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/31 00:55:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 01:10:50 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,19 @@ static int		get_next_room(t_list **lst_of_valid_paths, t_room *current_room,
 	num_of_paths = count_num_of_paths(lst_of_valid_paths);
 	return_code = 0;
 	current_room->is_visited = 1;
-	connection_elem = current_room->connection_lst;
-	while (connection_elem)
+	if (current_room->num_of_conn_to_end == 1)
+		return_code = create_new_valid_path(lst_of_valid_paths, end_room);
+	else
 	{
-		next_room = *(t_room **)connection_elem->content;
-		if (next_room == end_room)
-			return_code = create_new_valid_path(lst_of_valid_paths, next_room);
-		else if (!next_room->is_visited && next_room != start_room)
-			return_code |= get_next_room(lst_of_valid_paths, next_room,
+		connection_elem = current_room->connection_lst;
+		while (connection_elem)
+		{
+			next_room = *(t_room **)connection_elem->content;
+			if (!next_room->is_visited && next_room != start_room)
+				return_code |= get_next_room(lst_of_valid_paths, next_room,
 														start_room, end_room);
-		connection_elem = connection_elem->next;
+			connection_elem = connection_elem->next;
+		}
 	}
 	if (return_code)
 	{
