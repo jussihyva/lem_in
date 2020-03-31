@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/30 06:32:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 01:41:50 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int						main(int argc, char **argv)
 	return_code = 1;
 	if (input.error != invalid_connection_data && input.error)
 		print_error(&input);
-	else
+	else if (input.end_room_ptr && input.start_room_ptr)
 	{
 		calc_distance(&input);
 		if (!(return_code = run_algorithms(&input, &result)))
@@ -73,6 +73,8 @@ int						main(int argc, char **argv)
 		else
 			print_error(&input);
 	}
+	else
+		print_error(&input);
 	release_result(&result);
 	release_input(&input);
 	if (input.opt & leaks)
