@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/31 10:27:12 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 11:49:29 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void			add_line(t_list **instruction_line_lst, char *line)
 
 	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
 	ft_lstadd_e(instruction_line_lst, elem);
-//	ft_printf(line);
 	return ;
 }
 
