@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/30 22:22:02 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 10:24:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void			print_output(t_input *input, t_output *output)
 	}
 	print_input_lines(input);
 	print_path(output);
+	update_instructions(output);
 	print_instructions(output);
 	if (output->opt && output->opt & verbose)
 		print_path(output);

@@ -6,11 +6,21 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/29 18:50:25 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 10:27:12 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void			add_line(t_list **instruction_line_lst, char *line)
+{
+	t_list			*elem;
+
+	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+	ft_lstadd_e(instruction_line_lst, elem);
+//	ft_printf(line);
+	return ;
+}
 
 void			print_error(t_input *input)
 {
@@ -45,19 +55,29 @@ void			set_error(t_input *input, char *line, t_input_error error,
 	return ;
 }
 
-void			print_instructions(t_output *output)
+static void		add_num_of_lines(t_output *output)
+{
+	char			*line;
+
+	line = (char *)ft_memalloc(sizeof(*line) * 10000);
+	ft_sprintf(line, "#lines: %d\n", output->number_of_instruction_line - 1);
+	add_line(output->instruction_line_lst, line);
+	ft_strdel(&line);
+	return ;
+}
+
+void			update_instructions(t_output *output)
 {
 	size_t			c;
 	t_list			*elem;
 	int				all_ants_at_the_end;
-	size_t			line_c;
 	int				first;
 
-	line_c = 0;
+	output->number_of_instruction_line = 0;
 	all_ants_at_the_end = 0;
 	while (!all_ants_at_the_end)
 	{
-		ft_printf("\n");
+		add_line(output->instruction_line_lst, "\n");
 		first = 1;
 		all_ants_at_the_end = 1;
 		c = -1;
@@ -67,22 +87,20 @@ void			print_instructions(t_output *output)
 			if (*(t_room **)elem->content != output->end_room_ptr)
 				all_ants_at_the_end &= move_ant_next_room(output, c, &first);
 		}
-		line_c++;
+		output->number_of_instruction_line++;
 	}
-	ft_printf("#lines: %d\n", line_c - 1);
+	add_num_of_lines(output);
 	return ;
 }
 
-void			print_result(t_input *input, t_result *result)
+void			print_instructions(t_output *output)
 {
-	t_list			*elem;
-	t_output		*output;
+	t_list		*elem;
 
-	elem = *result->output_lst;
+	elem = *output->instruction_line_lst;
 	while (elem)
 	{
-		output = (t_output *)elem->content;
-		print_output(input, output);
+		ft_printf((char *)elem->content);
 		elem = elem->next;
 	}
 	return ;
