@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/30 12:29:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 14:17:21 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,19 @@ void				create_ants(t_output *output)
 		output->ant_array[c]->name = ft_strjoin("L", ant_id);
 		output->ant_array[c]->current_room = output->start_room_ptr;
 		ft_strdel(&ant_id);
+	}
+	return ;
+}
+
+void				set_ants_to_start_room(t_output *output)
+{
+	size_t			c;
+
+	c = -1;
+	while (++c < output->number_of_ants)
+	{
+		output->ant_array[c]->current_room_elem = *output->ant_array[c]->path;
+		output->ant_array[c]->current_room = output->start_room_ptr;
 	}
 	return ;
 }

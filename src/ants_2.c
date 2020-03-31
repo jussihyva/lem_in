@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/31 10:06:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 14:43:41 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ int					move_ant(t_instruction *instruction)
 	elem = current_room->connection_lst;
 	while (elem && !result)
 	{
-		if (*(t_room **)elem->content == next_room)
+		ft_printf("ANT: %s-%s  ", instruction->ant->name, instruction->room->name);
+		if (*(t_room **)elem->content == next_room && !next_room->ant)
 		{
 			result = 1;
 			ant->current_room = next_room;
+			next_room->ant = ant;
+			current_room->ant = NULL;
 		}
 		elem = elem->next;
 	}

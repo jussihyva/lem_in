@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 10:12:47 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/31 10:13:56 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 13:48:59 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,23 @@ void			print_result(t_input *input, t_result *result)
 {
 	t_list			*elem;
 	t_output		*output;
+	t_output		*best_output;	
 
+	best_output = NULL;
 	elem = *result->output_lst;
 	while (elem)
 	{
 		output = (t_output *)elem->content;
-		print_output(input, output);
+		if (!best_output || output->number_of_instruction_line <
+										best_output->number_of_instruction_line)
+			best_output = output;
+		if (output->opt && output->opt & verbose)
+			print_output(input, output);
 		elem = elem->next;
+	}
+	if (best_output && !(output->opt && output->opt & verbose))
+	{
+		print_output(input, best_output);
 	}
 	return ;
 }

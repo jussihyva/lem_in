@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/31 11:49:29 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 14:36:49 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,18 +202,19 @@ t_validity					add_rooms_to_path(t_output *output, t_list **path,
 																	int offset);
 void						finalize_path_selection(t_output *output,
 																int *offset);
-void						read_input_data(t_input *input, t_output *output,
+void						read_input_data(t_input *input, t_output **output,
 													int *argc, char ***argv);
 void						print_error(t_input *input);
+void						print_ok(t_input *input);
 void						print_input_lines(t_input *input);
 void						read_instruction_data(char *line, t_input *input,
 															t_output *output);
 t_ant						*get_ant(char *name, t_output *output);
 void						create_ants(t_output *output);
-int							validate_instructions(t_input *input);
+int							validate_instructions(t_output *output);
 void						update_instructions(t_output *output);
 void						print_instructions(t_output *output);
-void						print_instruction(t_input *input);
+void						print_instruction(t_output *output);
 int							move_ant(t_instruction *instruction);
 int							move_ant_next_room(t_output *output, size_t c,
 														int *first_instruction);
@@ -228,5 +229,6 @@ void						init_input_structure(t_input *input, t_app app);
 int							algorithm_ford_fulkerson_1(t_output *output);
 int							algorithm_ford_fulkerson_2(t_output *output);
 void						add_line(t_list **instruction_line_lst, char *line);
+void						set_ants_to_start_room(t_output *output);
 
 #endif

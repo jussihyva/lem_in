@@ -6,13 +6,13 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/31 12:09:26 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 14:30:59 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int						validate_instructions(t_input *input)
+int						validate_instructions(t_output *output)
 {
 	t_list					*instruction_line_elem;
 	t_list					*elem;
@@ -21,7 +21,7 @@ int						validate_instructions(t_input *input)
 	int						result;
 
 	result = 1;
-	instruction_line_elem = *input->instruction_line_lst;
+	instruction_line_elem = *output->instruction_line_lst;
 	while (instruction_line_elem && result)
 	{
 		instruction_line = (t_instruction_line *)instruction_line_elem->content;
@@ -29,8 +29,14 @@ int						validate_instructions(t_input *input)
 		while (elem && result)
 		{
 			instruction = (t_instruction *)elem->content;
+			ft_printf("ANT: %s-%s  ", instruction->ant->name, instruction->room->name);
 			if (!move_ant(instruction))
+			{
+				ft_printf("ANT: %s\n", instruction->ant->name);
 				result = 0;
+			}
+			else
+				ft_printf("\n");
 			elem = elem->next;
 		}
 		instruction_line_elem = instruction_line_elem->next;
@@ -38,7 +44,7 @@ int						validate_instructions(t_input *input)
 	return (result);
 }
 
-void					print_instruction(t_input *input)
+void					print_instruction(t_output *output)
 {
 	t_list					*instruction_line_elem;
 	t_list					*elem;
@@ -46,7 +52,7 @@ void					print_instruction(t_input *input)
 	char					*ant_name;
 	char					*room_name;
 
-	instruction_line_elem = *input->instruction_line_lst;
+	instruction_line_elem = *output->instruction_line_lst;
 	while (instruction_line_elem)
 	{
 		instruction_line = (t_instruction_line *)instruction_line_elem->content;
