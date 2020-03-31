@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 19:21:57 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/31 11:49:29 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 14:16:12 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ void			print_error(t_input *input)
 	}
 	else
 		ft_printf("ERROR\n");
+	return ;
+}
+
+void			print_ok(t_input *input)
+{
+	if (input->opt && input->opt & errors)
+	{
+		print_input_lines(input);
+		ft_printf("OK: %d\n", input->error);
+	}
+	else
+		ft_printf("OK\n");
 	return ;
 }
 
@@ -89,6 +101,7 @@ void			update_instructions(t_output *output)
 		output->number_of_instruction_line++;
 	}
 	add_num_of_lines(output);
+	set_ants_to_start_room(output);
 	return ;
 }
 

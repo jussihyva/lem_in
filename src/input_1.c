@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/31 12:07:24 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 14:36:25 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int				is_valid_line(t_input *input, char *line,
 		return (1);
 }
 
-static void				parse_line(char *line, t_input *input, t_output *output,
+static void				parse_line(char *line, t_input *input, t_output **output,
 													t_read_status *read_status)
 {
 	input->input_line_cnt++;
@@ -56,9 +56,9 @@ static void				parse_line(char *line, t_input *input, t_output *output,
 				read_connection_data(line, input, read_status);
 			else if (*read_status == e_read_instruction_data)
 			{
-				if (!output)
-					output = initialize_output(input);
-				read_instruction_data(line, input, output);
+				if (!*output)
+					*output = initialize_output(input);
+				read_instruction_data(line, input, *output);
 			}
 		}
 	}
@@ -89,7 +89,7 @@ void					init_input_structure(t_input *input, t_app app)
 	return ;
 }
 
-void					read_input_data(t_input *input, t_output *output,
+void					read_input_data(t_input *input, t_output **output,
 											int *argc, char ***argv)
 {
 	t_read_status	read_status;
