@@ -6,23 +6,26 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 19:56:16 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 10:06:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void			print_inst(int *first_instruction, char *ant_name,
+static char			*print_inst(int *first_instruction, char *ant_name,
 																char *room_name)
 {
+	char					*line;
+
+	line = (char *)ft_memalloc(sizeof(*line) * 10000);
 	if (*first_instruction)
 	{
-		ft_printf("%s-%s", ant_name, room_name);
+		ft_sprintf(line, "%s-%s", ant_name, room_name);
 		*first_instruction = 0;
 	}
 	else
-		ft_printf(" %s-%s", ant_name, room_name);
-	return ;
+		ft_sprintf(line, " %s-%s", ant_name, room_name);
+	return (line);
 }
 
 int					move_ant_next_room(t_output *output, size_t c,
@@ -31,14 +34,12 @@ int					move_ant_next_room(t_output *output, size_t c,
 	t_list					*elem;
 	t_room					*room;
 	t_room					*next_room;
-	int						all_ants_at_the_end;
+	char					*line;
 
-	all_ants_at_the_end = 0;
 	elem = output->ant_array[c]->current_room_elem->next;
 	next_room = *(t_room **)elem->content;
 	if (!next_room->ant || next_room == output->end_room_ptr)
 	{
-		all_ants_at_the_end = 0;
 		elem = output->ant_array[c]->current_room_elem;
 		room = *(t_room **)elem->content;
 		room->ant = NULL;
@@ -47,9 +48,12 @@ int					move_ant_next_room(t_output *output, size_t c,
 		room = *(t_room **)elem->content;
 		if (room != output->end_room_ptr)
 			room->ant = output->ant_array[c];
-		print_inst(first_instruction, output->ant_array[c]->name, room->name);
+		line = print_inst(first_instruction, output->ant_array[c]->name,
+																	room->name);
+		add_line(output->instruction_line_lst, line);
+		ft_strdel(&line);
 	}
-	return (all_ants_at_the_end);
+	return (0);
 }
 
 int					move_ant(t_instruction *instruction)

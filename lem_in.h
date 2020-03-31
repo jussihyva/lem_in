@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/30 14:58:05 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 10:28:40 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ typedef struct				s_output
 	int				error;
 	t_opt			opt;
 	t_list			**lst_of_valid_paths;
+	t_list			**instruction_line_lst;
+	size_t			number_of_instruction_line;
 	size_t			connection_counter;
 	t_room			*start_room_ptr;
 	t_room			*end_room_ptr;
@@ -181,7 +183,6 @@ void						validate_adj_rooms(size_t *connection_counter,
 int							select_paths(t_output *output);
 t_output					*initialize_output(t_input *input);
 void						transportation(t_output *output);
-void						print_instructions(t_output *output);
 t_room						**add_room(char **splitted_line, t_input *input);
 t_room						*get_room(char *name, t_input *input);
 t_room						**create_room_array_2(t_input *input);
@@ -208,9 +209,11 @@ void						read_instruction_data(char *line, t_input *input,
 															t_output *output);
 t_ant						*get_ant(char *name, t_output *output);
 void						create_ants(t_output *output);
+int							validate_instructions(t_input *input);
+void						update_instructions(t_output *output);
+void						print_instructions(t_output *output);
 void						print_instruction(t_input *input);
 int							move_ant(t_instruction *instruction);
-int							validate_instructions(t_input *input);
 int							move_ant_next_room(t_output *output, size_t c,
 														int *first_instruction);
 void						release_result(t_result *result);
@@ -223,5 +226,6 @@ void						add_valid_input_line(t_list **valid_input_lines,
 void						init_input_structure(t_input *input, t_app app);
 int							algorithm_ford_fulkerson_1(t_output *output);
 int							algorithm_ford_fulkerson_2(t_output *output);
+void						add_line(t_list **instruction_line_lst, char *line);
 
 #endif
