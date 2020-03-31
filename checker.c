@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 13:27:08 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 19:48:32 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 12:08:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int			main(int argc, char **argv)
 	t_output		*output;
 
 	init_input_structure(&input, e_checker);
+	output = NULL;
 	return_code = 0;
 	result.output_lst = (t_list **)ft_memalloc(sizeof(*result.output_lst));
-	output = NULL;
 	read_input_data(&input, output, &argc, &argv);
 	if (input.error)
 		print_error(&input);

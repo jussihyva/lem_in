@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/31 10:28:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 11:49:29 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef enum				e_input_error
 	invalid_connection_data,
 	input_file_missing,
 	num_of_ants_missing,
+	invalid_instruction_line,
 	no_path_available
 }							t_input_error;
 

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 19:03:02 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 12:09:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,17 @@ static int				add_instruction(char *instruction_string,
 	{
 		instruction.room = get_room(instruction_array[1], input);
 		instruction.ant = get_ant(instruction_array[0], output);
-		validity_result = 1;
-		elem = ft_lstnew(&instruction, sizeof(instruction));
-		ft_lstadd_e(instruction_lst, elem);
+		if (instruction.room && instruction.ant)
+		{
+			validity_result = 0;
+			elem = ft_lstnew(&instruction, sizeof(instruction));
+			ft_lstadd_e(instruction_lst, elem);
+		}
+		else
+			validity_result = invalid_instruction_line;
 	}
 	else
-		validity_result = 0;
+		validity_result = invalid_instruction_line;
 	return (validity_result);
 }
 
@@ -97,16 +102,15 @@ static void				split_instruction_line(char *line, t_input *input,
 	t_list					*elem;
 	char					**instruction_string_array;
 	size_t					c;
-	int						result;
 	t_instruction_line		instruction_line;
 
 	instruction_line.instruction_lst =
 			(t_list **)ft_memalloc(sizeof(*instruction_line.instruction_lst));
 	instruction_string_array = ft_strsplit(line, ' ');
-	result = 1;
+	input->error = 0;
 	c = -1;
-	while (instruction_string_array[++c] && result)
-		result = add_instruction(instruction_string_array[c], input, output,
+	while (instruction_string_array[++c] && !input->error)
+		input->error = add_instruction(instruction_string_array[c], input, output,
 											instruction_line.instruction_lst);
 	if (*instruction_line.instruction_lst)
 	{

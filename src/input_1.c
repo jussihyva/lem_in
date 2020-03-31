@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/03/29 19:52:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/03/31 12:07:24 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static void				parse_line(char *line, t_input *input, t_output *output,
 			else if (*read_status == e_read_connection_data)
 				read_connection_data(line, input, read_status);
 			else if (*read_status == e_read_instruction_data)
+			{
+				if (!output)
+					output = initialize_output(input);
 				read_instruction_data(line, input, output);
+			}
 		}
 	}
 	ft_strdel(&line);
