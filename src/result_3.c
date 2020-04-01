@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 10:12:47 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/31 13:48:59 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 18:19:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void			print_result(t_input *input, t_result *result)
 	while (elem)
 	{
 		output = (t_output *)elem->content;
+		update_instructions(output);
 		if (!best_output || output->number_of_instruction_line <
 										best_output->number_of_instruction_line)
 			best_output = output;
