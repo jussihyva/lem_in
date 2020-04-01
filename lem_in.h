@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/31 14:36:49 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 07:44:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef enum				e_input_error
 	input_file_missing,
 	num_of_ants_missing,
 	invalid_instruction_line,
+	incorrect_move,
 	no_path_available
 }							t_input_error;
 
@@ -211,11 +212,12 @@ void						read_instruction_data(char *line, t_input *input,
 															t_output *output);
 t_ant						*get_ant(char *name, t_output *output);
 void						create_ants(t_output *output);
-int							validate_instructions(t_output *output);
+int							validate_instructions(t_input *input);
 void						update_instructions(t_output *output);
 void						print_instructions(t_output *output);
 void						print_instruction(t_output *output);
-int							move_ant(t_instruction *instruction);
+int							move_ant(t_instruction *instruction,
+														t_room *end_room_ptr);
 int							move_ant_next_room(t_output *output, size_t c,
 														int *first_instruction);
 void						release_result(t_result *result);
