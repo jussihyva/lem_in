@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/04/01 07:30:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 12:36:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char			*print_inst(int *first_instruction, char *ant_name,
 		*first_instruction = 0;
 	}
 	else
-		ft_sprintf(line, " %s-%s", ant_name, room_name);
+		ft_sprintf(line, " %5s-%s", ant_name, room_name);
 	return (line);
 }
 
