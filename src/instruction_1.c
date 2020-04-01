@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 18:32:40 by pi                #+#    #+#             */
-/*   Updated: 2020/04/01 07:57:20 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 10:07:04 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static int				add_instruction(char *instruction_string,
 	}
 	else
 		validity_result = invalid_instruction_line;
+	ft_arraydel(instruction_array);
 	return (validity_result);
 }
 
