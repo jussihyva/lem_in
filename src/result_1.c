@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/01 12:31:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 18:18:40 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void			print_output(t_input *input, t_output *output)
 	}
 	print_input_lines(input);
 	print_path(output);
-	update_instructions(output);
 	print_instructions(output);
 	ft_printf("#paths: %d\n", output->number_of_paths);
 	return ;
