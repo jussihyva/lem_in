@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 13:27:08 by pi                #+#    #+#             */
-/*   Updated: 2020/03/31 14:36:25 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 08:08:50 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ int			main(int argc, char **argv)
 		print_error(&input);
 	else
 	{
-		print_instruction(output);
-		if (validate_instructions(output))
+		if (validate_instructions(&input))
 			print_ok(&input);
 		else
 			print_error(&input);
 	}
+	release_output(output);
+	release_input(&input);
+	if (input.opt & leaks)
+		system("leaks lem-in");
 	return (return_code);
 }
