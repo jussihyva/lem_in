@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 13:27:08 by pi                #+#    #+#             */
-/*   Updated: 2020/04/01 10:08:41 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 19:12:44 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int			main(int argc, char **argv)
 		else
 			print_error(&input);
 	}
-	release_output(output);
+	if (output)
+		release_output(output);
 	release_input(&input);
 	if (input.opt & leaks)
 		system("leaks lem-in");
