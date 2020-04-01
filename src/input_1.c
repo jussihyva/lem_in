@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/04/01 08:03:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/01 19:41:54 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void				parse_line(char *line, t_input *input, t_output **output,
 			else
 				read_num_of_ants(line, input, read_status);
 		}
-		else
+		else if (input->number_of_ants)
 		{
 			if (*read_status == e_read_room_data ||
 						*read_status == e_read_start_room_data ||
