@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/01 07:44:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/02 10:19:28 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ typedef struct				s_valid_path
 	t_validity		validity;
 	int				num_of_conn_to_end;
 	size_t			num_of_ants;
-	size_t			*visited_rooms;
+	size_t			**room_vector;
 }							t_valid_path;
 
 typedef struct				s_output
@@ -146,6 +146,7 @@ typedef struct				s_output
 	size_t			connection_counter;
 	t_room			*start_room_ptr;
 	t_room			*end_room_ptr;
+	size_t			num_of_rooms;
 	size_t			number_of_paths;
 	t_ant			**ant_array;
 	size_t			number_of_ants;

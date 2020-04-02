@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 14:55:23 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/01 20:04:01 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/02 10:34:32 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void		add_room_to_paths(t_list **lst_of_valid_paths, t_room *room,
 	return ;
 }
 
-static int		create_new_valid_path(t_list **lst_of_valid_paths, t_room *room)
+static int		create_new_valid_path(t_output *output, t_room *room)
 {
 	t_list			**path;
 	t_valid_path	*valid_path;
@@ -55,8 +55,11 @@ static int		create_new_valid_path(t_list **lst_of_valid_paths, t_room *room)
 	valid_path->num_of_conn_to_end++;
 	add_room_to_path(valid_path->path, room);
 	valid_path->id = id++;
+//	valid_path->room_vector =
+//					(size_t **)ft_memalloc(sizeof(*valid_path->room_vector) *
+//														output->num_of_rooms);
 	elem = ft_lstnew(&valid_path, sizeof(valid_path));
-	ft_lstadd_e(lst_of_valid_paths, elem);
+	ft_lstadd_e(output->lst_of_valid_paths, elem);
 	return (1);
 }
 
@@ -75,7 +78,7 @@ static size_t	count_num_of_paths(t_list **lst_of_valid_paths)
 	return (num_of_paths);
 }
 
-static int		get_next_room(t_list **lst_of_valid_paths, t_room *current_room,
+static int		get_next_room(t_output *output, t_room *current_room,
 										t_room *start_room, t_room *end_room)
 {
 	int				return_code;
@@ -83,11 +86,11 @@ static int		get_next_room(t_list **lst_of_valid_paths, t_room *current_room,
 	t_room			*next_room;
 	size_t			num_of_paths;
 
-	num_of_paths = count_num_of_paths(lst_of_valid_paths);
+	num_of_paths = count_num_of_paths(output->lst_of_valid_paths);
 	return_code = 0;
 	current_room->is_visited = 1;
 	if (current_room->num_of_conn_to_end == 1)
-		return_code = create_new_valid_path(lst_of_valid_paths, end_room);
+		return_code = create_new_valid_path(output, end_room);
 	else
 	{
 		connection_elem = current_room->connection_lst;
@@ -95,18 +98,35 @@ static int		get_next_room(t_list **lst_of_valid_paths, t_room *current_room,
 		{
 			next_room = *(t_room **)connection_elem->content;
 			if (!next_room->is_visited && next_room != start_room)
-				return_code |= get_next_room(lst_of_valid_paths, next_room,
+				return_code |= get_next_room(output, next_room,
 														start_room, end_room);
 			connection_elem = connection_elem->next;
 		}
 	}
 	if (return_code)
 	{
-		add_room_to_paths(lst_of_valid_paths, current_room, num_of_paths);
+		add_room_to_paths(output->lst_of_valid_paths, current_room, num_of_paths);
 		current_room->is_visited = 0;
 	}
 	return (return_code);
 }
+
+// static t_list	**select_valid_group_of_paths(t_output *output)
+// {
+// 	t_list		**path_lst;
+// 	t_list		*elem;
+// 	t_list		*new_elem;
+
+// 	path_lst = (t_list **)ft_memalloc(sizeof(*path_lst));
+// 	elem = *output->lst_of_valid_paths;
+// 	while (elem)
+// 	{
+// 		new_elem = ft_lstnew(elem->content, elem->content_size);
+// 		ft_lstadd_e(path_lst, new_elem);
+// 		elem = elem->next;
+// 	}
+// 	return (path_lst);
+// }
 
 int				algorithm_ford_fulkerson_2(t_output *output)
 {
@@ -116,10 +136,12 @@ int				algorithm_ford_fulkerson_2(t_output *output)
 
 	num_of_paths = 0;
 	room = output->start_room_ptr;
-	if (get_next_room(output->lst_of_valid_paths, room, room,
-														output->end_room_ptr))
+	if (get_next_room(output, room, room, output->end_room_ptr))
+	{
+//		output->lst_of_valid_paths = select_valid_group_of_paths(output);
 		output->number_of_paths =
 								count_num_of_paths(output->lst_of_valid_paths);
+	}
 	return_code = put_ants_to_paths(output);
 	return (return_code);
 }
