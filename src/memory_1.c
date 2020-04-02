@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/31 09:57:09 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/02 11:58:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void			del_output(void *elem, size_t size)
 	valid_path = *(t_valid_path **)elem;
 	ft_lstdel(valid_path->path, del_path);
 	free(valid_path->path);
+	free(valid_path->room_vector);
 	free(valid_path);
 	free(elem);
 	return ;
