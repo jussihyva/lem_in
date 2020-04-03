@@ -6,13 +6,13 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/04/01 19:41:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 13:17:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int				is_valid_line(t_input *input, char *line,
+static int			is_valid_line(t_input *input, char *line,
 													t_read_status read_status)
 {
 	t_list			*elem;
@@ -33,7 +33,7 @@ static int				is_valid_line(t_input *input, char *line,
 		return (1);
 }
 
-static void				parse_line(char *line, t_input *input, t_output **output,
+static void			parse_line(char *line, t_input *input, t_output **output,
 													t_read_status *read_status)
 {
 	input->input_line_cnt++;
@@ -55,18 +55,14 @@ static void				parse_line(char *line, t_input *input, t_output **output,
 			else if (*read_status == e_read_connection_data)
 				read_connection_data(line, input, read_status);
 			else if (*read_status == e_read_instruction_data)
-			{
-				if (!*output)
-					*output = initialize_output(input);
-				read_instruction_data(line, input, *output);
-			}
+				read_instruction_data(line, input, output);
 		}
 	}
 	ft_strdel(&line);
 	return ;
 }
 
-void					init_input_structure(t_input *input, t_app app)
+void				init_input_structure(t_input *input, t_app app)
 {
 	input->app = app;
 	input->error = 0;
@@ -89,7 +85,7 @@ void					init_input_structure(t_input *input, t_app app)
 	return ;
 }
 
-void					read_input_data(t_input *input, t_output **output,
+void				read_input_data(t_input *input, t_output **output,
 											int *argc, char ***argv)
 {
 	t_read_status	read_status;
@@ -97,6 +93,7 @@ void					read_input_data(t_input *input, t_output **output,
 	int				ret;
 	int				fd;
 
+	*output = NULL;
 	ft_step_args(argc, argv);
 	select_algorithms(input->algorithm_lst);
 	ft_read_opt(input, argc, argv);

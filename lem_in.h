@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/03 09:49:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 13:13:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ typedef struct				s_output
 	t_room			*end_room_ptr;
 	size_t			num_of_rooms;
 	size_t			number_of_paths;
+	size_t			number_of_selected_paths;
 	t_ant			**ant_array;
 	size_t			number_of_ants;
 }							t_output;
@@ -212,13 +213,12 @@ void						print_error(t_input *input);
 void						print_ok(t_input *input);
 void						print_input_lines(t_input *input);
 void						read_instruction_data(char *line, t_input *input,
-															t_output *output);
+															t_output **output);
 t_ant						*get_ant(char *name, t_output *output);
 void						create_ants(t_output *output);
 int							validate_instructions(t_input *input);
 void						update_instructions(t_output *output);
 void						print_instructions(t_output *output);
-void						print_instruction(t_output *output);
 int							move_ant(t_instruction *instruction,
 														t_room *end_room_ptr);
 int							move_ant_next_room(t_output *output, size_t c,
@@ -231,9 +231,14 @@ void						read_num_of_ants(char *line, t_input *input,
 void						add_valid_input_line(t_list **valid_input_lines,
 																	char *line);
 void						init_input_structure(t_input *input, t_app app);
-int							algorithm_ford_fulkerson_1(t_output *output);
-int							algorithm_ford_fulkerson_2(t_output *output);
+int							algorithm_ford_fulkerson1(t_output *output);
+int							algorithm_ford_fulkerson2(t_output *output);
 void						add_line(t_list **instruction_line_lst, char *line);
 void						set_ants_to_start_room(t_output *output);
+int							create_new_valid_path(t_output *output,
+																t_room *room);
+void						add_room_to_paths(t_output *output, t_room *room,
+									t_room *start_room, size_t num_of_paths);
+void						release(t_input *input, t_result *result);
 
 #endif
