@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/03 13:13:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 16:46:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ typedef struct				s_output
 	int				error;
 	t_opt			opt;
 	t_list			**lst_of_valid_paths;
-	t_valid_path	*valid_paths;
+	t_valid_path	**valid_paths;
 	t_list			**lst_of_selectd_paths;
 	t_list			**instruction_line_lst;
 	size_t			number_of_instruction_line;
@@ -240,5 +240,7 @@ int							create_new_valid_path(t_output *output,
 void						add_room_to_paths(t_output *output, t_room *room,
 									t_room *start_room, size_t num_of_paths);
 void						release(t_input *input, t_result *result);
+void						sort_valid_paths(t_list **lst_of_valid_paths,
+													t_valid_path **valid_paths);
 
 #endif
