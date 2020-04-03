@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/30 06:25:56 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 09:08:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int						select_paths(t_output *output)
 		finalize_path_selection(output, &offset);
 		if (output->number_of_paths)
 		{
+			output->lst_of_selectd_paths = output->lst_of_valid_paths;
 			put_ants_to_paths(output);
 			return_code = 1;
 		}

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/02 12:09:01 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 09:49:54 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct				s_output
 	int				error;
 	t_opt			opt;
 	t_list			**lst_of_valid_paths;
+	t_valid_path	*valid_paths;
 	t_list			**lst_of_selectd_paths;
 	t_list			**instruction_line_lst;
 	size_t			number_of_instruction_line;
