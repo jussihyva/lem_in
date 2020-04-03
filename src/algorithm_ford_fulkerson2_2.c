@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 13:01:45 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/03 13:10:25 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 16:46:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,48 @@ int				create_new_valid_path(t_output *output, t_room *room)
 	elem = ft_lstnew(&valid_path, sizeof(valid_path));
 	ft_lstadd_e(output->lst_of_valid_paths, elem);
 	return (1);
+}
+
+static void		add_path(t_valid_path **valid_paths, t_valid_path *valid_path)
+{
+	size_t			c;
+	t_valid_path	*tmp_valid_path;
+
+	c = 0;
+	while (1)
+	{
+		if (valid_paths[c])
+		{
+			if (valid_paths[c]->num_of_conn_to_end >
+												valid_path->num_of_conn_to_end)
+			{
+				tmp_valid_path = valid_paths[c];
+				valid_paths[c] = valid_path;
+				valid_path = tmp_valid_path;
+			}
+		}
+		else
+		{
+			valid_paths[c] = valid_path;
+			break ;
+		}
+		c++;
+	};
+	return ;
+}
+
+void			sort_valid_paths(t_list **lst_of_valid_paths,
+													t_valid_path **valid_paths)
+{
+	t_list			*elem;
+	t_valid_path	*valid_path;
+
+	elem = *lst_of_valid_paths;
+	while (elem)
+	{
+		valid_path = *(t_valid_path **)elem->content;
+		add_path(valid_paths, valid_path);
+		elem = elem->next;
+	}
+	return ;
 }
