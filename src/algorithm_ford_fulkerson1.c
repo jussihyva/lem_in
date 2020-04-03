@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm_ford_fulkerson_1.c                       :+:      :+:    :+:   */
+/*   algorithm_ford_fulkerson1.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 05:53:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/03 09:08:31 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 13:04:45 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int		get_next_room(t_list **path, t_room *current_room,
 	return (return_code);
 }
 
-int				algorithm_ford_fulkerson_1(t_output *output)
+int				algorithm_ford_fulkerson1(t_output *output)
 {
 	t_list			*elem;
 	t_room			*room;

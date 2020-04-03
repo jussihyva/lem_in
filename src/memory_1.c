@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/03 09:30:29 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 11:58:12 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void			release_output(t_output *output)
 		}
 		free(output->ant_array);
 	}
+	free(output->valid_paths);
 	free(output);
-	output = NULL;
 	return ;
 }
 

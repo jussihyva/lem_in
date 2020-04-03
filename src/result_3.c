@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 10:12:47 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/01 18:19:38 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 12:47:08 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void			print_result(t_input *input, t_result *result)
 {
 	t_list			*elem;
 	t_output		*output;
-	t_output		*best_output;	
+	t_output		*best_output;
 
 	best_output = NULL;
 	elem = *result->output_lst;

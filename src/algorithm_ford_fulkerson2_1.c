@@ -1,69 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm_ford_fulkerson_2.c                       :+:      :+:    :+:   */
+/*   algorithm_ford_fulkerson2_1.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 14:55:23 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/03 09:03:55 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 13:04:45 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static void		add_room_to_path(t_list **path, t_room *room)
-{
-	t_list			*elem;
-
-	elem = ft_lstnew(&room, sizeof(room));
-	ft_lstadd(path, elem);
-	return ;
-}
-
-static void		add_room_to_paths(t_list **lst_of_valid_paths, t_room *room,
-										t_room *start_room, size_t num_of_paths)
-{
-	t_list			*elem;
-	t_valid_path	*valid_path;
-
-	elem = *lst_of_valid_paths;
-	while (elem && num_of_paths)
-	{
-		num_of_paths--;
-		elem = elem->next;
-	}
-	while (elem)
-	{
-		valid_path = *(t_valid_path **)elem->content;
-		valid_path->num_of_conn_to_end++;
-		if (room != start_room)
-			valid_path->room_vector[room->id / 32] |= 1 << (room->id % 32);
-		add_room_to_path(valid_path->path, room);
-		elem = elem->next;
-	}
-	return ;
-}
-
-static int		create_new_valid_path(t_output *output, t_room *room)
-{
-	t_list			**path;
-	t_valid_path	*valid_path;
-	static int		id;
-	t_list			*elem;
-
-	path = (t_list **)ft_memalloc(sizeof(*path));
-	valid_path = create_valid_path(path, valid);
-	valid_path->num_of_conn_to_end++;
-	add_room_to_path(valid_path->path, room);
-	valid_path->id = id++;
-	valid_path->room_vector =
-					(size_t *)ft_memalloc(sizeof(*valid_path->room_vector) *
-											((output->num_of_rooms / 32) + 1));
-	elem = ft_lstnew(&valid_path, sizeof(valid_path));
-	ft_lstadd_e(output->lst_of_valid_paths, elem);
-	return (1);
-}
 
 static size_t	count_num_of_paths(t_list **lst_of_valid_paths)
 {
@@ -106,11 +53,7 @@ static int		get_next_room(t_output *output, t_room *current_room,
 		}
 	}
 	if (return_code)
-	{
-		add_room_to_paths(output->lst_of_valid_paths, current_room, start_room,
-																num_of_paths);
-		current_room->is_visited = 0;
-	}
+		add_room_to_paths(output, current_room, start_room, num_of_paths);
 	return (return_code);
 }
 
@@ -158,7 +101,7 @@ static t_list	**select_valid_group_of_paths(t_output *output)
 	return (path_lst);
 }
 
-int				algorithm_ford_fulkerson_2(t_output *output)
+int				algorithm_ford_fulkerson2(t_output *output)
 {
 	t_room			*room;
 	int				return_code;
@@ -170,12 +113,12 @@ int				algorithm_ford_fulkerson_2(t_output *output)
 	{
 		output->number_of_paths =
 								count_num_of_paths(output->lst_of_valid_paths);
-		// output->valid_paths =
-		// 			(t_valid_path *)ft_memalloc(sizeof(*output->valid_paths) *
-		// 											output->number_of_paths);
+		output->valid_paths =
+					(t_valid_path *)ft_memalloc(sizeof(*output->valid_paths) *
+													output->number_of_paths);
 		output->lst_of_selectd_paths = select_valid_group_of_paths(output);
 		output->number_of_paths =
-								count_num_of_paths(output->lst_of_selectd_paths);
+							count_num_of_paths(output->lst_of_selectd_paths);
 	}
 	return_code = put_ants_to_paths(output);
 	return (return_code);

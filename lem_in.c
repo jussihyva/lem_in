@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/31 14:38:05 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 13:17:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int						main(int argc, char **argv)
 
 	init_input_structure(&input, e_lem_in);
 	result.output_lst = (t_list **)ft_memalloc(sizeof(*result.output_lst));
-	output = NULL;
 	read_input_data(&input, &output, &argc, &argv);
 	return_code = 1;
 	if (input.error != invalid_connection_data && input.error)
@@ -75,8 +74,7 @@ int						main(int argc, char **argv)
 	}
 	else
 		print_error(&input);
-	release_result(&result);
-	release_input(&input);
+	release(&input, &result);
 	if (input.opt & leaks)
 		system("leaks lem-in");
 	return (return_code);

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/28 11:24:35 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/01 08:06:37 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 13:15:05 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,12 @@ void			release_input(t_input *input)
 	free(input->instruction_line_lst);
 	release_room_array(input);
 	free(input->input_file);
+	return ;
+}
+
+void			release(t_input *input, t_result *result)
+{
+	release_result(result);
+	release_input(input);
 	return ;
 }
