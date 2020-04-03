@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 05:53:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/03/30 14:55:38 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 09:08:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int				algorithm_ford_fulkerson_1(t_output *output)
 		path = (t_list **)ft_memalloc(sizeof(*path));
 	}
 	free(path);
+	output->lst_of_selectd_paths = output->lst_of_valid_paths;
 	return_code = put_ants_to_paths(output);
 	return (return_code);
 }

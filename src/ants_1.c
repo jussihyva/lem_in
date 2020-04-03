@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/04/02 12:13:42 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 09:04:46 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int					put_ants_to_paths(t_output *output)
 	c = 0;
 	while (c < output->number_of_ants && output->number_of_paths)
 	{
-		elem = *(t_list **)output->lst_of_valid_paths;
+		elem = *(t_list **)output->lst_of_selectd_paths;
 		while (elem)
 		{
 			return_code = 1;

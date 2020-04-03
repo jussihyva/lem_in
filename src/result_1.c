@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/01 19:51:19 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 09:39:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			print_path(t_output *output)
 	t_list			*valid_path_elem;
 	t_valid_path	*valid_path;
 
-	valid_path_elem = *output->lst_of_valid_paths;
+	valid_path_elem = *output->lst_of_selectd_paths;
 	while (valid_path_elem)
 	{
 		valid_path = *(t_valid_path **)valid_path_elem->content;

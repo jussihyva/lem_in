@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/03/30 06:16:49 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/03 09:47:37 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void					preliminary_path_selection(t_output *output,
 			valid_path->id = output->number_of_paths;
 			ft_lstadd(output->lst_of_valid_paths, ft_lstnew(&valid_path,
 														sizeof(valid_path)));
-			if (output->opt && output->opt & verbose)
-				print_path(output);
 		}
 		else
 			break ;
@@ -95,7 +93,5 @@ void					finalize_path_selection(t_output *output, int *offset)
 			}
 			elem = tmp_elem;
 		}
-		if (output->opt && output->opt & verbose)
-			print_path(output);
 	}
 }
