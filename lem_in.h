@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/05 09:08:16 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 10:56:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void						read_room_data(char *line, t_input *input,
 void						read_connection_data(char *line, t_input *input,
 													t_read_status *read_status);
 void						ft_arraydel(char **array);
+size_t						ft_lstlen(t_list **lst);
 void						print_output(t_input *input, t_output *output);
 void						ft_step_args(int *argc, char ***argv);
 void						calc_distance(t_input *input);
@@ -195,7 +196,7 @@ t_room						*get_room(char *name, t_input *input);
 t_room						**create_room_array_2(t_input *input);
 void						set_error(t_input *input, char *line,
 											t_input_error error, char *text);
-void						print_path(t_output *output);
+void						print_path(t_list **path_lst);
 int							put_ants_to_paths(t_output *output);
 t_valid_path				*create_valid_path(t_list **path,
 														t_validity validity);
@@ -234,6 +235,7 @@ void						add_valid_input_line(t_list **valid_input_lines,
 void						init_input_structure(t_input *input, t_app app);
 int							algorithm_ford_fulkerson1(t_output *output);
 int							algorithm_ford_fulkerson2(t_output *output);
+int							algorithm_ford_fulkerson3(t_output *output);
 void						add_line(t_list **instruction_line_lst, char *line);
 void						set_ants_to_start_room(t_output *output);
 int							create_new_valid_path(t_output *output,
@@ -243,5 +245,8 @@ void						add_room_to_paths(t_output *output, t_room *room,
 void						release(t_input *input, t_result *result);
 void						sort_valid_paths(t_list **lst_of_valid_paths,
 													t_valid_path **valid_paths);
+int							get_next_room(t_output *output,
+										t_room *current_room,
+										t_room *start_room, t_room *end_room);
 
 #endif

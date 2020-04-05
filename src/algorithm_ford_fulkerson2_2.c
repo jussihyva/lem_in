@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 13:01:45 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/03 16:46:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 10:00:22 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void		add_path(t_valid_path **valid_paths, t_valid_path *valid_path)
 			break ;
 		}
 		c++;
-	};
+	}
 	return ;
 }
 

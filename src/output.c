@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 12:20:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/05 09:13:48 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 10:00:57 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static void		add_num_of_lines(t_output *output)
 
 	line = (char *)ft_memalloc(sizeof(*line) * 10000);
 	if (output->opt & verbose)
-		ft_sprintf(line, "#lines: %d\n", output->number_of_instruction_line - 1);
+		ft_sprintf(line, "#lines: %d\n",
+										output->number_of_instruction_line - 1);
 	add_line(output->instruction_line_lst, line);
 	ft_strdel(&line);
 	return ;
