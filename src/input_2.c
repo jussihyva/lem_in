@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 05:30:49 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/03 16:51:30 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 09:00:23 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void				select_algorithms(t_list **algorithm_lst)
 	t_list			*elem;
 
 	*algorithm_lst = NULL;
-	// algorithm.function = (void *)select_paths;
-	// elem = ft_lstnew(&algorithm, sizeof(&algorithm));
-	// ft_lstadd(algorithm_lst, elem);
+	algorithm.function = (void *)select_paths;
+	elem = ft_lstnew(&algorithm, sizeof(&algorithm));
+	ft_lstadd(algorithm_lst, elem);
 	// algorithm.function = (void *)algorithm_ford_fulkerson1;
 	// elem = ft_lstnew(&algorithm, sizeof(algorithm));
 	// ft_lstadd(algorithm_lst, elem);

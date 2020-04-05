@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/03 16:46:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 09:08:16 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ typedef enum				e_opt
 	leaks = 0x01,
 	map_file = 0x02,
 	verbose = 0x04,
-	ants = 0x08,
-	errors = 0x10
+	verbose1 = 0x08,
+	ants = 0x10,
+	errors = 0x20
 }							t_opt;
 
 typedef struct				s_ant
