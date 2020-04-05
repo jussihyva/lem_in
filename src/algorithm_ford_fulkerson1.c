@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 05:53:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/03 13:04:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 09:47:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		add_room_to_path(t_list **path, t_room *room)
 	return ;
 }
 
-static int		get_next_room(t_list **path, t_room *current_room,
+static int		local_get_next_room(t_list **path, t_room *current_room,
 										t_room *start_room, t_room *end_room)
 {
 	int				return_code;
@@ -42,7 +42,7 @@ static int		get_next_room(t_list **path, t_room *current_room,
 		}
 		else if (!next_room->is_visited && next_room != start_room)
 		{
-			if ((return_code = get_next_room(path, next_room, start_room,
+			if ((return_code = local_get_next_room(path, next_room, start_room,
 																	end_room)))
 				add_room_to_path(path, next_room);
 		}
@@ -61,7 +61,7 @@ int				algorithm_ford_fulkerson1(t_output *output)
 
 	room = output->start_room_ptr;
 	path = (t_list **)ft_memalloc(sizeof(*path));
-	while (get_next_room(path, room, room, output->end_room_ptr))
+	while (local_get_next_room(path, room, room, output->end_room_ptr))
 	{
 		elem = ft_lstnew(&room, sizeof(room));
 		ft_lstadd(path, elem);

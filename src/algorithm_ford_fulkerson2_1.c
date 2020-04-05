@@ -6,28 +6,13 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 14:55:23 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/03 16:46:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 09:45:46 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static size_t	count_num_of_paths(t_list **lst_of_valid_paths)
-{
-	size_t			num_of_paths;
-	t_list			*elem;
-
-	num_of_paths = 0;
-	elem = *lst_of_valid_paths;
-	while (elem)
-	{
-		num_of_paths++;
-		elem = elem->next;
-	}
-	return (num_of_paths);
-}
-
-static int		get_next_room(t_output *output, t_room *current_room,
+int				get_next_room(t_output *output, t_room *current_room,
 										t_room *start_room, t_room *end_room)
 {
 	int				return_code;
@@ -35,7 +20,7 @@ static int		get_next_room(t_output *output, t_room *current_room,
 	t_room			*next_room;
 	size_t			num_of_paths;
 
-	num_of_paths = count_num_of_paths(output->lst_of_valid_paths);
+	num_of_paths = ft_lstlen(output->lst_of_valid_paths);
 	return_code = 0;
 	current_room->is_visited = 1;
 	if (current_room->num_of_conn_to_end == 1)
@@ -109,14 +94,14 @@ int				algorithm_ford_fulkerson2(t_output *output)
 	if (get_next_room(output, room, room, output->end_room_ptr))
 	{
 		output->number_of_paths =
-								count_num_of_paths(output->lst_of_valid_paths);
+								ft_lstlen(output->lst_of_valid_paths);
 		output->valid_paths =
 					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
 													output->number_of_paths);
 		sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
 		output->lst_of_selectd_paths = select_best_group_of_paths(output);
 		output->number_of_paths =
-							count_num_of_paths(output->lst_of_selectd_paths);
+							ft_lstlen(output->lst_of_selectd_paths);
 	}
 	return_code = put_ants_to_paths(output);
 	return (return_code);
