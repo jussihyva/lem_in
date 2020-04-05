@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/03 09:39:00 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/05 09:12:04 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,17 @@ void			print_output(t_input *input, t_output *output)
 	t_room		**room;
 
 	room = input->room_array;
-	if (input->opt & verbose)
+	if (input->opt & verbose1)
 	{
 		c = -1;
 		while (room[++c])
 			print_room_data(room[c]);
 	}
 	print_input_lines(input);
-	print_path(output);
+	if (input->opt & verbose)
+		print_path(output);
 	print_instructions(output);
-	ft_printf("#paths: %d\n", output->number_of_paths);
+	if (input->opt & verbose)
+		ft_printf("#paths: %d\n", output->number_of_paths);
 	return ;
 }
