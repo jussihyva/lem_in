@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/05 15:42:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/06 09:05:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,37 @@ static int		is_room_colision(size_t *merged_room_vector,
 	return (0);
 }
 
+static size_t	count_num_of_required_lines(t_list **path_lst,
+								size_t number_of_ants, size_t nr_required_lines)
+{
+	t_valid_path	*valid_path;
+	t_list			*elem;
+	size_t			total_nr_of_lines;
+	size_t			nr_of_lines;
+	size_t			c;
+	int				result;
+
+	total_nr_of_lines = number_of_ants;
+	elem = *path_lst;
+	c = 0;
+	result = 1;
+	nr_of_lines = INT_MAX;
+	while (elem && result)
+	{
+		c++;
+		valid_path = *(t_valid_path **)elem->content;
+		total_nr_of_lines += valid_path->num_of_conn_to_end - 1;
+		if ((total_nr_of_lines / c) < nr_required_lines)
+		{
+			nr_of_lines = total_nr_of_lines / c;
+			result = 0;
+		}
+		elem = elem->next;
+	}
+	ft_printf("Required lines: %4d(%d)\n", nr_of_lines, c);
+	return (nr_of_lines);
+}
+
 static void		select_best_group_of_paths(t_list **path_lst,
 				size_t *merged_room_vector, t_output *output, size_t path_index)
 {
@@ -52,7 +83,7 @@ static void		select_best_group_of_paths(t_list **path_lst,
 	t_list			*elem;
 	t_list			*new_elem;
 	size_t			c;
-	static size_t	nr_valid_paths = 0;
+	static size_t	nr_required_lines = INT_MAX;
 
 	valid_path = output->valid_paths[path_index];
 	if (path_index < output->number_of_paths)
@@ -62,11 +93,9 @@ static void		select_best_group_of_paths(t_list **path_lst,
 		{
 			elem = ft_lstnew(&valid_path, sizeof(valid_path));
 			ft_lstadd_e(path_lst, elem);
-			nr_valid_paths++;
 			select_best_group_of_paths(path_lst, merged_room_vector, output,
 																path_index + 1);
 			ft_lstrem(path_lst, elem);
-			nr_valid_paths--;
 			c = -1;
 			while (++c < ((output->num_of_rooms / 32) + 1))
 				merged_room_vector[c] &= ~valid_path->room_vector[c];
@@ -83,7 +112,7 @@ static void		select_best_group_of_paths(t_list **path_lst,
 		{
 			if (*output->lst_of_selectd_paths)
 			{
-				if (nr_valid_paths > output->number_of_selected_paths)
+				if (nr_required_lines > count_num_of_required_lines(path_lst, output->number_of_ants, nr_required_lines))
 				{
 					ft_lstdel(output->lst_of_selectd_paths, del_path);
 					elem = *path_lst;
@@ -95,6 +124,7 @@ static void		select_best_group_of_paths(t_list **path_lst,
 						elem = elem->next;
 					}
 					output->number_of_selected_paths = ft_lstlen(output->lst_of_selectd_paths);
+					nr_required_lines = count_num_of_required_lines(path_lst, output->number_of_ants, nr_required_lines);
 				}
 			}
 			else
@@ -108,6 +138,7 @@ static void		select_best_group_of_paths(t_list **path_lst,
 					elem = elem->next;
 				}
 				output->number_of_selected_paths = ft_lstlen(output->lst_of_selectd_paths);
+				nr_required_lines = count_num_of_required_lines(path_lst, output->number_of_ants, nr_required_lines);
 			}
 		}
 	}
