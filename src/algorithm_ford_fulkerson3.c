@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/06 11:14:36 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/06 13:09:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,25 +66,21 @@ static size_t	count_num_of_required_lines(t_list **path_lst,
 	{
 		c++;
 		valid_path = *(t_valid_path **)elem->content;
-		if (c == 1)
-			;
-//			remain_nr_of_lines;
-		else
+		remain_nr_of_lines--;
+		if (c > 1)
+		{
 			remain_nr_of_lines -= (valid_path->num_of_conn_to_end - nr_connection_to_end) * (c - 1);
 			if (remain_nr_of_lines < 0)
-			{
 				break ;
-			}
+		}
 		nr_connection_to_end = valid_path->num_of_conn_to_end;
-//		ft_printf("%10d\n", remain_nr_of_lines);
-		if (nr_required_lines > remain_nr_of_lines / c - c + (remain_nr_of_lines % c > 0) + nr_connection_to_end)
+		if (nr_required_lines > remain_nr_of_lines / c + ((remain_nr_of_lines % c) > 0) + nr_connection_to_end)
 		{
-			nr_of_lines = remain_nr_of_lines / c - c + (remain_nr_of_lines % c > 0) + nr_connection_to_end;
-			result = 0;
+			nr_of_lines = remain_nr_of_lines / c + ((remain_nr_of_lines % c) > 0) + nr_connection_to_end;
+			nr_required_lines = nr_of_lines;
 		}
 		elem = elem->next;
 	}
-	ft_printf("Required lines: %4d(%d)\n", nr_of_lines, c);
 	return (nr_of_lines);
 }
 
