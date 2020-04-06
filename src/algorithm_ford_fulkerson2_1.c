@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 14:55:23 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/05 09:45:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/07 00:03:57 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,25 @@ int				get_next_room(t_output *output, t_room *current_room,
 	return_code = 0;
 	current_room->is_visited = 1;
 	if (current_room->num_of_conn_to_end == 1)
-		return_code = create_new_valid_path(output, end_room);
-	else
 	{
+		return_code = create_new_valid_path(output, end_room);
+	}
+	else if (current_room->num_of_conn_to_end > 1)
+	{
+		if (ft_strequ(current_room->name, "Uyg4"))
+			ft_printf("MOI\n");
 		connection_elem = current_room->connection_lst;
 		while (connection_elem)
 		{
 			next_room = *(t_room **)connection_elem->content;
+			if (ft_strequ(current_room->name, "Uyg4"))
+				ft_printf("MOI\n");
 			if (!next_room->is_visited && next_room != start_room)
 				return_code |= get_next_room(output, next_room,
 														start_room, end_room);
 			connection_elem = connection_elem->next;
+			if (ft_strequ(current_room->name, "Uyg4"))
+				ft_printf("MOI\n");
 		}
 	}
 	if (return_code)
