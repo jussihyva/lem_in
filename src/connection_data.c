@@ -6,11 +6,25 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/06 23:39:34 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/08 16:49:12 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+static int				is_dublicate(t_room *room1, t_room *room2)
+{
+	t_list			*elem;
+
+	elem = room1->connection_lst;
+	while (elem)
+	{
+		if (room2 == *(t_room **)elem->content)
+			return (1);
+		elem = elem->next;
+	}
+	return (0);
+}
 
 static void				add_connection(t_input *input, char **splitted_line,
 																	char *line)
@@ -25,21 +39,14 @@ static void				add_connection(t_input *input, char **splitted_line,
 		set_error(input, line, 0, "#WARNING: ");
 	else if (room1 && room2)
 	{
-		elem = room1->connection_lst;
-		while (elem)
-		{
-			if (room2 == *(t_room **)elem->content)
-				break ;
-			elem = elem->next;
-		}
-		if (!elem)
+		if (!is_dublicate(room1, room2))
 		{
 			elem = ft_lstnew(&room1, sizeof(&room1));
 			room1->num_of_connections++;
-			ft_lstadd(&room2->connection_lst, elem);
+			ft_lstadd_e(&room2->connection_lst, elem);
 			elem = ft_lstnew(&room2, sizeof(&room2));
 			room2->num_of_connections++;
-			ft_lstadd(&room1->connection_lst, elem);
+			ft_lstadd_e(&room1->connection_lst, elem);
 		}
 	}
 	else
@@ -88,7 +95,6 @@ void					read_connection_data(char *line, t_input *input,
 		;
 	else if (line[0] == '\0')
 	{
-//		sort_connection_data();
 		if (input->app == e_checker)
 			*read_status = e_read_instruction_data;
 		else

@@ -6,13 +6,13 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/06 13:09:31 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/08 17:44:43 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void			ft_lstrem(t_list **lst, t_list *elem)
+static void		ft_lstrem(t_list **lst, t_list *elem)
 {
 	t_list			*tmp_elem;
 	t_valid_path	*valid_path;
@@ -69,14 +69,17 @@ static size_t	count_num_of_required_lines(t_list **path_lst,
 		remain_nr_of_lines--;
 		if (c > 1)
 		{
-			remain_nr_of_lines -= (valid_path->num_of_conn_to_end - nr_connection_to_end) * (c - 1);
+			remain_nr_of_lines -= (valid_path->num_of_conn_to_end -
+												nr_connection_to_end) * (c - 1);
 			if (remain_nr_of_lines < 0)
 				break ;
 		}
 		nr_connection_to_end = valid_path->num_of_conn_to_end;
-		if (nr_required_lines > remain_nr_of_lines / c + ((remain_nr_of_lines % c) > 0) + nr_connection_to_end)
+		if (nr_required_lines > remain_nr_of_lines / c +
+						((remain_nr_of_lines % c) > 0) + nr_connection_to_end)
 		{
-			nr_of_lines = remain_nr_of_lines / c + ((remain_nr_of_lines % c) > 0) + nr_connection_to_end;
+			nr_of_lines = remain_nr_of_lines / c +
+						((remain_nr_of_lines % c) > 0) + nr_connection_to_end;
 			nr_required_lines = nr_of_lines;
 		}
 		elem = elem->next;
@@ -84,7 +87,7 @@ static size_t	count_num_of_required_lines(t_list **path_lst,
 	return (nr_of_lines);
 }
 
-static void		select_best_group_of_paths(t_list **path_lst,
+void			select_best_group_of_paths(t_list **path_lst,
 				size_t *merged_room_vector, t_output *output, size_t path_index)
 {
 	t_valid_path	*valid_path;
@@ -120,7 +123,8 @@ static void		select_best_group_of_paths(t_list **path_lst,
 		{
 			if (*output->lst_of_selectd_paths)
 			{
-				if (nr_required_lines > count_num_of_required_lines(path_lst, output->number_of_ants, nr_required_lines))
+				if (nr_required_lines > count_num_of_required_lines(path_lst,
+									output->number_of_ants, nr_required_lines))
 				{
 					ft_lstdel(output->lst_of_selectd_paths, del_path);
 					elem = *path_lst;
@@ -131,8 +135,10 @@ static void		select_best_group_of_paths(t_list **path_lst,
 						ft_lstadd_e(output->lst_of_selectd_paths, new_elem);
 						elem = elem->next;
 					}
-					output->number_of_selected_paths = ft_lstlen(output->lst_of_selectd_paths);
-					nr_required_lines = count_num_of_required_lines(path_lst, output->number_of_ants, nr_required_lines);
+					output->number_of_selected_paths =
+										ft_lstlen(output->lst_of_selectd_paths);
+					nr_required_lines = count_num_of_required_lines(path_lst,
+									output->number_of_ants, nr_required_lines);
 				}
 			}
 			else
@@ -145,8 +151,10 @@ static void		select_best_group_of_paths(t_list **path_lst,
 					ft_lstadd_e(output->lst_of_selectd_paths, new_elem);
 					elem = elem->next;
 				}
-				output->number_of_selected_paths = ft_lstlen(output->lst_of_selectd_paths);
-				nr_required_lines = count_num_of_required_lines(path_lst, output->number_of_ants, nr_required_lines);
+				output->number_of_selected_paths =
+										ft_lstlen(output->lst_of_selectd_paths);
+				nr_required_lines = count_num_of_required_lines(path_lst,
+									output->number_of_ants, nr_required_lines);
 			}
 		}
 	}
@@ -167,6 +175,7 @@ int				algorithm_ford_fulkerson3(t_output *output)
 											((output->num_of_rooms / 32) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
+	output->first = 1;
 	if (get_next_room(output, room, room, output->end_room_ptr))
 	{
 		output->number_of_paths =
