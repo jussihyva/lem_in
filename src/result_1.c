@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/06 13:19:10 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/08 16:53:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void			print_path(t_list **path_lst)
 	{
 		valid_path = *(t_valid_path **)valid_path_elem->content;
 		elem = *valid_path->path;
-//		ft_printf("#path: %d Rooms: %5d     ", valid_path->id,
-		ft_printf("#path: %d Rooms: %5d     ", 0,
+		ft_printf("#path: %d Rooms: %5d     ", valid_path->id,
 												valid_path->num_of_conn_to_end);
 		while (elem)
 		{
@@ -84,8 +83,10 @@ void			print_output(t_input *input, t_output *output)
 	}
 	print_input_lines(input);
 	if (input->opt & verbose)
+	{
 		print_path(output->lst_of_valid_paths);
 		print_path(output->lst_of_selectd_paths);
+	}
 	print_instructions(output);
 	if (input->opt & verbose)
 		ft_printf("#paths: %d\n", output->number_of_paths);

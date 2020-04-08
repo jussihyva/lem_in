@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/05 10:56:00 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/08 17:22:22 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct				s_output
 	size_t			number_of_selected_paths;
 	t_ant			**ant_array;
 	size_t			number_of_ants;
+	int				first;
 }							t_output;
 
 typedef struct				s_algorithm
@@ -236,6 +237,7 @@ void						init_input_structure(t_input *input, t_app app);
 int							algorithm_ford_fulkerson1(t_output *output);
 int							algorithm_ford_fulkerson2(t_output *output);
 int							algorithm_ford_fulkerson3(t_output *output);
+int							algorithm_ford_fulkerson4(t_output *output);
 void						add_line(t_list **instruction_line_lst, char *line);
 void						set_ants_to_start_room(t_output *output);
 int							create_new_valid_path(t_output *output,
@@ -248,5 +250,8 @@ void						sort_valid_paths(t_list **lst_of_valid_paths,
 int							get_next_room(t_output *output,
 										t_room *current_room,
 										t_room *start_room, t_room *end_room);
+void						select_best_group_of_paths(t_list **path_lst,
+							size_t *merged_room_vector, t_output *output,
+							size_t path_index);
 
 #endif
