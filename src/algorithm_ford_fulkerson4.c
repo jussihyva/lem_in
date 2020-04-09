@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/09 13:41:02 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/09 19:44:36 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int				algorithm_ford_fulkerson4(t_output *output)
 	{
 		adj_room = *(t_room **)elem->content;
 		return_code = trace_path(adj_room, output->end_room_ptr);
+		ft_printf("\n");
 		if (return_code)
-		{
-			ft_printf("\n");
 			track_path(adj_room);
-			ft_printf("\n");
-		}
+		else
+			track_path(adj_room);
+		ft_printf("\n");
 		elem = elem->next;
 	}
 	return_code = 0;

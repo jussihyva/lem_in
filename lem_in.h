@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/09 14:12:39 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/09 17:13:13 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,5 +259,8 @@ size_t						count_num_of_instruction_lines(t_list **path_lst,
 							size_t number_of_ants, size_t nr_instruction_lines);
 void						add_connection(t_input *input, char **splitted_line,
 																	char *line);
+void						sort_connections(t_input *input);
+void						ft_lstadd_sort(t_list **alst, t_list *new,
+									int (*cmp)(t_list *elem1, t_list *elem2));
 
 #endif
