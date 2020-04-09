@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/08 17:22:22 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/09 10:27:14 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +250,11 @@ void						sort_valid_paths(t_list **lst_of_valid_paths,
 int							get_next_room(t_output *output,
 										t_room *current_room,
 										t_room *start_room, t_room *end_room);
-void						select_best_group_of_paths(t_list **path_lst,
+void						select_best_group(t_list **path_lst,
 							size_t *merged_room_vector, t_output *output,
 							size_t path_index);
+void						ft_lstrem(t_list **lst, t_list *elem);
+size_t						count_num_of_instruction_lines(t_list **path_lst,
+							size_t number_of_ants, size_t nr_instruction_lines);
 
 #endif

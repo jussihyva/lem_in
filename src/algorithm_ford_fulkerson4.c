@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/08 17:22:22 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/09 08:31:19 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				algorithm_ford_fulkerson4(t_output *output)
 													output->number_of_paths);
 		sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
 		new_path_lst = NULL;
-		select_best_group_of_paths(&new_path_lst, merged_room_vector, output,
+		select_best_group(&new_path_lst, merged_room_vector, output,
 																	path_index);
 		ft_lstdel(&new_path_lst, del_path);
 		output->number_of_paths =
