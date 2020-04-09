@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/09 13:18:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/09 14:12:39 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,5 +257,7 @@ void						select_best_group(t_list **path_lst,
 void						ft_lstrem(t_list **lst, t_list *elem);
 size_t						count_num_of_instruction_lines(t_list **path_lst,
 							size_t number_of_ants, size_t nr_instruction_lines);
+void						add_connection(t_input *input, char **splitted_line,
+																	char *line);
 
 #endif
