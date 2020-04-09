@@ -6,7 +6,7 @@
 #    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/04/08 16:04:57 by ubuntu           ###   ########.fr        #
+#    Updated: 2020/04/09 10:27:14 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,13 @@ SRC_FOLDER	=	src
 SRC_FILES	=	input_1.c input_2.c ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 				room_data_1.c room_data_2.c room_data_3.c \
 				result_1.c result_2.c result_3.c \
-				connection_data.c ft_step_args.c ft_lstlen.c \
+				connection_data.c ft_step_args.c ft_lstlen.c ft_lstrem.c \
 				calc_distance.c ants_1.c ants_2.c \
 				select_paths_1.c select_paths_2.c select_paths_3.c \
 				instruction_1.c instruction_2.c memory_1.c memory_2.c output.c \
 				algorithm_ford_fulkerson1.c algorithm_ford_fulkerson2_1.c \
 				algorithm_ford_fulkerson2_2.c \
-				algorithm_ford_fulkerson3.c \
+				algorithm_ford_fulkerson3_1.c algorithm_ford_fulkerson3_2.c \
 				algorithm_ford_fulkerson4.c
 
 OBJ_FOLDER	=	obj
