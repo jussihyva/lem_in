@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc_distance.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/12 19:36:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/04/09 19:04:04 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void						calc_distance(t_input *input)
 	}
 	validate_adj_rooms_2(input, new_room_element_lst);
 	free(new_room_element_lst);
+	sort_connections(input);
 	return ;
 }
