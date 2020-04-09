@@ -6,37 +6,70 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/09 10:48:23 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/09 13:41:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+static int		trace_path(t_room *current_room, t_room *end_room)
+{
+	t_list		*elem;
+	int			return_code;
+	t_room		*adj_room;
+
+	return_code = 0;
+	current_room->is_visited = 1;
+	elem = current_room->connection_lst;
+	while (elem && !return_code)
+	{
+		adj_room = *(t_room **)elem->content;
+		if (adj_room == end_room)
+			return_code = 1;
+		else if (!adj_room->is_visited)
+			return_code = trace_path(adj_room, end_room);
+		elem = elem->next;
+	}
+	if (return_code)
+		current_room->next_room = adj_room;
+	// else
+	// 	ft_printf("No path: %10s\n", current_room->name);
+	return (return_code);
+}
+
+static void		track_path(t_room *current_room)
+{
+	ft_printf("%5s", current_room->name);
+	if (current_room->next_room)
+		track_path(current_room->next_room);
+	return ;
+}
+
 int				algorithm_ford_fulkerson4(t_output *output)
 {
-	int					return_code;
-	size_t				*merged_room_vector;
-	t_list				*new_path_lst;
+	t_list		*elem;
+	int			return_code;
+	t_room		*current_room;
+	t_room		*adj_room;
 
-	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
-											((output->num_of_rooms / 32) + 1));
+	return_code = 1;
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
-	output->first = 1;
-	if (get_next_room(output, output->start_room_ptr, output->start_room_ptr,
-														output->end_room_ptr))
+	current_room = output->start_room_ptr;
+	current_room->is_visited = 1;
+	elem = current_room->connection_lst;
+	while (elem)
 	{
-		output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
-		output->valid_paths =
-					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
-													output->number_of_paths);
-		sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
-		new_path_lst = NULL;
-		select_best_group(&new_path_lst, merged_room_vector, output, 0);
-		ft_lstdel(&new_path_lst, del_path);
-		output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
+		adj_room = *(t_room **)elem->content;
+		return_code = trace_path(adj_room, output->end_room_ptr);
+		if (return_code)
+		{
+			ft_printf("\n");
+			track_path(adj_room);
+			ft_printf("\n");
+		}
+		elem = elem->next;
 	}
-	free(merged_room_vector);
-	return_code = put_ants_to_paths(output);
+	return_code = 0;
 	return (return_code);
 }
