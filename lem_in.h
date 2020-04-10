@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/09 17:13:13 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/10 15:06:52 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct				s_room
 	size_t			num_of_connections;
 	t_ant			*ant;
 	int				is_visited;
+	void			*prev_room;
 	void			*next_room;
 }							t_room;
 
@@ -262,5 +263,7 @@ void						add_connection(t_input *input, char **splitted_line,
 void						sort_connections(t_input *input);
 void						ft_lstadd_sort(t_list **alst, t_list *new,
 									int (*cmp)(t_list *elem1, t_list *elem2));
+int							trace_path(t_room *current_room, t_room *start_room,
+															t_room *end_room);
 
 #endif
