@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/10 15:11:41 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:01:44 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int		re_trace_path(t_room *current_room, t_room *start_room,
 	}
 	if (return_code)
 	{
+		ft_printf("RE-ROUTED PATH.\n");
 		current_room->next_room = adj_room;
 		adj_room->prev_room = current_room;
 	}
@@ -58,7 +59,7 @@ int				trace_path(t_room *current_room, t_room *start_room, t_room *end_room)
 		{
 			return_code = 1;
 		}
-		else if (adj_room->is_visited && current_room->prev_room && current_room->prev_room != adj_room)
+		else if (adj_room->is_visited && adj_room->prev_room && adj_room->prev_room != adj_room)
 			is_connection_to_valid_path = 1;
 		else if (!adj_room->is_visited)
 		{
@@ -79,7 +80,8 @@ int				trace_path(t_room *current_room, t_room *start_room, t_room *end_room)
 		}
 		if (!return_code)
 		{
-			current_room->is_visited = 0;
+			;
+//			current_room->is_visited = 0;
 		}
 	}
 	return (return_code);
@@ -119,6 +121,15 @@ int				algorithm_ford_fulkerson4(t_output *output)
 		}
 		else
 			track_path(adj_room);
+		ft_printf("\n");
+		elem = elem->next;
+	}
+	elem = current_room->connection_lst;
+	while (elem)
+	{
+		adj_room = *(t_room **)elem->content;
+		ft_printf("\n");
+		track_path(adj_room);
 		ft_printf("\n");
 		elem = elem->next;
 	}
