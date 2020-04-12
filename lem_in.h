@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/12 10:06:42 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/12 16:03:03 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct				s_room
 	int				is_visited;
 	void			*prev_room;
 	void			*next_room;
+	int				re_routing;
 }							t_room;
 
 typedef struct				s_instruction
