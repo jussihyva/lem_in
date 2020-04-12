@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/09 19:04:04 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/12 18:11:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,5 @@ void						calc_distance(t_input *input)
 	}
 	validate_adj_rooms_2(input, new_room_element_lst);
 	free(new_room_element_lst);
-	sort_connections(input);
 	return ;
 }
