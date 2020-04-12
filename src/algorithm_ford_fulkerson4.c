@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/12 10:43:05 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/12 16:19:51 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,23 @@ static int		re_trace_path(t_room *current_room, t_room *start_room,
 	t_room		*adj_room;
 	t_room		*next_room;
 
-	(void)end_room;
 	return_code = 0;
+	if (current_room->re_routing)
+		return (return_code);
+	current_room->re_routing = 1;
 	elem = current_room->connection_lst;
 	while (elem && !return_code)
 	{
 		adj_room = *(t_room **)elem->content;
-		if (adj_room->is_visited && adj_room->prev_room && adj_room->prev_room != current_room && adj_room->prev_room != start_room)
+		if (adj_room->is_visited && adj_room->prev_room &&
+					adj_room->prev_room != current_room &&
+					adj_room->prev_room != start_room)
 		{
 			next_room = adj_room->prev_room;
-			while (!return_code && next_room != start_room)
+			while (!return_code && next_room != start_room && !next_room->re_routing)
 			{
-				ft_printf("%s: %10s(%s)\n", current_room->name, adj_room->name, next_room->name);
+				ft_printf("%s: %10s(%s)\n", current_room->name, adj_room->name,
+															next_room->name);
 				return_code = trace_path(next_room, start_room, end_room);
 				next_room = next_room->prev_room;
 			}
@@ -44,10 +49,12 @@ static int		re_trace_path(t_room *current_room, t_room *start_room,
 		current_room->next_room = adj_room;
 		adj_room->prev_room = current_room;
 	}
+	current_room->re_routing = 0;
 	return (return_code);
 }
 
-int				trace_path(t_room *current_room, t_room *start_room, t_room *end_room)
+int				trace_path(t_room *current_room, t_room *start_room,
+															t_room *end_room)
 {
 	t_list		*elem;
 	int			return_code;
@@ -69,7 +76,7 @@ int				trace_path(t_room *current_room, t_room *start_room, t_room *end_room)
 										adj_room->next_room != current_room &&
 											adj_room->prev_room != current_room)
 			is_connection_to_valid_path = 1;
-		else if (!adj_room->is_visited)
+		else if (!adj_room->is_visited && !is_connection_to_valid_path)
 		{
 			return_code = trace_path(adj_room, start_room, end_room);
 		}
@@ -98,7 +105,10 @@ static void		track_path(t_room *current_room)
 {
 	ft_printf("%7s(%d)", current_room->name, current_room->num_of_conn_to_end);
 	if (current_room->next_room)
-		track_path(current_room->next_room);
+	{
+		if (current_room != ((t_room *)current_room->next_room)->next_room)
+			track_path(current_room->next_room);
+	}
 	return ;
 }
 
