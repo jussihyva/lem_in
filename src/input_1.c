@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/04/09 19:04:04 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/12 10:06:42 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,7 @@ void				read_input_data(t_input *input, t_output **output,
 			parse_line(line, input, output, &read_status);
 		ft_strdel(&line);
 	}
+	if (!input->room_array)
+		input->error = no_connection_data;
 	return ;
 }
