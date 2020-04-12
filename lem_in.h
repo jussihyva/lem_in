@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/10 15:06:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/12 10:06:42 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef enum				e_input_error
 	faulty_room_data,
 	invalid_room_name,
 	invalid_room_data,
+	no_connection_data,
 	invalid_connection_data,
 	input_file_missing,
 	num_of_ants_missing,
