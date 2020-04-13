@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/12 18:15:47 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/13 19:13:24 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int				run_algorithms(t_input *input, t_result *result)
 
 	return_code = 1;
 	algorithm_elem = *input->algorithm_lst;
-	sort_connections(input);
 	while (algorithm_elem)
 	{
 		prepare_input_data(input);

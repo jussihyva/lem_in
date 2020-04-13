@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 09:59:20 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/12 18:11:31 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/13 19:13:24 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void						calc_distance(t_input *input)
 	t_list			*tmp_elem;
 	size_t			c;
 
+	sort_connections(input);
 	new_room_element_lst =
 						(t_list **)ft_memalloc(sizeof(*new_room_element_lst));
 	room = input->end_room_ptr;

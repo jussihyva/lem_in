@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room_data_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pi <pi@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:57:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/03/23 07:35:45 by pi               ###   ########.fr       */
+/*   Updated: 2020/04/13 19:28:51 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,24 @@ t_room				**create_room_array_2(t_input *input)
 	t_list		*elem;
 	size_t		index;
 
-	room_array = (t_room **)ft_memalloc(sizeof(*room_array) *
-													(input->num_of_rooms + 1));
-	elem = input->room_lst;
-	index = -1;
-	room_array[++index] = *(t_room **)elem->content;
-	elem = elem->next;
-	while (elem)
+	if (input->room_lst)
 	{
-		add_room_to_array(room_array, elem, ++index);
+		room_array = (t_room **)ft_memalloc(sizeof(*room_array) *
+													(input->num_of_rooms + 1));
+		elem = input->room_lst;
+		index = -1;
+		room_array[++index] = *(t_room **)elem->content;
 		elem = elem->next;
+		while (elem)
+		{
+			add_room_to_array(room_array, elem, ++index);
+			elem = elem->next;
+		}
+		room_array[input->num_of_rooms] = NULL;
 	}
-	room_array[input->num_of_rooms] = NULL;
+	else
+		room_array = NULL;
+	ft_lstdel(&input->room_lst, del_path);
 	return (room_array);
 }
 

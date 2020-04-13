@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 18:59:24 by pi                #+#    #+#             */
-/*   Updated: 2020/04/12 18:08:57 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/13 19:32:47 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,16 @@ void				init_input_structure(t_input *input, t_app app)
 	return ;
 }
 
+static int			open_fd(t_input *input)
+{
+	int		fd;
+
+	fd = 0;
+	if (input->opt & map_file)
+		fd = open(input->input_file, O_RDONLY);
+	return (fd);
+}
+
 void				read_input_data(t_input *input, t_output **output,
 											int *argc, char ***argv)
 {
@@ -97,24 +107,18 @@ void				read_input_data(t_input *input, t_output **output,
 	ft_step_args(argc, argv);
 	select_algorithms(input->algorithm_lst);
 	ft_read_opt(input, argc, argv);
-	fd = 0;
-	if (input->opt & map_file)
-		fd = open(input->input_file, O_RDONLY);
+	fd = open_fd(input);
 	line = NULL;
 	if (fd < 0)
 		input->error = file_open_failure;
-	else
-	{
-		read_status = e_read_num_of_ants;
-		while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
-												read_status != e_stop_reading)
-			parse_line(line, input, output, &read_status);
-		ft_strdel(&line);
-	}
+	read_status = e_read_num_of_ants;
+	while ((ret = ft_get_next_line(fd, &line)) > 0 && !input->error &&
+											read_status != e_stop_reading)
+		parse_line(line, input, output, &read_status);
+	ft_strdel(&line);
 	if (!input->room_array && input->num_of_rooms)
 	{
 		input->room_array = create_room_array_2(input);
-		ft_lstdel(&input->room_lst, del_path);
 		input->error = no_connection_data;
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 09:28:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/08 16:53:00 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/13 19:37:30 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void			print_input_lines(t_input *input)
 	t_list		*elem;
 
 	elem = *input->valid_input_lines;
-	while (elem->next)
+	while (elem && elem->next)
 		elem = elem->next;
 	while (elem)
 	{

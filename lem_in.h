@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/12 17:58:57 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/12 18:28:55 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ int							algorithm_ford_fulkerson1(t_output *output);
 int							algorithm_ford_fulkerson2(t_output *output);
 int							algorithm_ford_fulkerson3(t_output *output);
 int							algorithm_ford_fulkerson4(t_output *output);
+int							algorithm_ford_fulkerson5(t_output *output);
 void						add_line(t_list **instruction_line_lst, char *line);
 void						set_ants_to_start_room(t_output *output);
 int							create_new_valid_path(t_output *output,
