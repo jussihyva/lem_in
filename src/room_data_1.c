@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:50:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/01 19:21:33 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/13 19:28:15 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ void					read_room_data(char *line, t_input *input,
 		if (input->error == invalid_room_data)
 		{
 			add_line = 1;
-			if (input->room_lst)
-				input->room_array = create_room_array_2(input);
-			ft_lstdel(&input->room_lst, del_path);
+			input->room_array = create_room_array_2(input);
 			input->error = 0;
 			*read_status = e_read_connection_data;
 			read_connection_data(line, input, read_status);

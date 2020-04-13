@@ -6,7 +6,7 @@
 #    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/04/09 14:12:39 by ubuntu           ###   ########.fr        #
+#    Updated: 2020/04/12 18:28:32 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRC_FILES	=	input_1.c input_2.c ft_read_opt.c ft_strtoi.c ft_arraydel.c \
 				algorithm_ford_fulkerson1.c algorithm_ford_fulkerson2_1.c \
 				algorithm_ford_fulkerson2_2.c \
 				algorithm_ford_fulkerson3_1.c algorithm_ford_fulkerson3_2.c \
-				algorithm_ford_fulkerson4.c
+				algorithm_ford_fulkerson4.c \
+				algorithm_ford_fulkerson5.c
 
 OBJ_FOLDER	=	obj
 OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(patsubst %.c, %.o, $(SRC_FILES)))

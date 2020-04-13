@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:11:01 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/09 19:43:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/12 18:18:44 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static int			sort(t_list *elem1, t_list *elem2)
 	room1 = *(t_room **)elem1->content;
 	room2 = *(t_room **)elem2->content;
 	if (room1->num_of_conn_to_end < room2->num_of_conn_to_end)
-		return (-1);
-	else
 		return (1);
+	else
+		return (-1);
 }
 
 void				sort_connections(t_input *input)
