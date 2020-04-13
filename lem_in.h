@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/12 18:28:55 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/13 23:21:43 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct				s_room
 	size_t			num_of_connections;
 	t_ant			*ant;
 	int				is_visited;
+	int				is_blocked;
 	void			*prev_room;
 	void			*next_room;
 	int				re_routing;
