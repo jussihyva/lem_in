@@ -4,5 +4,9 @@
 			"path": "/home/ubuntu/lem_in"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"typeinfo": "c"
+		}
+	}
 }

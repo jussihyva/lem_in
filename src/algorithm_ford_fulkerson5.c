@@ -6,25 +6,28 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/13 23:43:29 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/14 10:25:55 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		track_path(t_room *current_room)
+static t_list			**track_path(t_list **path, t_room *current_room,
+														t_room *end_room_ptr)
 {
 	ft_printf("%7s(%d)", current_room->name, current_room->num_of_conn_to_end);
 	if (current_room->next_room)
 	{
-		if (current_room != ((t_room *)current_room->next_room)->next_room)
-			track_path(current_room->next_room);
+		if (current_room->next_room != end_room_ptr)
+			track_path(path, current_room->next_room, end_room_ptr);
+		ft_lstadd(path, ft_lstnew(&current_room->next_room,
+											sizeof(current_room->next_room)));
 	}
-	return ;
+	return (path);
 }
 
-static int		trace_path_1(t_room *current_roon, t_room *start_room_ptr,
-														t_room *end_room_ptr)
+static int				trace_path_1(t_room *current_roon, t_room *start_room_ptr,
+														t_room *end_room_ptr, size_t c)
 {
 	int			trace_result;
 	t_room		*adj_room;
@@ -45,9 +48,9 @@ static int		trace_path_1(t_room *current_roon, t_room *start_room_ptr,
 			adj_room = *(t_room **)elem->content;
 			if (!adj_room->is_visited && !current_roon->is_blocked)
 				trace_result = trace_path_1(adj_room, start_room_ptr,
-																end_room_ptr);
+																end_room_ptr, c + 1);
 			else if (adj_room->next_room)
-				ft_printf("Colission: %s\n", adj_room->name);
+				ft_printf("Colission: %s (%d)\n", adj_room->name, c);
 			elem = elem->next;
 		}
 		if (!trace_result)
@@ -64,12 +67,14 @@ static int		trace_path_1(t_room *current_roon, t_room *start_room_ptr,
 	return (trace_result);
 }
 
-int				algorithm_ford_fulkerson5(t_output *output)
+int						algorithm_ford_fulkerson5(t_output *output)
 {
-	t_room		*current_roon;
-	t_room		*adj_room;
-	t_list		*elem;
-	int			trace_result;
+	t_room				*current_roon;
+	t_room				*adj_room;
+	t_list				*elem;
+	int					trace_result;
+	t_valid_path		*valid_path;
+	t_list				**path;
 
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
@@ -81,14 +86,27 @@ int				algorithm_ford_fulkerson5(t_output *output)
 	{
 		adj_room = *(t_room **)elem->content;
 		trace_result = trace_path_1(adj_room, output->start_room_ptr,
-														output->end_room_ptr);
+														output->end_room_ptr, 1);
 		if (trace_result)
 		{
 			ft_printf("\n");
-			track_path(adj_room);
+			path = (t_list **)ft_memalloc(sizeof(*path));
+			track_path(path, adj_room, output->end_room_ptr);
+			if (*path)
+			{
+				ft_lstadd(path, ft_lstnew(&adj_room,
+											sizeof(adj_room)));
+				ft_lstadd(path, ft_lstnew(&current_roon,
+											sizeof(current_roon)));
+				output->number_of_paths++;
+				valid_path = create_valid_path(path, valid);
+				ft_lstadd(output->lst_of_selectd_paths, ft_lstnew(&valid_path,
+														sizeof(valid_path)));
+			}
 			ft_printf("\n");
 		}
 		elem = elem->next;
 	}
-	return (0);
+	trace_result = put_ants_to_paths(output);
+	return (1);
 }
