@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 13:01:45 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/07 08:58:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/22 13:27:48 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			add_room_to_paths(t_output *output, t_room *room,
 		valid_path->num_of_conn_to_end++;
 		if (room != start_room)
 			valid_path->room_vector[room->id / 32] |= 1 << (room->id % 32);
-		add_room_to_path(valid_path->path, room);
+		add_room_to_path(valid_path->room_lst, room);
 		elem = elem->next;
 	}
 	room->is_visited = 0;
@@ -56,7 +56,7 @@ int				create_new_valid_path(t_output *output, t_room *room)
 	path = (t_list **)ft_memalloc(sizeof(*path));
 	valid_path = create_valid_path(path, valid);
 	valid_path->num_of_conn_to_end++;
-	add_room_to_path(valid_path->path, room);
+	add_room_to_path(valid_path->room_lst, room);
 	valid_path->id = id++;
 	valid_path->room_vector =
 					(size_t *)ft_memalloc(sizeof(*valid_path->room_vector) *

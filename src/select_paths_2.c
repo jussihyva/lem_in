@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/04/03 09:47:37 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/22 13:25:35 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void					finalize_path_selection(t_output *output, int *offset)
 			if (valid_path->validity == many)
 			{
 				valid_path->validity = add_rooms_to_path(output,
-													valid_path->path, *offset);
+													valid_path->room_lst, *offset);
 				if (valid_path->validity == no_room)
 					delete_valid_path(output, elem);
 				else

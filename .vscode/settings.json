@@ -1,6 +1,5 @@
 {
     "git.autofetch": true,
-    "C_Cpp.autocomplete": "Disabled",
     "C_Cpp.default.intelliSenseMode": "clang-x64",
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "editor.insertSpaces": false
