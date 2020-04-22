@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:42:46 by pi                #+#    #+#             */
-/*   Updated: 2020/04/03 09:04:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/22 13:25:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void			add_ants(t_output *output, size_t *c,
 	ants_to_add = 1;
 	while (ants_to_add-- && selected_valid_path)
 	{
-		output->ant_array[*c]->path = selected_valid_path->path;
+		output->ant_array[*c]->path = selected_valid_path->room_lst;
 		path_elem = *(t_list **)output->ant_array[*c]->path;
 		output->ant_array[*c]->current_room_elem = path_elem;
 		selected_valid_path->num_of_ants++;

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/05 14:47:30 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/22 13:27:05 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void			del_output(void *elem, size_t size)
 
 	(void)size;
 	valid_path = *(t_valid_path **)elem;
-	ft_lstdel(valid_path->path, del_path);
-	free(valid_path->path);
+	ft_lstdel(valid_path->room_lst, del_path);
+	free(valid_path->room_lst);
 	free(valid_path->room_vector);
 	free(valid_path);
 	free(elem);
@@ -42,10 +42,8 @@ void			release_output(t_output *output)
 	free(output->instruction_line_lst);
 	ft_lstdel(output->lst_of_valid_paths, del_output);
 	if (*output->lst_of_selectd_paths)
-	{
 		ft_lstdel(output->lst_of_selectd_paths, del_path);
-		free(output->lst_of_selectd_paths);
-	}
+	free(output->lst_of_selectd_paths);
 	free(output->lst_of_valid_paths);
 	output->lst_of_valid_paths = NULL;
 	c = -1;

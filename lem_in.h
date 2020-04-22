@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/13 23:21:43 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/22 13:23:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef enum				e_validity
 typedef struct				s_valid_path
 {
 	size_t			id;
-	t_list			**path;
+	t_list			**room_lst;
 	t_validity		validity;
 	int				num_of_conn_to_end;
 	size_t			num_of_ants;
