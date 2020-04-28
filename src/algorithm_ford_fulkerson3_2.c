@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/09 10:25:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/23 13:53:11 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,24 @@ void			select_best_group(t_list **path_lst,
 	t_list			*elem;
 	static size_t	nr_instruction_lines = INT_MAX;
 
-	valid_path = output->valid_paths[path_index];
-	if (path_index < output->number_of_paths)
+	while (path_index < output->number_of_paths)
 	{
-		path_index++;
+		valid_path = output->valid_paths[path_index];
 		if (!is_room_colision(merged_room_vector, valid_path->room_vector,
 														output->num_of_rooms))
 		{
 			elem = ft_lstnew(&valid_path, sizeof(valid_path));
 			ft_lstadd_e(path_lst, elem);
-			select_best_group(path_lst, merged_room_vector, output, path_index);
+			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 			ft_lstrem(path_lst, elem);
 			update_room_vector(output, valid_path, merged_room_vector);
-			select_best_group(path_lst, merged_room_vector, output, path_index);
+//			select_best_group(path_lst, merged_room_vector, output, path_index);
 		}
-		else
-			select_best_group(path_lst, merged_room_vector, output, path_index);
+//		else
+//			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
+		path_index++;
 	}
-	else if (*path_lst)
+	if (*path_lst)
 		update_num_of_instruction_lines(output, path_lst,
 														&nr_instruction_lines);
 	return ;
