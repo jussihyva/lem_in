@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 17:34:26 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/29 17:46:44 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int						algorithm_ford_fulkerson5(t_output *output)
 		while (++c < output->num_of_rooms)
 		{
 			output->room_array[c]->is_visited = 0;
-			output->room_array[c]->is_blocked = 0;
+//			output->room_array[c]->is_blocked = 0;
 		}
 		elem = elem->next;
 	}
