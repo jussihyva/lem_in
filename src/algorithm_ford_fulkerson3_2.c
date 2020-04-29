@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 07:36:34 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/29 16:00:51 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,19 @@ static void		update_lst_of_selectd_paths(t_output *output, t_list **path_lst)
 static void		update_num_of_instruction_lines(t_output *output,
 								t_list **path_lst, size_t *nr_instruction_lines)
 {
+	size_t		tmp_nr_instruction_lines;
+
 	if (*output->lst_of_selectd_paths)
 	{
-		if (*nr_instruction_lines > count_num_of_instruction_lines(path_lst,
-							output->number_of_ants, *nr_instruction_lines))
+		tmp_nr_instruction_lines = count_num_of_instruction_lines(path_lst,
+							output->number_of_ants, *nr_instruction_lines);
+		if (*nr_instruction_lines > tmp_nr_instruction_lines)
 		{
 			ft_lstdel(output->lst_of_selectd_paths, del_path);
 			update_lst_of_selectd_paths(output, path_lst);
 			output->number_of_selected_paths =
 								ft_lstlen(output->lst_of_selectd_paths);
-			*nr_instruction_lines = count_num_of_instruction_lines(path_lst,
-							output->number_of_ants, *nr_instruction_lines);
+			*nr_instruction_lines = tmp_nr_instruction_lines;
 		}
 	}
 	else
@@ -89,6 +91,7 @@ void			select_best_group(t_list **path_lst,
 {
 	t_valid_path	*valid_path;
 	t_list			*elem;
+	static size_t	rooms_in_path;
 	static size_t	nr_instruction_lines = INT_MAX;
 
 	if (path_index < output->number_of_paths)
@@ -98,22 +101,31 @@ void			select_best_group(t_list **path_lst,
 		if (!is_room_colision(merged_room_vector, valid_path->room_vector,
 														output->num_of_rooms))
 		{
+			if (path_index < 10)
+				ft_printf("MOI1 %d\n", path_index);
 			elem = ft_lstnew(&valid_path, sizeof(valid_path));
 			ft_lstadd_e(path_lst, elem);
+			rooms_in_path++;
 			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 			ft_lstrem(path_lst, elem);
+			rooms_in_path--;
+			if (path_index < 10)
+				ft_printf("MOI2 %d\n", path_index);
 			update_room_vector(output, valid_path, merged_room_vector);
-//			select_best_group(path_lst, merged_room_vector, output, path_index);
+			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 		}
 		else
 			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
-//		path_index++;
 	}
-	if (*path_lst)
+	else
 	{
-//		ft_printf("MOI2 ");
-		update_num_of_instruction_lines(output, path_lst,
+		if (*path_lst)
+		{
+//			if (rooms_in_path > 2)
+//				ft_printf("MOI\n");
+			update_num_of_instruction_lines(output, path_lst,
 														&nr_instruction_lines);
+		}
 	}
 	return ;
 }
