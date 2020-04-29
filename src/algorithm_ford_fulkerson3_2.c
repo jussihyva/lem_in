@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 16:00:51 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/29 17:28:04 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,16 @@ void			select_best_group(t_list **path_lst,
 		if (!is_room_colision(merged_room_vector, valid_path->room_vector,
 														output->num_of_rooms))
 		{
-			if (path_index < 10)
-				ft_printf("MOI1 %d\n", path_index);
+//			if (path_index < 1000)
+//				ft_printf("MOI1 %d\n", path_index);
 			elem = ft_lstnew(&valid_path, sizeof(valid_path));
 			ft_lstadd_e(path_lst, elem);
 			rooms_in_path++;
 			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 			ft_lstrem(path_lst, elem);
 			rooms_in_path--;
-			if (path_index < 10)
-				ft_printf("MOI2 %d\n", path_index);
+//			if (path_index < 1000)
+//				ft_printf("MOI2 %d\n", path_index);
 			update_room_vector(output, valid_path, merged_room_vector);
 			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 		}

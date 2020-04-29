@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 16:54:02 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/29 17:34:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,9 +181,10 @@ int						algorithm_ford_fulkerson5(t_output *output)
 					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
 													output->number_of_paths);
 	sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
-	print_valid_paths(output);
+	if (output->opt && output->opt & verbose1)
+		print_valid_paths(output);
 	c = -1;
-	ft_printf("START: %d\n", output->number_of_paths);
+//	ft_printf("START: %d\n", output->number_of_paths);
 	while (++c < output->number_of_paths)
 	{
 		ft_printf(" %d (%d)", c, output->valid_paths[c]->num_of_conn_to_end);
@@ -196,10 +197,10 @@ int						algorithm_ford_fulkerson5(t_output *output)
 		ft_lstdel(&new_path_lst, del_path);
 		break ;
 	}
-	ft_printf("\n");
-	ft_printf("END:\n");
+//	ft_printf("\n");
+//	ft_printf("END:\n");
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
 	trace_result = put_ants_to_paths(output);
-	ft_printf("END:\n");
+//	ft_printf("END:\n");
 	return 1;
 }
