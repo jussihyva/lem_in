@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/22 13:23:31 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/29 16:43:19 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct				s_output
 	size_t			connection_counter;
 	t_room			*start_room_ptr;
 	t_room			*end_room_ptr;
+	t_room			**room_array;
 	size_t			num_of_rooms;
 	size_t			number_of_paths;
 	size_t			number_of_selected_paths;

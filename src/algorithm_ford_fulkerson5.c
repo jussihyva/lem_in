@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 07:30:38 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/29 16:47:52 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,31 @@
 // 	return (path);
 // }
 
-static void				print_valid_paths(t_list **path_lst)
+static void				print_valid_paths(t_output *output)
 {
-	t_list			*elem;
+//	t_list			*elem;
 	t_valid_path	*valid_path;
 	t_list			*room_elem;
 	size_t			c;
+	size_t			i;
 	t_room			*room;
 
-	elem = *path_lst;
+	c = 0;
 	ft_printf("\n");
-	while (elem)
+	while (c < output->number_of_paths)
 	{
-		valid_path = *(t_valid_path **)elem->content;
-		ft_printf("%3d", valid_path->num_of_conn_to_end);
+		valid_path = (t_valid_path *)output->valid_paths[c];
+		ft_printf("%3d %3d", c, valid_path->num_of_conn_to_end);
 		room_elem = *valid_path->room_lst;
-		c = 25;
-		while (room_elem && c--)
+		i = 25;
+		while (room_elem && i--)
 		{
 			room = *(t_room **)room_elem->content;
 			ft_printf(" %s", room->name);
 			room_elem = room_elem->next;
 		}
 		ft_printf("\n");
-		elem = elem->next;
+		c++;
 	}
 	return ;
 }
@@ -132,7 +133,7 @@ static int				trace_path_1(t_output *output, t_list **path_lst,
 		}
 	}
 	if (trace_result == 0)
-		current_room->is_blocked = 1;
+		current_room->is_blocked = 0;
 	ft_lstrem(path_lst, current_elem);
 	current_room->is_visited = 0;
 	return (trace_result);
@@ -165,16 +166,22 @@ int						algorithm_ford_fulkerson5(t_output *output)
 		adj_room = *(t_room **)elem->content;
 		ft_printf(" %d\n", adj_room->num_of_conn_to_end);
 		trace_result = trace_path_1(output, path, adj_room, current_room);
+		c = -1;
+		while (++c < output->num_of_rooms)
+		{
+			output->room_array[c]->is_visited = 0;
+			output->room_array[c]->is_blocked = 0;
+		}
 		elem = elem->next;
 	}
 	ft_lstdel(path, del_path);
 	free(path);
-	print_valid_paths(output->lst_of_valid_paths);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
 	output->valid_paths =
 					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
 													output->number_of_paths);
 	sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
+	print_valid_paths(output);
 	c = -1;
 	ft_printf("START: %d\n", output->number_of_paths);
 	while (++c < output->number_of_paths)
@@ -184,11 +191,10 @@ int						algorithm_ford_fulkerson5(t_output *output)
 		i = -1;
 		while (++i < (output->num_of_rooms / 32 + 1))
 			merged_room_vector[i] = 0;
-		ft_printf("MOI ");
 		select_best_group(&new_path_lst, merged_room_vector, output, c);
-		ft_printf("MOI ");
 //		print_valid_paths(output->lst_of_selectd_paths);
 		ft_lstdel(&new_path_lst, del_path);
+		break ;
 	}
 	ft_printf("\n");
 	ft_printf("END:\n");
