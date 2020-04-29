@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 16:47:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/04/29 16:54:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ static int				trace_path_1(t_output *output, t_list **path_lst,
 		}
 	}
 	if (trace_result == 0)
-		current_room->is_blocked = 0;
+		current_room->is_blocked = 1;
 	ft_lstrem(path_lst, current_elem);
 	current_room->is_visited = 0;
 	return (trace_result);
