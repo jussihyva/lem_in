@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/29 16:43:19 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/01 19:46:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,13 @@ typedef struct				s_valid_path
 	size_t			*room_vector;
 }							t_valid_path;
 
+typedef struct				s_connection
+{
+	size_t		capazity;
+	int			flow;
+}							t_connection;
+
+
 typedef struct				s_output
 {
 	int				error;
@@ -161,6 +168,7 @@ typedef struct				s_output
 	t_ant			**ant_array;
 	size_t			number_of_ants;
 	int				first;
+	t_connection	***connection_array;
 }							t_output;
 
 typedef struct				s_algorithm
@@ -245,6 +253,7 @@ int							algorithm_ford_fulkerson2(t_output *output);
 int							algorithm_ford_fulkerson3(t_output *output);
 int							algorithm_ford_fulkerson4(t_output *output);
 int							algorithm_ford_fulkerson5(t_output *output);
+int							algorithm_ford_fulkerson6(t_output *output);
 void						add_line(t_list **instruction_line_lst, char *line);
 void						set_ants_to_start_room(t_output *output);
 int							create_new_valid_path(t_output *output,
