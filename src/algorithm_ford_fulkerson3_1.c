@@ -6,18 +6,16 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 12:58:13 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/01 19:10:32 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 static int		update_ants_in_start_room(int *ants_in_start_room,
-						t_valid_path *valid_path, size_t nr_connection_to_end, size_t c)
+						t_valid_path *valid_path, size_t nr_connection_to_end,
+						size_t c)
 {
-//	size_t			c;
-
-//	c = 0;
 	(*ants_in_start_room)--;
 	if (c > 1)
 		*ants_in_start_room -= (valid_path->num_of_conn_to_end -
@@ -43,7 +41,7 @@ size_t			count_num_of_instruction_lines(t_list **path_lst,
 		c++;
 		valid_path = *(t_valid_path **)elem->content;
 		if ((update_ants_in_start_room(&ants_in_start_room, valid_path,
-													nr_connection_to_end, c)) < 0)
+												nr_connection_to_end, c)) < 0)
 			break ;
 		nr_connection_to_end = valid_path->num_of_conn_to_end;
 		if (nr_instruction_lines > ants_in_start_room / c +
