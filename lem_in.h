@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/01 19:46:33 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/01 22:10:12 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct				s_valid_path
 
 typedef struct				s_connection
 {
+	t_room		*owner_room;
 	size_t		capazity;
 	int			flow;
 }							t_connection;
@@ -279,5 +280,6 @@ void						ft_lstadd_sort(t_list **alst, t_list *new,
 									int (*cmp)(t_list *elem1, t_list *elem2));
 int							trace_path(t_room *current_room, t_room *start_room,
 															t_room *end_room);
+void						release_connection_array(t_output *output);
 
 #endif
