@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/29 17:28:04 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/01 19:21:28 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void		update_lst_of_selectd_paths(t_output *output, t_list **path_lst)
 	return ;
 }
 
-static void		update_num_of_instruction_lines(t_output *output,
+static void		update_num_of_instr_lines(t_output *output,
 								t_list **path_lst, size_t *nr_instruction_lines)
 {
 	size_t		tmp_nr_instruction_lines;
@@ -96,36 +96,22 @@ void			select_best_group(t_list **path_lst,
 
 	if (path_index < output->number_of_paths)
 	{
-//		ft_printf("path_index: %d\n", path_index);
 		valid_path = output->valid_paths[path_index];
 		if (!is_room_colision(merged_room_vector, valid_path->room_vector,
 														output->num_of_rooms))
 		{
-//			if (path_index < 1000)
-//				ft_printf("MOI1 %d\n", path_index);
 			elem = ft_lstnew(&valid_path, sizeof(valid_path));
 			ft_lstadd_e(path_lst, elem);
 			rooms_in_path++;
-			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
+			select_best_group(path_lst, merged_room_vector, output,
+																path_index + 1);
 			ft_lstrem(path_lst, elem);
 			rooms_in_path--;
-//			if (path_index < 1000)
-//				ft_printf("MOI2 %d\n", path_index);
 			update_room_vector(output, valid_path, merged_room_vector);
-			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 		}
-		else
-			select_best_group(path_lst, merged_room_vector, output, path_index + 1);
+		select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 	}
-	else
-	{
-		if (*path_lst)
-		{
-//			if (rooms_in_path > 2)
-//				ft_printf("MOI\n");
-			update_num_of_instruction_lines(output, path_lst,
-														&nr_instruction_lines);
-		}
-	}
+	else if (*path_lst)
+		update_num_of_instr_lines(output, path_lst, &nr_instruction_lines);
 	return ;
 }
