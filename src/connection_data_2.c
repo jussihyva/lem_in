@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:11:01 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/22 21:55:01 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/02 09:29:39 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int			sort(t_list *elem1, t_list *elem2)
 		return (1);
 }
 
-void				sort_connections(t_input *input)
+void				sort_connections(t_output *output)
 {
 	t_list			*elem;
 	t_list			*new_elem;
@@ -76,10 +76,10 @@ void				sort_connections(t_input *input)
 	size_t			c;
 
 	c = -1;
-	while (++c < input->num_of_rooms)
+	while (++c < output->num_of_rooms)
 	{
 		connection_lst = NULL;
-		room = input->room_array[c];
+		room = output->room_array[c];
 		elem = room->connection_lst;
 		while (elem)
 		{

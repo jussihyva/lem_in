@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/01 19:21:28 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/02 19:09:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void		update_num_of_instr_lines(t_output *output,
 			output->number_of_selected_paths =
 								ft_lstlen(output->lst_of_selectd_paths);
 			*nr_instruction_lines = tmp_nr_instruction_lines;
+			ft_printf("Lines: %d(%d)\n", *nr_instruction_lines, output->number_of_selected_paths);
 		}
 	}
 	else
@@ -71,6 +72,7 @@ static void		update_num_of_instr_lines(t_output *output,
 								ft_lstlen(output->lst_of_selectd_paths);
 		*nr_instruction_lines = count_num_of_instruction_lines(path_lst,
 							output->number_of_ants, *nr_instruction_lines);
+		ft_printf("Lines: %d(%d)\n", *nr_instruction_lines, output->number_of_selected_paths);
 	}
 	return ;
 }
@@ -112,6 +114,9 @@ void			select_best_group(t_list **path_lst,
 		select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 	}
 	else if (*path_lst)
+	{
 		update_num_of_instr_lines(output, path_lst, &nr_instruction_lines);
+//		ft_printf("Lines: %d\n", nr_instruction_lines);
+	}
 	return ;
 }
