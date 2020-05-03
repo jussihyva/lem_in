@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/01 18:58:06 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/03 15:08:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ static void				print_valid_paths(t_output *output)
 	return ;
 }
 
-static t_valid_path		*initialize_path(t_output *output, t_validity validity)
-{
-	static int		id;
-	t_valid_path	*path;
-
-	path = (t_valid_path *)ft_memalloc(sizeof(*path));
-	path->room_lst = (t_list **)ft_memalloc(sizeof(*path->room_lst));
-	path->room_vector = (size_t *)ft_memalloc(sizeof(*path->room_vector) *
-											((output->num_of_rooms / 32) + 1));
-	path->id = id++;
-	path->validity = validity;
-	path->num_of_conn_to_end = -1;
-	return (path);
-}
-
 static int				create_path(t_output *output, t_list **room_lst,
 										t_validity validity, t_room *start_room)
 {
@@ -63,6 +48,7 @@ static int				create_path(t_output *output, t_list **room_lst,
 	t_room			*room;
 
 	path = initialize_path(output, validity);
+	path->num_of_conn_to_end = -1;
 	room_elem = *room_lst;
 	while (room_elem)
 	{
