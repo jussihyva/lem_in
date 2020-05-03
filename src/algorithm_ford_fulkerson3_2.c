@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/02 19:09:26 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/03 15:58:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,6 @@ static int		is_room_colision(size_t *merged_room_vector,
 	return (0);
 }
 
-static void		update_lst_of_selectd_paths(t_output *output, t_list **path_lst)
-{
-	t_list			*elem;
-	t_valid_path	*valid_path;
-	t_list			*new_elem;
-
-	elem = *path_lst;
-	while (elem)
-	{
-		valid_path = *(t_valid_path **)elem->content;
-		new_elem = ft_lstnew(&valid_path, sizeof(valid_path));
-		ft_lstadd_e(output->lst_of_selectd_paths, new_elem);
-		elem = elem->next;
-	}
-	return ;
-}
-
 static void		update_num_of_instr_lines(t_output *output,
 								t_list **path_lst, size_t *nr_instruction_lines)
 {
@@ -58,21 +41,15 @@ static void		update_num_of_instr_lines(t_output *output,
 		if (*nr_instruction_lines > tmp_nr_instruction_lines)
 		{
 			ft_lstdel(output->lst_of_selectd_paths, del_path);
-			update_lst_of_selectd_paths(output, path_lst);
-			output->number_of_selected_paths =
-								ft_lstlen(output->lst_of_selectd_paths);
 			*nr_instruction_lines = tmp_nr_instruction_lines;
-			ft_printf("Lines: %d(%d)\n", *nr_instruction_lines, output->number_of_selected_paths);
+			update_lst_of_selectd_paths(output, path_lst, nr_instruction_lines);
 		}
 	}
 	else
 	{
-		update_lst_of_selectd_paths(output, path_lst);
-		output->number_of_selected_paths =
-								ft_lstlen(output->lst_of_selectd_paths);
 		*nr_instruction_lines = count_num_of_instruction_lines(path_lst,
 							output->number_of_ants, *nr_instruction_lines);
-		ft_printf("Lines: %d(%d)\n", *nr_instruction_lines, output->number_of_selected_paths);
+		update_lst_of_selectd_paths(output, path_lst, nr_instruction_lines);
 	}
 	return ;
 }
@@ -88,14 +65,32 @@ static void		update_room_vector(t_output *output, t_valid_path *valid_path,
 	return ;
 }
 
+static int		selection_timeout(t_output *output)
+{
+	static size_t	path_verification_cnt = 1;
+
+	if (!(path_verification_cnt % 90000000))
+	{
+		if (output->opt && output->opt & verbose)
+			ft_printf("Timeout: %d\n", path_verification_cnt);
+		return (1);
+	}
+	else
+	{
+		path_verification_cnt++;
+		return (0);
+	}
+}
+
 void			select_best_group(t_list **path_lst,
 				size_t *merged_room_vector, t_output *output, size_t path_index)
 {
 	t_valid_path	*valid_path;
 	t_list			*elem;
-	static size_t	rooms_in_path;
 	static size_t	nr_instruction_lines = INT_MAX;
 
+	if (selection_timeout(output))
+		return ;
 	if (path_index < output->number_of_paths)
 	{
 		valid_path = output->valid_paths[path_index];
@@ -104,19 +99,14 @@ void			select_best_group(t_list **path_lst,
 		{
 			elem = ft_lstnew(&valid_path, sizeof(valid_path));
 			ft_lstadd_e(path_lst, elem);
-			rooms_in_path++;
 			select_best_group(path_lst, merged_room_vector, output,
 																path_index + 1);
 			ft_lstrem(path_lst, elem);
-			rooms_in_path--;
 			update_room_vector(output, valid_path, merged_room_vector);
 		}
 		select_best_group(path_lst, merged_room_vector, output, path_index + 1);
 	}
 	else if (*path_lst)
-	{
 		update_num_of_instr_lines(output, path_lst, &nr_instruction_lines);
-//		ft_printf("Lines: %d\n", nr_instruction_lines);
-	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/02 16:54:39 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/03 15:58:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ typedef struct				s_connection
 	int			flow;
 }							t_connection;
 
-
 typedef struct				s_output
 {
 	int				error;
@@ -282,5 +281,15 @@ void						ft_lstadd_sort(t_list **alst, t_list *new,
 int							trace_path(t_room *current_room, t_room *start_room,
 															t_room *end_room);
 void						release_connection_array(t_output *output);
+void						breadth_first_search(t_output *output);
+void						release_connection_array(t_output *output);
+void						create_connection_array(t_output *output);
+void						initialize_connection_array(t_output *output);
+t_valid_path				*initialize_path(t_output *output,
+														t_validity validity);
+void						save_path(t_output *output, t_room *room);
+void						update_lst_of_selectd_paths(t_output *output,
+												t_list **path_lst,
+												size_t *nr_instruction_lines);
 
 #endif
