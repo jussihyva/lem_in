@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 19:23:52 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/03 14:58:00 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/04 11:59:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void				print_valid_paths(t_output *output)
 
 int						algorithm_ford_fulkerson6(t_output *output)
 {
-	t_room			*start_room;
 	t_list			*new_path_lst;
 	size_t			*merged_room_vector;
 
@@ -50,7 +49,6 @@ int						algorithm_ford_fulkerson6(t_output *output)
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
 	initialize_connection_array(output);
-	start_room = output->start_room_ptr;
 	breadth_first_search(output);
 	sort_connections(output);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
@@ -62,6 +60,7 @@ int						algorithm_ford_fulkerson6(t_output *output)
 		print_valid_paths(output);
 	new_path_lst = NULL;
 	select_best_group(&new_path_lst, merged_room_vector, output, 0);
+	free(merged_room_vector);
 	ft_lstdel(&new_path_lst, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
 	put_ants_to_paths(output);

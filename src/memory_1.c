@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/01 21:49:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/04 09:58:42 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void			release_output(t_output *output)
 	ft_lstdel(output->instruction_line_lst, del_path);
 	free(output->instruction_line_lst);
 	ft_lstdel(output->lst_of_valid_paths, del_output);
-	if (*output->lst_of_selectd_paths)
+	if (output->lst_of_selectd_paths && *output->lst_of_selectd_paths)
 		ft_lstdel(output->lst_of_selectd_paths, del_path);
 	free(output->lst_of_selectd_paths);
 	free(output->lst_of_valid_paths);

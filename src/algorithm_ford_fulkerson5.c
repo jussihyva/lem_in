@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/04 09:40:03 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/04 11:59:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int						trace_path_1(t_output *output, t_list **path_lst,
 
 int						algorithm_ford_fulkerson5(t_output *output)
 {
-	t_list				**path;
+	t_list				*path;
 	t_list				*new_path_lst;
 	size_t				*merged_room_vector;
 
@@ -127,10 +127,9 @@ int						algorithm_ford_fulkerson5(t_output *output)
 											((output->num_of_rooms / 32) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
-	path = (t_list **)ft_memalloc(sizeof(*path));
-	trace_path_1(output, path, output->start_room_ptr, NULL);
-	ft_lstdel(path, del_path);
-	free(path);
+	path = NULL;
+	trace_path_1(output, &path, output->start_room_ptr, NULL);
+	ft_lstdel(&path, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
 	output->valid_paths =
 					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
@@ -140,6 +139,7 @@ int						algorithm_ford_fulkerson5(t_output *output)
 		print_valid_paths(output);
 	new_path_lst = NULL;
 	select_best_group(&new_path_lst, merged_room_vector, output, 0);
+	free(merged_room_vector);
 	ft_lstdel(&new_path_lst, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
 	put_ants_to_paths(output);
