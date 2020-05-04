@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/03 15:58:33 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/04 12:09:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int		selection_timeout(t_output *output)
 {
 	static size_t	path_verification_cnt = 1;
 
-	if (!(path_verification_cnt % 90000000))
+	if (!(path_verification_cnt % 900000))
 	{
 		if (output->opt && output->opt & verbose)
 			ft_printf("Timeout: %d\n", path_verification_cnt);
