@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 14:54:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/03 14:59:16 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/04 08:44:17 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void					release_connection_array(t_output *output)
 	size_t			i2;
 
 	i1 = -1;
-	while (++i1 < output->num_of_rooms)
+	while (++i1 < output->num_of_rooms && output->connection_array)
 	{
 		i2 = -1;
 		while (++i2 < output->num_of_rooms)
