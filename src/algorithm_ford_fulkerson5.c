@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/03 15:08:31 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/04 09:40:03 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,41 @@ static int				create_path(t_output *output, t_list **room_lst,
 	return (1);
 }
 
-static int				trace_path_1(t_output *output, t_list **path_lst,
+static int				validate_adj_room(t_output *output, t_room *prev_room,
+										t_room *current_room, t_list **path_lst)
+{
+	int				trace_result;
+	t_list			*elem;
+	t_room			*adj_room;
+	size_t			c;
+
+	trace_result = 0;
+	elem = current_room->connection_lst;
+	while (elem)
+	{
+		adj_room = *(t_room **)elem->content;
+		if (adj_room == output->start_room_ptr)
+			trace_result |= 1;
+		else if (!adj_room->is_blocked && !adj_room->is_visited &&
+														adj_room != prev_room)
+			trace_result |= trace_path_1(output, path_lst, adj_room,
+															current_room);
+		if (!prev_room)
+		{
+			c = -1;
+			while (++c < output->num_of_rooms)
+				output->room_array[c]->is_blocked = 0;
+		}
+		elem = elem->next;
+	}
+	return (trace_result);
+}
+
+int						trace_path_1(t_output *output, t_list **path_lst,
 										t_room *current_room, t_room *prev_room)
 {
 	int				trace_result;
-	t_room			*adj_room;
-	t_list			*elem;
 	t_list			*current_elem;
-	size_t			c;
 
 	current_room->is_visited = 1;
 	current_elem = ft_lstnew(&current_room, sizeof(current_room));
@@ -81,30 +108,8 @@ static int				trace_path_1(t_output *output, t_list **path_lst,
 		trace_result = create_path(output, path_lst, valid_room,
 														output->start_room_ptr);
 	else
-	{
-		trace_result = 0;
-		elem = current_room->connection_lst;
-		while (elem)
-		{
-			adj_room = *(t_room **)elem->content;
-			if (adj_room == prev_room)
-				;
-			else if (adj_room == output->start_room_ptr)
-				trace_result |= 1;
-			else if (adj_room->is_visited)
-				trace_result |= 0;
-			else if (!adj_room->is_blocked)
-				trace_result |= trace_path_1(output, path_lst, adj_room,
-																current_room);
-			if (!prev_room)
-			{
-				c = -1;
-				while (++c < output->num_of_rooms)
-					output->room_array[c]->is_blocked = 0;
-			}
-			elem = elem->next;
-		}
-	}
+		trace_result = validate_adj_room(output, prev_room, current_room,
+																	path_lst);
 	if (trace_result == 0)
 		current_room->is_blocked = 1;
 	ft_lstrem(path_lst, current_elem);
