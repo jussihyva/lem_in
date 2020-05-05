@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/04 12:09:33 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:26:10 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ static int		is_room_colision(size_t *merged_room_vector,
 									size_t *room_vector, size_t num_of_rooms)
 {
 	size_t			c;
+	size_t			vector_size;
 
+	vector_size = (num_of_rooms / 32) + 1;
 	c = -1;
-	while (++c < ((num_of_rooms / 32) + 1))
+	while (++c < vector_size)
 	{
 		if (merged_room_vector[c] & room_vector[c])
 			return (1);
 	}
 	c = -1;
-	while (++c < ((num_of_rooms / 32) + 1))
+	while (++c < vector_size)
 		merged_room_vector[c] |= room_vector[c];
 	return (0);
 }
@@ -58,9 +60,11 @@ static void		update_room_vector(t_output *output, t_valid_path *valid_path,
 													size_t *merged_room_vector)
 {
 	size_t			c;
+	size_t			vector_size;
 
+	vector_size = (output->num_of_rooms / 32) + 1;
 	c = -1;
-	while (++c < ((output->num_of_rooms / 32) + 1))
+	while (++c < vector_size)
 		merged_room_vector[c] &= ~valid_path->room_vector[c];
 	return ;
 }
@@ -69,7 +73,8 @@ static int		selection_timeout(t_output *output)
 {
 	static size_t	path_verification_cnt = 1;
 
-	if (!(path_verification_cnt % 900000))
+//	if (!(path_verification_cnt % 900000))
+	if (1 == 2)
 	{
 		if (output->opt && output->opt & verbose)
 			ft_printf("Timeout: %d\n", path_verification_cnt);
@@ -94,11 +99,12 @@ void			select_best_group(t_list **path_lst,
 	if (path_index < output->number_of_paths)
 	{
 		valid_path = output->valid_paths[path_index];
-		if (!is_room_colision(merged_room_vector, valid_path->room_vector,
-														output->num_of_rooms))
+		if (nr_instruction_lines > (size_t)valid_path->num_of_conn_to_end &&
+				!is_room_colision(merged_room_vector, valid_path->room_vector,
+				output->num_of_rooms))
 		{
 			elem = ft_lstnew(&valid_path, sizeof(valid_path));
-			ft_lstadd_e(path_lst, elem);
+			ft_lstadd(path_lst, elem);
 			select_best_group(path_lst, merged_room_vector, output,
 																path_index + 1);
 			ft_lstrem(path_lst, elem);

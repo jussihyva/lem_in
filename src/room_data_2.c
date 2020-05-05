@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 09:48:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/05 10:30:41 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/05 17:57:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_room				**add_room(char **splitted_line, t_input *input)
 	if (splitted_line[0][0] == 'L' || ft_strchr(splitted_line[0], '-'))
 		input->error = invalid_room_name;
 	i = 0;
-	while (splitted_line[0][i] && ft_isalnum(splitted_line[0][i]))
+	while (splitted_line[0][i] && ft_isprint(splitted_line[0][i]))
 		i++;
 	if (i != ft_strlen(splitted_line[0]))
 		input->error = invalid_room_name;
