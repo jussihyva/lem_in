@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 19:23:52 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/04 11:59:20 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/05 09:37:55 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void				print_valid_paths(t_output *output)
 
 int						algorithm_ford_fulkerson6(t_output *output)
 {
+	int				return_code;
 	t_list			*new_path_lst;
 	size_t			*merged_room_vector;
 
@@ -63,6 +64,6 @@ int						algorithm_ford_fulkerson6(t_output *output)
 	free(merged_room_vector);
 	ft_lstdel(&new_path_lst, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
-	put_ants_to_paths(output);
-	return (1);
+	return_code = put_ants_to_paths(output);
+	return (return_code);
 }

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/09 14:12:39 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/05 09:53:37 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,18 @@ void					read_connection_data(char *line, t_input *input,
 										t_read_status *read_status)
 {
 	t_list			*elem;
+	int				is_valid_line;
 
-	elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
-	ft_lstadd(input->valid_input_lines, elem);
+	is_valid_line = 0;
 	if (line[0] == '#')
-		;
+		is_valid_line = 1;
 	else if (line[0] == '\0')
 	{
 		if (input->app == e_checker)
+		{
+			is_valid_line = 1;
 			*read_status = e_read_instruction_data;
+		}
 		else
 		{
 			input->error = invalid_connection_data;
@@ -63,5 +66,9 @@ void					read_connection_data(char *line, t_input *input,
 	}
 	else
 		*read_status = validate_connection_data(line, input, *read_status);
-	return ;
+	if (is_valid_line || !input->error)
+	{
+		elem = ft_lstnew(line, sizeof(*line) * (ft_strlen(line) + 1));
+		ft_lstadd(input->valid_input_lines, elem);
+	}
 }
