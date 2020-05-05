@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/04 12:26:23 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/05 09:17:07 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				algorithm_ford_fulkerson3(t_output *output)
 											((output->num_of_rooms / 32) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
+	sort_connections(output);
 	output->first = 1;
 	if (get_next_room(output, output->start_room_ptr, output->start_room_ptr,
 														output->end_room_ptr))
