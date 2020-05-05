@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/04 09:10:52 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/05 17:23:17 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,7 @@ int							trace_path_1(t_output *output, t_list **path_lst,
 									t_room *current_room, t_room *prev_room);
 void						release_connection_array(t_output *output);
 void						breadth_first_search(t_output *output);
+void						bepth_first_search(t_output *output);
 void						release_connection_array(t_output *output);
 void						create_connection_array(t_output *output);
 void						initialize_connection_array(t_output *output);

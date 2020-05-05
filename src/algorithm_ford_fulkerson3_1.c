@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/05 09:17:07 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:17:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ size_t			count_num_of_instruction_lines(t_list **path_lst,
 	c = 0;
 	nr_connection_to_end = 0;
 	elem = *path_lst;
-	while (elem)
+	while (elem && ants_in_start_room > 0)
 	{
 		c++;
 		valid_path = *(t_valid_path **)elem->content;
 		if ((update_ants_in_start_room(&ants_in_start_room, valid_path,
 												nr_connection_to_end, c)) < 0)
-			break ;
+			;
 		nr_connection_to_end = valid_path->num_of_conn_to_end;
 		if (nr_instruction_lines > ants_in_start_room / c +
 						((ants_in_start_room % c) > 0) + nr_connection_to_end)
