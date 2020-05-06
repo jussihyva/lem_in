@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:25:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/04 09:58:42 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/06 14:26:52 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ void			del_output(void *elem, size_t size)
 	return ;
 }
 
+static void		release_path_array(t_output *output)
+{
+	size_t		c;
+
+	c = -1;
+	if (output->path_array)
+	{
+		while (++c < output->start_room_ptr->num_of_connections)
+			free(output->path_array[c]);
+		free(output->path_array);
+	}
+	return ;
+}
+
 void			release_output(t_output *output)
 {
 	size_t		c;
@@ -47,6 +61,7 @@ void			release_output(t_output *output)
 	free(output->lst_of_valid_paths);
 	output->lst_of_valid_paths = NULL;
 	release_connection_array(output);
+	release_path_array(output);
 	c = -1;
 	if (output->ant_array)
 	{

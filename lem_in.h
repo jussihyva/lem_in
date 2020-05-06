@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/05 17:23:17 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/06 14:39:13 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef enum				e_validity
 typedef struct				s_valid_path
 {
 	size_t			id;
+	size_t			branch_id;
 	t_list			**room_lst;
 	t_validity		validity;
 	int				num_of_conn_to_end;
@@ -156,6 +157,7 @@ typedef struct				s_output
 	t_opt			opt;
 	t_list			**lst_of_valid_paths;
 	t_valid_path	**valid_paths;
+	t_valid_path	***path_array;
 	t_list			**lst_of_selectd_paths;
 	t_list			**instruction_line_lst;
 	size_t			number_of_instruction_line;
@@ -284,15 +286,17 @@ int							trace_path_1(t_output *output, t_list **path_lst,
 									t_room *current_room, t_room *prev_room);
 void						release_connection_array(t_output *output);
 void						breadth_first_search(t_output *output);
-void						bepth_first_search(t_output *output);
+void						depth_first_search(t_output *output);
 void						release_connection_array(t_output *output);
 void						create_connection_array(t_output *output);
 void						initialize_connection_array(t_output *output);
 t_valid_path				*initialize_path(t_output *output,
-														t_validity validity);
-void						save_path(t_output *output, t_room *room);
+										t_validity validity, size_t branch_id);
+void						save_path(t_output *output, t_room *room,
+															size_t branch_id);
 void						update_lst_of_selectd_paths(t_output *output,
 												t_list **path_lst,
 												size_t *nr_instruction_lines);
+void						select_paths_1(t_output *output);
 
 #endif

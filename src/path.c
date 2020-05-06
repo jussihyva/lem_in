@@ -6,13 +6,14 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 15:03:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/03 16:02:22 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/06 14:33:07 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_valid_path	*initialize_path(t_output *output, t_validity validity)
+t_valid_path	*initialize_path(t_output *output, t_validity validity,
+															size_t branch_id)
 {
 	static int		id;
 	t_valid_path	*path;
@@ -23,16 +24,17 @@ t_valid_path	*initialize_path(t_output *output, t_validity validity)
 											((output->num_of_rooms / 32) + 1));
 	path->id = id++;
 	path->validity = validity;
+	path->branch_id = branch_id;
 	path->num_of_conn_to_end = 0;
 	return (path);
 }
 
-void			save_path(t_output *output, t_room *room)
+void			save_path(t_output *output, t_room *room, size_t branch_id)
 {
 	t_room			*parent_room;
 	t_valid_path	*path;
 
-	path = initialize_path(output, valid_room);
+	path = initialize_path(output, valid_room, branch_id);
 	parent_room = room->parent_room;
 	ft_lstadd(path->room_lst, ft_lstnew(&output->end_room_ptr,
 												sizeof(output->end_room_ptr)));
@@ -74,5 +76,35 @@ void			update_lst_of_selectd_paths(t_output *output, t_list **path_lst,
 	if (output->opt && output->opt & verbose)
 		ft_printf("Lines: %d(%d)\n", *nr_instruction_lines,
 											output->number_of_selected_paths);
+	return ;
+}
+
+void			select_paths_1(t_output *output)
+{
+	t_list			*elem;
+	t_valid_path	*valid_path;
+	size_t			i;
+	t_room			*room;
+	size_t			*i_array;
+
+	i_array = (size_t *)ft_memalloc(sizeof(*i_array) * output->start_room_ptr->num_of_connections);
+	output->path_array = (t_valid_path ***)ft_memalloc(sizeof(*output->path_array) * output->start_room_ptr->num_of_connections);
+	i = -1;
+	while (++i < output->start_room_ptr->num_of_connections)
+		output->path_array[i] = (t_valid_path **)ft_memalloc(sizeof(**output->path_array) * output->number_of_paths);
+	i = -1;
+	while (++i < output->number_of_paths)
+	{
+		valid_path = output->valid_paths[i];
+		output->path_array[valid_path->branch_id][i_array[valid_path->branch_id]] = valid_path;
+		i_array[valid_path->branch_id]++;
+		elem = *(t_list **)valid_path->room_lst;
+		if (elem->next)
+		{
+			room = *(t_room **)elem->next->content;
+//			ft_printf("The first room in the path: %s %d(%d)\n", room->name, valid_path->branch_id, output->start_room_ptr->num_of_connections);
+		}
+	}
+	free(i_array);
 	return ;
 }

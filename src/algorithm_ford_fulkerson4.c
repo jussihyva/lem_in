@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/05 21:26:41 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/06 14:39:13 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int						algorithm_ford_fulkerson4(t_output *output)
 											((output->num_of_rooms / 32) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
-	bepth_first_search(output);
+	depth_first_search(output);
 	sort_connections(output);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
 	output->valid_paths =
@@ -61,10 +61,10 @@ int						algorithm_ford_fulkerson4(t_output *output)
 		print_valid_paths(output);
 	new_path_lst = NULL;
 	select_best_group(&new_path_lst, merged_room_vector, output, 0);
+	select_paths_1(output);
 	free(merged_room_vector);
 	ft_lstdel(&new_path_lst, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
-	ft_printf("PATHS: %d\n", output->number_of_paths);
 	return_code = put_ants_to_paths(output);
 	return (return_code);
 }

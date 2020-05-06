@@ -6,7 +6,7 @@
 #    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/05/05 17:21:08 by ubuntu           ###   ########.fr        #
+#    Updated: 2020/05/06 14:37:36 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRC_FILES		=	input_1.c input_2.c ft_read_opt.c ft_strtoi.c \
 					algorithm_ford_fulkerson4.c \
 					algorithm_ford_fulkerson5.c \
 					algorithm_ford_fulkerson6.c \
-					breadth_first_search.c bepth_first_search.c \
+					breadth_first_search.c depth_first_search.c \
 					path.c
 
 OBJ_FOLDER		=	obj
