@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bepth_first_search.c                               :+:      :+:    :+:   */
+/*   depth_first_search.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:16:28 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/05 23:02:03 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/06 14:37:06 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "lem_in.h"
 
-static int		dfs(t_output *output, t_room *current_room, size_t level)
+static int		dfs(t_output *output, t_room *current_room, size_t level,
+															size_t branch_id)
 {
 	int			return_code;
 	t_room		*adj_room;
@@ -33,7 +34,7 @@ static int		dfs(t_output *output, t_room *current_room, size_t level)
 		{
 			adj_room->parent_room = current_room;
 //			ft_printf(" %s", adj_room->name);
-			save_path(output, current_room);
+			save_path(output, current_room, branch_id);
 			return_code = 2;
 			current_room->is_visited = 0;
 			break ;
@@ -43,7 +44,7 @@ static int		dfs(t_output *output, t_room *current_room, size_t level)
 			if (return_code == 2)
 				return_code = 0;
 			adj_room->parent_room = current_room;
-			return_code |= dfs(output, adj_room, level + 1);
+			return_code |= dfs(output, adj_room, level + 1, branch_id);
 		}
 		else if (adj_room->is_visited)
 			return_code = 0;
@@ -59,12 +60,13 @@ static int		dfs(t_output *output, t_room *current_room, size_t level)
 	return (return_code);
 }
 
-void			bepth_first_search(t_output *output)
+void			depth_first_search(t_output *output)
 {
 	int			return_code;
 	t_room		*start_room;
 	t_room		*adj_room;
 	t_list		*elem;
+	size_t		branch_id;
 
 	start_room = output->start_room_ptr;
 	start_room->is_visited = 1;
@@ -76,11 +78,12 @@ void			bepth_first_search(t_output *output)
 		elem = elem->next;
 	}
 	elem = start_room->connection_lst;
+	branch_id = 0;
 	while (elem)
 	{
 		adj_room = *(t_room **)elem->content;
 		adj_room->parent_room = start_room;
-		return_code = dfs(output, adj_room, 1);
+		return_code = dfs(output, adj_room, 1, branch_id++);
 		adj_room->is_visited = 1;
 		elem = elem->next;
 	}

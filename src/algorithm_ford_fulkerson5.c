@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/04 11:59:20 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/06 13:40:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int				create_path(t_output *output, t_list **room_lst,
 	t_list			*room_elem;
 	t_room			*room;
 
-	path = initialize_path(output, validity);
+	path = initialize_path(output, validity, 0);
 	path->num_of_conn_to_end = -1;
 	room_elem = *room_lst;
 	while (room_elem)
