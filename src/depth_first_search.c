@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:16:28 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 08:24:02 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:09:40 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int		dfs(t_output *output, t_room *current_room, size_t level,
 
 void			depth_first_search(t_output *output)
 {
-	int			return_code;
 	t_room		*start_room;
 	t_room		*adj_room;
 	t_list		*elem;
@@ -83,7 +82,10 @@ void			depth_first_search(t_output *output)
 	{
 		adj_room = *(t_room **)elem->content;
 		adj_room->parent_room = start_room;
-		return_code = dfs(output, adj_room, 1, branch_id++);
+		if (adj_room == output->end_room_ptr)
+			save_path(output, start_room, branch_id);
+		else
+			dfs(output, adj_room, 1, branch_id++);
 		adj_room->is_visited = 1;
 		elem = elem->next;
 	}

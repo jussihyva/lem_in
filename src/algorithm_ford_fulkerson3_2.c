@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 11:54:21 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 16:47:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				is_room_colision(size_t *merged_room_vector,
 	size_t			c;
 	size_t			vector_size;
 
-	vector_size = (num_of_rooms / 32) + 1;
+	vector_size = (num_of_rooms / VECTOR_BITS) + 1;
 	c = -1;
 	while (++c < vector_size)
 	{
@@ -62,7 +62,7 @@ void			update_room_vector(t_output *output, t_valid_path *valid_path,
 	size_t			c;
 	size_t			vector_size;
 
-	vector_size = (output->num_of_rooms / 32) + 1;
+	vector_size = (output->num_of_rooms / VECTOR_BITS) + 1;
 	c = -1;
 	while (++c < vector_size)
 		merged_room_vector[c] &= ~valid_path->room_vector[c];

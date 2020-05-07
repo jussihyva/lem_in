@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 15:03:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 11:55:56 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:10:21 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_valid_path	*initialize_path(t_output *output, t_validity validity,
 	path = (t_valid_path *)ft_memalloc(sizeof(*path));
 	path->room_lst = (t_list **)ft_memalloc(sizeof(*path->room_lst));
 	path->room_vector = (size_t *)ft_memalloc(sizeof(*path->room_vector) *
-											((output->num_of_rooms / 32) + 1));
+											((output->num_of_rooms / VECTOR_BITS) + 1));
 	path->id = id++;
 	path->validity = validity;
 	path->branch_id = branch_id;
@@ -39,12 +39,12 @@ void			save_path(t_output *output, t_room *room, size_t branch_id)
 	ft_lstadd(path->room_lst, ft_lstnew(&output->end_room_ptr,
 												sizeof(output->end_room_ptr)));
 	ft_lstadd(path->room_lst, ft_lstnew(&room, sizeof(room)));
-	path->room_vector[room->id / 32] |= 1 << (room->id % 32);
+	path->room_vector[room->id / VECTOR_BITS] |= 1 << (room->id % VECTOR_BITS);
 	path->num_of_conn_to_end++;
 	room->num_of_conn_to_end = path->num_of_conn_to_end;
 	while (parent_room->parent_room)
 	{
-		path->room_vector[parent_room->id / 32] |= 1 << (parent_room->id % 32);
+		path->room_vector[parent_room->id / VECTOR_BITS] |= 1 << (parent_room->id % VECTOR_BITS);
 		ft_lstadd(path->room_lst, ft_lstnew(&parent_room, sizeof(parent_room)));
 		path->num_of_conn_to_end++;
 		parent_room->num_of_conn_to_end = path->num_of_conn_to_end;
@@ -91,24 +91,30 @@ static void		select_paths_2(t_output *output, t_list **path_lst,
 	if (barach_id < output->start_room_ptr->num_of_connections)
 	{
 		i = 0;
-//		while (output->path_array[barach_id][i] && i < (num_of_paths_in_branch_array[barach_id] / 5 + 1))
-		while (output->path_array[barach_id][i] && i < 4)
+		if (output->path_array[barach_id][i])
 		{
-			valid_path = output->path_array[barach_id][i];
-			if (nr_instruction_lines > (size_t)valid_path->num_of_conn_to_end &&
-					!is_room_colision(merged_room_vector, valid_path->room_vector,
-					output->num_of_rooms))
+	//		while (output->path_array[barach_id][i] && i < (num_of_paths_in_branch_array[barach_id] / 5 + 1))
+			while (output->path_array[barach_id][i] && i < 4)
 			{
-				elem = ft_lstnew(&valid_path, sizeof(valid_path));
-				ft_lstadd_e(path_lst, elem);
-				select_paths_2(output, path_lst, merged_room_vector, barach_id + 1, num_of_paths_in_branch_array);
-				ft_lstrem(path_lst, elem);
-				update_room_vector(output, valid_path, merged_room_vector);
+				valid_path = output->path_array[barach_id][i];
+				if (nr_instruction_lines < (size_t)valid_path->num_of_conn_to_end)
+					break ;
+				else if (!is_room_colision(merged_room_vector, valid_path->room_vector,
+						output->num_of_rooms))
+				{
+					elem = ft_lstnew(&valid_path, sizeof(valid_path));
+					ft_lstadd_e(path_lst, elem);
+					select_paths_2(output, path_lst, merged_room_vector, barach_id + 1, num_of_paths_in_branch_array);
+					ft_lstrem(path_lst, elem);
+					update_room_vector(output, valid_path, merged_room_vector);
+				}
+				i++;
 			}
-			i++;
+			select_paths_2(output, path_lst, merged_room_vector, barach_id + 1, num_of_paths_in_branch_array);
 		}
-//		ft_printf("%d\n", barach_id);
-		select_paths_2(output, path_lst, merged_room_vector, barach_id + 1, num_of_paths_in_branch_array);
+		else
+	//		ft_printf("%d\n", barach_id);
+			select_paths_2(output, path_lst, merged_room_vector, barach_id + 1, num_of_paths_in_branch_array);
 	}
 	else if (*path_lst)
 		update_num_of_instr_lines(output, path_lst, &nr_instruction_lines);
@@ -117,17 +123,15 @@ static void		select_paths_2(t_output *output, t_list **path_lst,
 
 void			select_paths_1(t_output *output)
 {
-	t_list			*elem;
 	t_valid_path	*valid_path;
 	size_t			i;
-	t_room			*room;
 	size_t			*num_of_paths_in_branch_array;
 	t_list			*path_lst;
 	size_t			barach_id;
 	size_t			*merged_room_vector;
 
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
-											((output->num_of_rooms / 32) + 1));
+											((output->num_of_rooms / VECTOR_BITS) + 1));
 	num_of_paths_in_branch_array = (size_t *)ft_memalloc(sizeof(*num_of_paths_in_branch_array) * output->start_room_ptr->num_of_connections);
 	output->path_array = (t_valid_path ***)ft_memalloc(sizeof(*output->path_array) * output->start_room_ptr->num_of_connections);
 	i = -1;
@@ -139,12 +143,6 @@ void			select_paths_1(t_output *output)
 		valid_path = output->valid_paths[i];
 		output->path_array[valid_path->branch_id][num_of_paths_in_branch_array[valid_path->branch_id]] = valid_path;
 		num_of_paths_in_branch_array[valid_path->branch_id]++;
-		elem = *(t_list **)valid_path->room_lst;
-		if (elem->next)
-		{
-			room = *(t_room **)elem->next->content;
-//			ft_printf("The first room in the path: %s %d(%d)\n", room->name, valid_path->branch_id, output->start_room_ptr->num_of_connections);
-		}
 	}
 //	free(i_array);
 	path_lst = NULL;
