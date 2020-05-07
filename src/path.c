@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 15:03:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 17:10:21 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 18:16:06 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void		select_paths_2(t_output *output, t_list **path_lst,
 		if (output->path_array[barach_id][i])
 		{
 	//		while (output->path_array[barach_id][i] && i < (num_of_paths_in_branch_array[barach_id] / 5 + 1))
-			while (output->path_array[barach_id][i] && i < 4)
+			while (output->path_array[barach_id][i] && i < 3)
 			{
 				valid_path = output->path_array[barach_id][i];
 				if (nr_instruction_lines < (size_t)valid_path->num_of_conn_to_end)
