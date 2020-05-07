@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 07:27:03 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 16:47:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int						algorithm_ford_fulkerson4(t_output *output)
 	t_list			*new_path_lst;
 
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
-											((output->num_of_rooms / 32) + 1));
+											((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
 	depth_first_search(output);

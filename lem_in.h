@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/07 07:55:44 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:12:45 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "errno.h"
 # include <fcntl.h>
 # include <stdio.h>
+# define VECTOR_BITS 32
 
 typedef enum				e_app
 {

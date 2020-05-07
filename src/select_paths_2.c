@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 06:36:34 by pi                #+#    #+#             */
-/*   Updated: 2020/05/01 19:09:12 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:07:33 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,11 @@ static t_valid_path		*find_shortest_path(t_output *output, int offset)
 {
 	t_valid_path	*valid_path;
 	t_list			**path;
-	t_list			*adj_room_elem;
 	t_validity		validity;
 
 	path = (t_list **)ft_memalloc(sizeof(*path));
 	ft_lstadd_e(path, ft_lstnew(&output->start_room_ptr,
 											sizeof(output->start_room_ptr)));
-	adj_room_elem = output->start_room_ptr->connection_lst;
 	output->start_room_ptr->is_visited = 1;
 	validity = add_rooms_to_path(output, path, offset);
 	if (validity != no_room)

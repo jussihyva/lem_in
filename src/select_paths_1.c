@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:16:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/12 18:15:47 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:07:08 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ static t_room			*get_next_best_room(t_list *adj_room_elem,
 {
 	t_room		*best_room;
 	t_room		*next_room;
-	size_t		num_of_conn_to_start;
 
 	next_room = *(t_room **)adj_room_elem->content;
-	num_of_conn_to_start = next_room->num_of_conn_to_start;
 	best_room = NULL;
 	*validity = no_room;
 	while (adj_room_elem)

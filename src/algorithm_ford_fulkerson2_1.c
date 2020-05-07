@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 14:55:23 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/08 17:38:47 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 16:47:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static int		check_room_colision(size_t *current_room_vector,
 	size_t			c;
 
 	c = -1;
-	while (++c < ((num_of_rooms / 32) + 1))
+	while (++c < ((num_of_rooms / VECTOR_BITS) + 1))
 	{
 		if (current_room_vector[c] & room_vector[c])
 			return (1);
 	}
 	c = -1;
-	while (++c < ((num_of_rooms / 32) + 1))
+	while (++c < ((num_of_rooms / VECTOR_BITS) + 1))
 		current_room_vector[c] |= room_vector[c];
 	return (0);
 }
@@ -81,7 +81,7 @@ static t_list	**select_best_group_of_paths_1(t_output *output)
 	size_t			c;
 
 	current_room_vector = (size_t *)ft_memalloc(sizeof(*current_room_vector) *
-											((output->num_of_rooms / 32) + 1));
+											((output->num_of_rooms / VECTOR_BITS) + 1));
 	path_lst = (t_list **)ft_memalloc(sizeof(*path_lst));
 	c = -1;
 	while (++c < output->number_of_paths)
