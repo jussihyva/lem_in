@@ -6,13 +6,13 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/05 23:26:10 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 11:54:21 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		is_room_colision(size_t *merged_room_vector,
+int				is_room_colision(size_t *merged_room_vector,
 									size_t *room_vector, size_t num_of_rooms)
 {
 	size_t			c;
@@ -31,7 +31,7 @@ static int		is_room_colision(size_t *merged_room_vector,
 	return (0);
 }
 
-static void		update_num_of_instr_lines(t_output *output,
+void			update_num_of_instr_lines(t_output *output,
 								t_list **path_lst, size_t *nr_instruction_lines)
 {
 	size_t		tmp_nr_instruction_lines;
@@ -56,7 +56,7 @@ static void		update_num_of_instr_lines(t_output *output,
 	return ;
 }
 
-static void		update_room_vector(t_output *output, t_valid_path *valid_path,
+void			update_room_vector(t_output *output, t_valid_path *valid_path,
 													size_t *merged_room_vector)
 {
 	size_t			c;
