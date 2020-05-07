@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:16:28 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/06 14:37:06 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/07 08:24:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int		dfs(t_output *output, t_room *current_room, size_t level,
 	t_list		*elem;
 
 //	ft_printf(" %s", current_room->name);
-	if (level > 80)
-		return (0);
+	// if (level > 80)
+	// 	return (0);
 	current_room->is_visited = 1;
 	return_code = 2;
 	elem = current_room->connection_lst;
