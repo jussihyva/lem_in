@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/07 17:12:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/18 06:41:57 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,7 @@ int							algorithm_ford_fulkerson3(t_output *output);
 int							algorithm_ford_fulkerson4(t_output *output);
 int							algorithm_ford_fulkerson5(t_output *output);
 int							algorithm_ford_fulkerson6(t_output *output);
+int							algorithm_depth_first_search1(t_output *output);
 void						add_line(t_list **instruction_line_lst, char *line);
 void						set_ants_to_start_room(t_output *output);
 int							create_new_valid_path(t_output *output,
@@ -287,6 +288,7 @@ int							trace_path_1(t_output *output, t_list **path_lst,
 									t_room *current_room, t_room *prev_room);
 void						release_connection_array(t_output *output);
 void						breadth_first_search(t_output *output);
+void						depth_first_search_2(t_output *output);
 void						depth_first_search(t_output *output);
 void						release_connection_array(t_output *output);
 void						create_connection_array(t_output *output);

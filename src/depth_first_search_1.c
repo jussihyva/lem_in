@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   depth_first_search.c                               :+:      :+:    :+:   */
+/*   depth_first_search_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:16:28 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 17:09:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/18 06:57:08 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lem_in.h"
+#include "lem_in.h"
 
 static int		dfs(t_output *output, t_room *current_room, size_t level,
 															size_t branch_id)
@@ -19,9 +19,6 @@ static int		dfs(t_output *output, t_room *current_room, size_t level,
 	t_room		*adj_room;
 	t_list		*elem;
 
-//	ft_printf(" %s", current_room->name);
-	// if (level > 80)
-	// 	return (0);
 	current_room->is_visited = 1;
 	return_code = 2;
 	elem = current_room->connection_lst;
@@ -33,7 +30,6 @@ static int		dfs(t_output *output, t_room *current_room, size_t level,
 		else if (adj_room == output->end_room_ptr)
 		{
 			adj_room->parent_room = current_room;
-//			ft_printf(" %s", adj_room->name);
 			save_path(output, current_room, branch_id);
 			return_code = 2;
 			current_room->is_visited = 0;
@@ -52,7 +48,6 @@ static int		dfs(t_output *output, t_room *current_room, size_t level,
 	}
 	if (return_code == 2)
 	{
-//		ft_printf("\n");
 		return_code = 0;
 	}
 	else

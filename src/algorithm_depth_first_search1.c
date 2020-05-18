@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm_ford_fulkerson4.c                        :+:      :+:    :+:   */
+/*   algorithm_depth_first_search1.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/08 16:03:12 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/18 06:41:57 by ubuntu           ###   ########.fr       */
+/*   Created: 2020/05/18 06:36:51 by ubuntu            #+#    #+#             */
+/*   Updated: 2020/05/18 06:43:06 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,18 @@ static void				print_valid_paths(t_output *output)
 	return ;
 }
 
-int						algorithm_ford_fulkerson4(t_output *output)
+int						algorithm_depth_first_search1(t_output *output)
 {
 	int				return_code;
 	size_t			*merged_room_vector;
 	t_list			*new_path_lst;
+	size_t			nr_instruction_lines;
 
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
 											((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
-	depth_first_search(output);
+	depth_first_search_2(output);
 	sort_connections(output);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
 	output->valid_paths =
@@ -60,8 +61,8 @@ int						algorithm_ford_fulkerson4(t_output *output)
 	if (output->opt && output->opt & verbose)
 		print_valid_paths(output);
 	new_path_lst = NULL;
-//	select_best_group(&new_path_lst, merged_room_vector, output, 0);
-	select_paths_1(output);
+	nr_instruction_lines = INT_MAX;
+	update_num_of_instr_lines(output, output->lst_of_valid_paths, &nr_instruction_lines);
 	free(merged_room_vector);
 	ft_lstdel(&new_path_lst, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
