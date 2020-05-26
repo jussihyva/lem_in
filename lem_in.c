@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:08:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/07 12:19:35 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 12:27:45 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int						main(int argc, char **argv)
 		print_error(&input);
 	else if (input.end_room_ptr && input.start_room_ptr)
 	{
-//		calc_distance(&input);
+		calc_distance(&input);
 		if (!(return_code = run_algorithms(&input, &result)))
 			print_result(&input, &result);
 		else

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 17:09:06 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 12:31:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ size_t			count_num_of_instruction_lines(t_list **path_lst,
 
 int				algorithm_ford_fulkerson3(t_output *output)
 {
-	int					return_code;
 	size_t				*merged_room_vector;
 	t_list				*new_path_lst;
 
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
-											((output->num_of_rooms / VECTOR_BITS) + 1));
+									((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
 	sort_connections(output);
@@ -78,6 +77,5 @@ int				algorithm_ford_fulkerson3(t_output *output)
 		output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
 	}
 	free(merged_room_vector);
-	return_code = put_ants_to_paths(output);
-	return (return_code);
+	return (put_ants_to_paths(output));
 }
