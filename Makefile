@@ -6,7 +6,7 @@
 #    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/05/18 06:50:47 by ubuntu           ###   ########.fr        #
+#    Updated: 2020/05/26 17:48:49 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SRC_FILES		=	input_1.c input_2.c ft_read_opt.c ft_strtoi.c \
 					breadth_first_search.c \
 					depth_first_search_1.c depth_first_search_2.c \
 					algorithm_depth_first_search1.c \
-					path.c
+					path_1.c path_2.c
 
 OBJ_FOLDER		=	obj
 OBJ_FILES		=	$(addprefix $(OBJ_FOLDER)/, \

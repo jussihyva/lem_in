@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/26 13:14:55 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 17:36:53 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,12 @@ typedef struct				s_output
 	t_connection	***connection_array;
 }							t_output;
 
+typedef struct				s_best_paths
+{
+	size_t			*merged_room_vector;
+	t_list			**path_lst;
+}							t_best_paths;
+
 typedef struct				s_algorithm
 {
 	void			*(*function)(t_output *output);
@@ -309,5 +315,7 @@ int							is_room_colision(size_t *merged_room_vector,
 void						update_room_vector(t_output *output,
 													t_valid_path *valid_path,
 													size_t *merged_room_vector);
+void						select_paths_2(t_output *output,
+									t_best_paths *best_paths, size_t branch_id);
 
 #endif
