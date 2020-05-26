@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/07 16:47:02 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 11:20:42 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int				create_path(t_output *output, t_list **room_lst,
 	{
 		room = *(t_room **)room_elem->content;
 		if (room != start_room && room != output->end_room_ptr)
-			path->room_vector[room->id / VECTOR_BITS] |= 1 << (room->id % VECTOR_BITS);
+			path->room_vector[room->id / VECTOR_BITS] |= 1 <<
+													(room->id % VECTOR_BITS);
 		ft_lstadd(path->room_lst, ft_lstnew(room_elem->content,
 													room_elem->content_size));
 		path->num_of_conn_to_end++;
@@ -124,7 +125,7 @@ int						algorithm_ford_fulkerson5(t_output *output)
 	size_t				*merged_room_vector;
 
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
-											((output->num_of_rooms / VECTOR_BITS) + 1));
+									((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
 	path = NULL;

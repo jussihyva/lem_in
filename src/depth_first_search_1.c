@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:16:28 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/18 06:57:08 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 12:00:39 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,39 @@ static int		dfs(t_output *output, t_room *current_room, size_t level,
 	t_list		*elem;
 
 	current_room->is_visited = 1;
-	return_code = 2;
+	return_code = 0;
 	elem = current_room->connection_lst;
 	while (elem)
 	{
 		adj_room = *(t_room **)elem->content;
-		if (adj_room == current_room->parent_room)
-			;
-		else if (adj_room == output->end_room_ptr)
+		if (adj_room == output->end_room_ptr)
 		{
 			adj_room->parent_room = current_room;
 			save_path(output, current_room, branch_id);
-			return_code = 2;
-			current_room->is_visited = 0;
 			break ;
 		}
-		else if (!adj_room->is_visited)
+		else if (!adj_room->is_visited && adj_room != current_room->parent_room)
 		{
-			if (return_code == 2)
-				return_code = 0;
 			adj_room->parent_room = current_room;
 			return_code |= dfs(output, adj_room, level + 1, branch_id);
 		}
-		else if (adj_room->is_visited)
-			return_code = 0;
 		elem = elem->next;
 	}
-	if (return_code == 2)
-	{
-		return_code = 0;
-	}
-	else
-		current_room->is_visited = 0;
+	current_room->is_visited = 0;
 	return (return_code);
+}
+
+static void		set_visited(t_list *elem)
+{
+	t_room		*adj_room;
+
+	while (elem)
+	{
+		adj_room = *(t_room **)elem->content;
+		adj_room->is_visited = 1;
+		elem = elem->next;
+	}
+	return ;
 }
 
 void			depth_first_search(t_output *output)
@@ -64,13 +64,7 @@ void			depth_first_search(t_output *output)
 
 	start_room = output->start_room_ptr;
 	start_room->is_visited = 1;
-	elem = start_room->connection_lst;
-	while (elem)
-	{
-		adj_room = *(t_room **)elem->content;
-		adj_room->is_visited = 1;
-		elem = elem->next;
-	}
+	set_visited(start_room->connection_lst);
 	elem = start_room->connection_lst;
 	branch_id = 0;
 	while (elem)

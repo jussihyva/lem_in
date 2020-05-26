@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/18 06:41:57 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 13:14:55 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,8 @@ void						update_lst_of_selectd_paths(t_output *output,
 												size_t *nr_instruction_lines);
 void						select_paths_1(t_output *output);
 void						update_num_of_instr_lines(t_output *output,
-								t_list **path_lst, size_t *nr_instruction_lines);
+															t_list **path_lst,
+												size_t *nr_instruction_lines);
 int							is_room_colision(size_t *merged_room_vector,
 									size_t *room_vector, size_t num_of_rooms);
 void						update_room_vector(t_output *output,

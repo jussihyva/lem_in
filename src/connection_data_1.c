@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:23:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/05 09:53:37 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 11:17:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void					read_connection_data(char *line, t_input *input,
 			*read_status = e_read_instruction_data;
 		}
 		else
-		{
-			input->error = invalid_connection_data;
-			set_error(input, line, input->error, "#ERROR ");
-		}
+			set_error(input, line, invalid_connection_data, "#ERROR: ");
 	}
 	else
 		*read_status = validate_connection_data(line, input, *read_status);

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 06:48:18 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/18 07:21:07 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 11:19:14 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void			depth_first_search_2(t_output *output)
 	while (++i < output->num_of_rooms)
 	{
 		current_room = output->room_array[i];
-		if (current_room != output->start_room_ptr && !current_room->parent_room)
+		if (current_room != output->start_room_ptr &&
+													!current_room->parent_room)
 			dfs_2(current_room, output->start_room_ptr);
 	}
 	save_path_2(output, output->end_room_ptr);
