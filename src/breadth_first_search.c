@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 14:45:49 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/06 13:27:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 18:22:36 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void					reset_level_counter(t_output *output)
 
 static void					collect_adj_rooms(t_output *output,
 									t_list **new_room_elem_lst, t_room *room,
-									size_t level, size_t branch_id)
+														t_bfs_data *bfs_data)
 {
 	t_room			*adj_room;
 	t_list			*adj_elem;
@@ -42,10 +42,10 @@ static void					collect_adj_rooms(t_output *output,
 	{
 		adj_room = *(t_room **)adj_elem->content;
 		if (adj_room == output->end_room_ptr)
-			save_path(output, room, branch_id);
+			save_path(output, room, bfs_data->branch_id);
 		else if (adj_room->num_of_conn_to_start == -1)
 		{
-			adj_room->num_of_conn_to_start = level;
+			adj_room->num_of_conn_to_start = bfs_data->level;
 			adj_room->parent_room = room;
 			ft_lstadd(new_room_elem_lst, ft_lstnew(&adj_room,
 															sizeof(adj_room)));
@@ -56,7 +56,7 @@ static void					collect_adj_rooms(t_output *output,
 }
 
 static void					bfs(t_output *output, t_list **room_elem_lst,
-																size_t level, size_t branch_id)
+														t_bfs_data *bfs_data)
 {
 	t_list			*elem;
 	t_room			*room;
@@ -67,14 +67,15 @@ static void					bfs(t_output *output, t_list **room_elem_lst,
 	while (elem)
 	{
 		room = *(t_room **)elem->content;
-		collect_adj_rooms(output, &new_room_elem_lst, room, level, branch_id);
+		collect_adj_rooms(output, &new_room_elem_lst, room, bfs_data);
 		elem = elem->next;
 	}
 	if (new_room_elem_lst)
 	{
 		ft_lstdel(room_elem_lst, del_path);
 		*room_elem_lst = new_room_elem_lst;
-		bfs(output, room_elem_lst, level + 1, branch_id);
+		bfs_data->level++;
+		bfs(output, room_elem_lst, bfs_data);
 	}
 	return ;
 }
@@ -84,22 +85,22 @@ void						breadth_first_search(t_output *output)
 	t_list			**room_elem_lst;
 	t_list			*elem;
 	t_room			*room;
-	size_t			level;
-	size_t			branch_id;
+	t_bfs_data		bfs_data;
 
 	reset_level_counter(output);
 	room_elem_lst = (t_list **)ft_memalloc(sizeof(*room_elem_lst));
 	room = output->start_room_ptr;
-	branch_id = 0;
+	bfs_data.branch_id = 0;
 	elem = room->connection_lst;
 	while (elem)
 	{
 		room = *(t_room **)elem->content;
 		*room_elem_lst = ft_lstnew(&room, sizeof(room));
-		level = 1;
-		room->num_of_conn_to_start = level;
+		bfs_data.level = 1;
+		bfs_data.branch_id++;
+		room->num_of_conn_to_start = bfs_data.level;
 		room->parent_room = output->start_room_ptr;
-		bfs(output, room_elem_lst, level + 1, branch_id++);
+		bfs(output, room_elem_lst, &bfs_data);
 		ft_lstdel(room_elem_lst, del_path);
 		reset_level_counter(output);
 		elem = elem->next;

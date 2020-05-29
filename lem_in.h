@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/26 17:36:53 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/26 18:25:05 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,12 @@ typedef struct				s_best_paths
 	size_t			*merged_room_vector;
 	t_list			**path_lst;
 }							t_best_paths;
+
+typedef struct				s_bfs_data
+{
+	size_t			branch_id;
+	size_t			level;
+}							t_bfs_data;
 
 typedef struct				s_algorithm
 {
