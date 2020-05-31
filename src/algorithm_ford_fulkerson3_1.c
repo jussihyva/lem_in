@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 09:30:36 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/26 12:31:26 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/31 19:34:35 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ int				algorithm_ford_fulkerson3(t_output *output)
 	size_t				*merged_room_vector;
 	t_list				*new_path_lst;
 
+	prepare_room_data(output->room_array, output->num_of_rooms);
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
 									((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
-	sort_connections(output);
+	sort_connections(output, e_ascending);
 	output->first = 1;
 	if (get_next_room(output, output->start_room_ptr, output->start_room_ptr,
 														output->end_room_ptr))

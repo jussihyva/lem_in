@@ -6,11 +6,25 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:57:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/13 19:28:51 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/29 13:30:05 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void				prepare_room_data(t_room **room_array, size_t num_of_rooms)
+{
+	size_t		i;
+	t_room		*room;
+
+	i = -1;
+	while (++i < num_of_rooms)
+	{
+		room = room_array[i];
+		room->is_blocked = 0;
+		room->is_visited = 0;
+	}
+}
 
 static void			add_room_to_array(t_room **room_array, t_list *elem,
 																size_t index)

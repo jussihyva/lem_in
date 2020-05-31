@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/26 18:25:05 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/29 13:47:46 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # include <fcntl.h>
 # include <stdio.h>
 # define VECTOR_BITS 32
+
+typedef enum				e_sort_order
+{
+	e_ascending,
+	e_descending
+}							t_sort_order;
 
 typedef enum				e_app
 {
@@ -291,7 +297,8 @@ size_t						count_num_of_instruction_lines(t_list **path_lst,
 							size_t number_of_ants, size_t nr_instruction_lines);
 void						add_connection(t_input *input, char **splitted_line,
 																	char *line);
-void						sort_connections(t_output *output);
+void						sort_connections(t_output *output,
+													t_sort_order sort_order);
 void						ft_lstadd_sort(t_list **alst, t_list *new,
 									int (*cmp)(t_list *elem1, t_list *elem2));
 int							trace_path(t_room *current_room, t_room *start_room,
@@ -323,5 +330,7 @@ void						update_room_vector(t_output *output,
 													size_t *merged_room_vector);
 void						select_paths_2(t_output *output,
 									t_best_paths *best_paths, size_t branch_id);
+void						prepare_room_data(t_room **room_array,
+														size_t num_of_rooms);
 
 #endif

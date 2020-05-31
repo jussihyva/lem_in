@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 06:36:51 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/26 12:06:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/31 19:54:14 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,22 @@ int						algorithm_depth_first_search1(t_output *output)
 {
 	size_t			*merged_room_vector;
 	t_list			*new_path_lst;
-	size_t			nr_instruction_lines;
 
+	prepare_room_data(output->room_array, output->num_of_rooms);
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
 									((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
+	sort_connections(output, e_ascending);
 	depth_first_search_2(output);
-	sort_connections(output);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
-	output->valid_paths =
-					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
-													output->number_of_paths);
+	output->valid_paths = (t_valid_path **)ft_memalloc(
+					sizeof(*output->valid_paths) * output->number_of_paths);
 	sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
 	if (output->opt && output->opt & verbose)
 		print_valid_paths(output);
 	new_path_lst = NULL;
-	nr_instruction_lines = INT_MAX;
-	update_num_of_instr_lines(output, output->lst_of_valid_paths,
-														&nr_instruction_lines);
+	select_paths_1(output);
 	free(merged_room_vector);
 	ft_lstdel(&new_path_lst, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);

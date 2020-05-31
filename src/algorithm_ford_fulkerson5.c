@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 18:21:34 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/26 11:20:42 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/29 14:10:50 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int						algorithm_ford_fulkerson5(t_output *output)
 	t_list				*new_path_lst;
 	size_t				*merged_room_vector;
 
+	prepare_room_data(output->room_array, output->num_of_rooms);
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
 									((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
@@ -132,9 +133,8 @@ int						algorithm_ford_fulkerson5(t_output *output)
 	trace_path_1(output, &path, output->start_room_ptr, NULL);
 	ft_lstdel(&path, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
-	output->valid_paths =
-					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
-													output->number_of_paths);
+	output->valid_paths = (t_valid_path **)ft_memalloc(
+					sizeof(*output->valid_paths) * output->number_of_paths);
 	sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
 	if (output->opt && output->opt & verbose1)
 		print_valid_paths(output);

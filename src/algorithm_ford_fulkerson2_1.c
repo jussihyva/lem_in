@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 14:55:23 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/26 16:12:18 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/29 13:31:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int				algorithm_ford_fulkerson2(t_output *output)
 	t_room			*room;
 	int				return_code;
 
+	prepare_room_data(output->room_array, output->num_of_rooms);
 	room = output->start_room_ptr;
 	output->first = 1;
 	if (get_next_room(output, room, room, output->end_room_ptr))
