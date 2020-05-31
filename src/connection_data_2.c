@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:11:01 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/02 09:29:39 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/29 13:47:46 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void				add_connection(t_input *input, char **splitted_line,
 	return ;
 }
 
-static int			sort(t_list *elem1, t_list *elem2)
+static int			sort_ascending(t_list *elem1, t_list *elem2)
 {
 	t_room		*room1;
 	t_room		*room2;
@@ -67,7 +67,20 @@ static int			sort(t_list *elem1, t_list *elem2)
 		return (1);
 }
 
-void				sort_connections(t_output *output)
+static int			sort_descending(t_list *elem1, t_list *elem2)
+{
+	t_room		*room1;
+	t_room		*room2;
+
+	room1 = *(t_room **)elem1->content;
+	room2 = *(t_room **)elem2->content;
+	if (room1->num_of_conn_to_end < room2->num_of_conn_to_end)
+		return (1);
+	else
+		return (-1);
+}
+
+void				sort_connections(t_output *output, t_sort_order sort_order)
 {
 	t_list			*elem;
 	t_list			*new_elem;
@@ -84,7 +97,10 @@ void				sort_connections(t_output *output)
 		while (elem)
 		{
 			new_elem = ft_lstnew(elem->content, elem->content_size);
-			ft_lstadd_sort(&connection_lst, new_elem, sort);
+			if (sort_order == e_ascending)
+				ft_lstadd_sort(&connection_lst, new_elem, sort_ascending);
+			else
+				ft_lstadd_sort(&connection_lst, new_elem, sort_descending);
 			elem = elem->next;
 		}
 		ft_lstdel(&room->connection_lst, del_path);

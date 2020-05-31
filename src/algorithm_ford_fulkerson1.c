@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 05:53:21 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/04/05 09:47:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/29 13:31:26 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int				algorithm_ford_fulkerson1(t_output *output)
 	t_list			**path;
 	int				return_code;
 
+	prepare_room_data(output->room_array, output->num_of_rooms);
 	room = output->start_room_ptr;
 	path = (t_list **)ft_memalloc(sizeof(*path));
 	while (local_get_next_room(path, room, room, output->end_room_ptr))

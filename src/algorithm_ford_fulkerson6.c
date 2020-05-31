@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 19:23:52 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/26 16:12:34 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/31 19:34:35 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ int						algorithm_ford_fulkerson6(t_output *output)
 	t_list			*new_path_lst;
 	size_t			*merged_room_vector;
 
+	prepare_room_data(output->room_array, output->num_of_rooms);
 	merged_room_vector = (size_t *)ft_memalloc(sizeof(*merged_room_vector) *
 									((output->num_of_rooms / VECTOR_BITS) + 1));
 	output->lst_of_selectd_paths =
 				(t_list **)ft_memalloc(sizeof(*output->lst_of_selectd_paths));
 	initialize_connection_array(output);
+	sort_connections(output, e_descending);
 	breadth_first_search(output);
-	sort_connections(output);
 	output->number_of_paths = ft_lstlen(output->lst_of_valid_paths);
-	output->valid_paths =
-					(t_valid_path **)ft_memalloc(sizeof(*output->valid_paths) *
-													output->number_of_paths);
+	output->valid_paths = (t_valid_path **)ft_memalloc(
+					sizeof(*output->valid_paths) * output->number_of_paths);
 	sort_valid_paths(output->lst_of_valid_paths, output->valid_paths);
 	if (output->opt && output->opt & verbose)
 		print_valid_paths(output);

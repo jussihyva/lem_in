@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 06:48:18 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/26 11:19:14 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/05/29 14:48:43 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ static void		save_path_2(t_output *output, t_room *room)
 	ft_lstadd(path->room_lst, ft_lstnew(&output->start_room_ptr,
 											sizeof(output->start_room_ptr)));
 	path->num_of_conn_to_end++;
+	ft_printf("connections: %d\n", path->num_of_conn_to_end);
 	ft_lstadd_e(output->lst_of_valid_paths, ft_lstnew(&path, sizeof(path)));
 	return ;
 }
 
-static void		dfs_2(t_room *current_room, t_room *start_room)
+static void		dfs_2(t_output *output, t_room *current_room,
+										t_room *start_room, t_room *end_room)
 {
 	t_room		*adj_room;
 	t_list		*elem;
@@ -51,7 +53,11 @@ static void		dfs_2(t_room *current_room, t_room *start_room)
 		if (adj_room != start_room && !adj_room->parent_room)
 		{
 			adj_room->parent_room = current_room;
-			dfs_2(adj_room, start_room);
+			if (adj_room == end_room)
+				save_path_2(output, end_room);
+			else
+				dfs_2(output, adj_room, start_room, end_room);
+			adj_room->parent_room = NULL;
 		}
 		elem = elem->next;
 	}
@@ -61,18 +67,8 @@ static void		dfs_2(t_room *current_room, t_room *start_room)
 void			depth_first_search_2(t_output *output)
 {
 	t_room		*current_room;
-	size_t		i;
 
 	current_room = output->start_room_ptr;
-	dfs_2(current_room, output->start_room_ptr);
-	i = -1;
-	while (++i < output->num_of_rooms)
-	{
-		current_room = output->room_array[i];
-		if (current_room != output->start_room_ptr &&
-													!current_room->parent_room)
-			dfs_2(current_room, output->start_room_ptr);
-	}
-	save_path_2(output, output->end_room_ptr);
+	dfs_2(output, current_room, output->start_room_ptr, output->end_room_ptr);
 	return ;
 }
