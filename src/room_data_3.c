@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:57:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/29 13:30:05 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/01 10:02:01 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ t_room				**create_room_array_2(t_input *input)
 t_room				*get_room(char *name, t_input *input)
 {
 	t_room		*room;
-	size_t		low;
-	size_t		middle;
-	size_t		high;
+	int			low;
+	int			middle;
+	int			high;
 	int			result;
 
 	room = NULL;
 	low = 0;
 	high = input->num_of_rooms - 1;
-	while (low <= high)
+	while (low <= high && high >= 0)
 	{
 		middle = (high + low) / 2;
 		result = ft_strcmp(name, input->room_array[middle]->name);

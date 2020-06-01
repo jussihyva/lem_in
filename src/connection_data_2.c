@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:11:01 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/29 13:47:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/01 09:55:19 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void				add_connection(t_input *input, char **splitted_line,
 
 	room1 = get_room(splitted_line[0], input);
 	room2 = get_room(splitted_line[1], input);
-	if (room1 == room2)
+	if (room1 == room2 && room1)
 		set_error(input, line, 0, "#WARNING: ");
 	else if (room1 && room2)
 	{
