@@ -6,7 +6,7 @@
 #    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 13:36:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/05/26 17:48:49 by ubuntu           ###   ########.fr        #
+#    Updated: 2020/06/03 23:07:50 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,11 +75,16 @@ norm:
 	norminette $(MAIN_SRC) $(HEADER) $(SRC_FOLDER)
 
 clean:
+	make -C ${LIBFT_FOLDER} clean
+	make -C ${LIBFT_PRINTF_FOLDER} clean
 	@\rm -rf $(NAME).dSYM
-	@\rm -rf $(OBJ_FILES)
+	@\rm -rf $(OBJ_FOLDER)/*.o
 
 fclean: clean
+	make -C ${LIBFT_FOLDER} fclean
+	make -C ${LIBFT_PRINTF_FOLDER} fclean
 	@\rm -rf $(NAME)
+	@\rm -rf $(NAME_2)
 
 re: fclean all
 

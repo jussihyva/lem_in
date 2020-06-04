@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_output_string.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/11 12:14:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/06/03 23:02:24 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void		write_output_string(size_t *words, t_list **substring_list,
 }
 
 size_t			print_formatted_string(t_list **substring_list, int fd,
-																char **str)
+																char *str)
 {
 	size_t			words;
 	char			*buffer;
@@ -92,7 +92,7 @@ size_t			print_formatted_string(t_list **substring_list, int fd,
 	words = 0;
 	write_output_string(&words, substring_list, buffer);
 	if (str)
-		ft_memcpy(*str, buffer, words + 1);
+		ft_memcpy(str, buffer, words + 1);
 	else
 		ft_putlstr_fd(buffer, words, fd);
 	ft_strdel(&buffer);

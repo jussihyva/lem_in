@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 13:31:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/06/03 23:02:24 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 static int		create_output_string(va_list *ap, const char *format, int fd,
-																	char **str)
+																	char *str)
 {
 	size_t			attrs;
 	t_list			**substring_list;
@@ -63,7 +63,7 @@ int				ft_sprintf(char *str, const char *format, ...)
 	int				attrs;
 
 	va_start(ap, format);
-	attrs = create_output_string(&ap, format, 0, &str);
+	attrs = create_output_string(&ap, format, 0, str);
 	va_end(ap);
 	return (attrs);
 }
