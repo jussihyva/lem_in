@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/23 16:33:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/06/03 23:09:01 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void		set_pre_filler(t_substring *substring);
 void		set_post_filler(t_substring *substring);
 void		set_sign(t_substring *substring);
 void		set_zero_filler(t_substring *substring);
-size_t		print_formatted_string(t_list **substring_list, int fd, char **str);
+size_t		print_formatted_string(t_list **substring_list, int fd, char *str);
 long double	read_f_param(t_type type, va_list *ap);
 void		save_parameter(t_substring *substring, char *s);
 void		set_prefix(t_substring *substring);
