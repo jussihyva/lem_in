@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ants_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/04/01 12:36:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/10 20:40:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,18 @@ static char			*print_inst(int *first_instruction, char *ant_name,
 	line = (char *)ft_memalloc(sizeof(*line) * 10000);
 	if (*first_instruction)
 	{
-		ft_sprintf(line, "%s-%s", ant_name, room_name);
+		ft_strcat(line, ant_name);
+		ft_strcat(line, "-");
+		ft_strcat(line, room_name);
 		*first_instruction = 0;
 	}
 	else
-		ft_sprintf(line, " %5s-%s", ant_name, room_name);
+	{
+		ft_strcat(line, " ");
+		ft_strcat(line, ant_name);
+		ft_strcat(line, "-");
+		ft_strcat(line, room_name);
+	}
 	return (line);
 }
 
