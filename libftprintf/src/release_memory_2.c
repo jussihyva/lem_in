@@ -3,35 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   release_memory_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 09:59:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/02/24 11:22:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/06/19 10:36:59 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		reset_elem(t_list *elem)
+static void		reset_elem(t_list elem)
 {
 	char	*s;
 
-	s = (*elem).content;
-	ft_strdel(&s);
-	(*elem).content_size = 0;
-	(*elem).next = NULL;
-	(*elem).prev = NULL;
+	s = (char *)elem.content;
+	if (elem.content_size)
+		ft_strdel(&s);
 	return ;
 }
 
 static void		del_o_string(t_substring *elem)
 {
-	reset_elem(&elem->o_string.pre_filler);
-	reset_elem(&elem->o_string.sign);
-	reset_elem(&elem->o_string.prefix);
-	reset_elem(&elem->o_string.zero_filler);
-	reset_elem(&elem->o_string.parameter);
-	reset_elem(&elem->o_string.post_filler);
+	reset_elem(elem->o_string.pre_filler);
+	reset_elem(elem->o_string.sign);
+	reset_elem(elem->o_string.prefix);
+	reset_elem(elem->o_string.zero_filler);
+	reset_elem(elem->o_string.parameter);
+	reset_elem(elem->o_string.post_filler);
 }
 
 void			del_substring(void *substring_elem, size_t size)
