@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 14:45:49 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/06/24 23:02:32 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/25 01:19:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ static void					collect_adj_rooms(t_output *output,
 	{
 		adj_room = *(t_room **)adj_elem->content;
 		if (adj_room == output->end_room_ptr)
-			save_path(output, room, bfs_data->branch_id);
+		{
+			adj_room->parent_room = room;
+			save_path(output, bfs_data->branch_id);
+		}
 		else if (adj_room->num_of_conn_to_start == -1)
 		{
 			adj_room->num_of_conn_to_start = bfs_data->level;
@@ -80,37 +83,40 @@ static void					bfs(t_output *output, t_list **room_elem_lst,
 	return ;
 }
 
+static void					start_bfs(t_output *output, t_room *room,
+														t_bfs_data *bfs_data)
+{
+	t_list			*room_elem_lst;
+
+	room_elem_lst = ft_lstnew(&room, sizeof(room));
+	bfs(output, &room_elem_lst, bfs_data);
+	ft_lstdel(&room_elem_lst, del_path);
+	return ;
+}
+
 void						breadth_first_search(t_output *output)
 {
-	t_list			**room_elem_lst;
 	t_list			*elem;
 	t_room			*room;
 	t_bfs_data		bfs_data;
 
 	reset_level_counter(output);
-	room_elem_lst = (t_list **)ft_memalloc(sizeof(*room_elem_lst));
-	room = output->start_room_ptr;
 	bfs_data.branch_id = -1;
-	elem = room->connection_lst;
+	elem = output->start_room_ptr->connection_lst;
 	while (elem)
 	{
 		room = *(t_room **)elem->content;
-		*room_elem_lst = ft_lstnew(&room, sizeof(room));
 		bfs_data.level = 1;
 		bfs_data.branch_id++;
 		room->num_of_conn_to_start = bfs_data.level;
 		room->parent_room = output->start_room_ptr;
 		if (room == output->end_room_ptr)
 		{
-			save_path(output, NULL, bfs_data.branch_id);
+			save_path(output, bfs_data.branch_id);
 			break ;
 		}
-		else
-			bfs(output, room_elem_lst, &bfs_data);
-		ft_lstdel(room_elem_lst, del_path);
+		start_bfs(output, room, &bfs_data);
 		reset_level_counter(output);
 		elem = elem->next;
 	}
-	free(room_elem_lst);
-	return ;
 }

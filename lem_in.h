@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/05/29 13:47:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/25 00:54:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,8 +314,7 @@ void						create_connection_array(t_output *output);
 void						initialize_connection_array(t_output *output);
 t_valid_path				*initialize_path(t_output *output,
 										t_validity validity, size_t branch_id);
-void						save_path(t_output *output, t_room *room,
-															size_t branch_id);
+void						save_path(t_output *output, size_t branch_id);
 void						update_lst_of_selectd_paths(t_output *output,
 												t_list **path_lst,
 												size_t *nr_instruction_lines);
