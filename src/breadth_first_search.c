@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 14:45:49 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/26 18:22:36 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/24 23:02:32 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void						breadth_first_search(t_output *output)
 	reset_level_counter(output);
 	room_elem_lst = (t_list **)ft_memalloc(sizeof(*room_elem_lst));
 	room = output->start_room_ptr;
-	bfs_data.branch_id = 0;
+	bfs_data.branch_id = -1;
 	elem = room->connection_lst;
 	while (elem)
 	{
@@ -100,7 +100,13 @@ void						breadth_first_search(t_output *output)
 		bfs_data.branch_id++;
 		room->num_of_conn_to_start = bfs_data.level;
 		room->parent_room = output->start_room_ptr;
-		bfs(output, room_elem_lst, &bfs_data);
+		if (room == output->end_room_ptr)
+		{
+			save_path(output, NULL, bfs_data.branch_id);
+			break ;
+		}
+		else
+			bfs(output, room_elem_lst, &bfs_data);
 		ft_lstdel(room_elem_lst, del_path);
 		reset_level_counter(output);
 		elem = elem->next;
