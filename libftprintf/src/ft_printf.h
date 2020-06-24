@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/10 10:00:27 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/19 08:47:07 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ struct		s_param_type
 {
 	t_type			type;
 	char			*type_string;
+	int				length;
 };
 
 typedef struct s_param_type	t_param_type;

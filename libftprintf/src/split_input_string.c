@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_input_string.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 17:51:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/06/19 10:00:54 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,11 @@
 
 static void		set_default_values(t_substring *substring)
 {
-	t_list		deafult_string;
-
-	deafult_string.content = NULL;
-	deafult_string.content_size = 0;
-	substring->converter = NULL;
 	substring->filler = ' ';
 	substring->precision = -1;
 	substring->width = -1;
-	substring->conv_type = 0;
-	substring->par_value = NULL;
-	substring->par_value_is_neg = 0;
-	substring->o_string.add_null = 0;
-	substring->o_string.sign = deafult_string;
-	substring->o_string.parameter = deafult_string;
-	substring->o_string.post_filler = deafult_string;
-	substring->o_string.pre_filler = deafult_string;
-	substring->o_string.prefix = deafult_string;
-	substring->o_string.zero_filler = deafult_string;
 	substring->formatter_list =
 					(t_list **)ft_memalloc(sizeof(*substring->formatter_list));
-	*substring->formatter_list = NULL;
 	return ;
 }
 

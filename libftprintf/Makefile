@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
+#    By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/02/23 16:37:11 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/06/19 09:28:45 by ubuntu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ LIBFT_FILES		=	ft_putstr.o ft_putstr_fd.o ft_strlen.o ft_putchar.o \
 					ft_islower.o ft_lstdel.o ft_lstdelone.o ft_strdup.o \
 					ft_putendl.o ft_lstnew.o ft_memcpy.o ft_strncmp.o \
 					ft_atoi.o ft_isdigit.o ft_isspace.o ft_strcat.o \
-					ft_strncpy.o ft_memccpy.o
+					ft_strncpy.o ft_memccpy.o ft_strnequ.o ft_lstadd.o
 LIBFT_PATHS		=	${addprefix ${LIBFT_FOLDER}/, ${LIBFT_FILES}}
 
 all: ${NAME}

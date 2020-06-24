@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   width_and_prediction.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:17:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/06/24 06:45:23 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 static void		save_width_and_prediction(char **ptr,
 												t_list *substring_elem)
 {
+	t_substring		*substring;
+
+	substring = (t_substring *)substring_elem->content;
 	if (**ptr == '.')
 	{
-		((t_substring *)substring_elem->content)->precision =
-													ft_atoi(*ptr + 1);
+		substring->precision = ft_atoi(*ptr + 1);
 		(*ptr)--;
 		while (**ptr && ft_isdigit(**ptr))
 			(*ptr)--;
-		((t_substring *)substring_elem->content)->width =
-													ft_atoi(*ptr + 1);
+		substring->width = ft_atoi(*ptr + 1);
 	}
 	else
 	{
-		((t_substring *)substring_elem->content)->precision = -1;
-		((t_substring *)substring_elem->content)->width =
-													ft_atoi(*ptr + 1);
+		substring->precision = -1;
+		substring->width = ft_atoi(*ptr + 1);
 	}
 	if (*(*ptr + 1) == '0')
 		(*ptr)++;
@@ -40,19 +40,21 @@ void			add_width_and_prediction(t_list **substring_list)
 {
 	t_list			*substring_elem;
 	char			*ptr;
+	t_substring		*substring;
 
 	substring_elem = *substring_list;
 	while (substring_elem)
 	{
-		ptr = ((t_substring *)substring_elem->content)->end_ptr;
-		while (*ptr && (ft_isdigit(*ptr)))
-			ptr--;
-		if (*ptr == '.' ||
-					ptr < ((t_substring *)substring_elem->content)->end_ptr)
+		substring = (t_substring *)substring_elem->content;
+		if (substring->input_string[0] == '%')
 		{
-			save_width_and_prediction(&ptr, substring_elem);
+			ptr = substring->end_ptr;
+			while (ptr > substring->input_string && *ptr && (ft_isdigit(*ptr)))
+				ptr--;
+			if (*ptr == '.' || ptr < substring->end_ptr)
+				save_width_and_prediction(&ptr, substring_elem);
+			substring->end_ptr = ptr;
 		}
-		((t_substring *)substring_elem->content)->end_ptr = ptr;
 		substring_elem = substring_elem->next;
 	}
 	return ;
