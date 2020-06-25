@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/03 15:03:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/29 16:33:36 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/25 13:10:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static void		update_path_to_lst(t_output *output, t_best_paths *best_paths,
 	t_valid_path	*valid_path;
 
 	i = 0;
-	while (output->path_array[branch_id][i] && i < 3)
+	while (output->path_array[branch_id][i] && i < 4)
 	{
 		valid_path = output->path_array[branch_id][i];
-		if (nr_instruction_lines < (size_t)valid_path->num_of_conn_to_end)
+		if (nr_instruction_lines <= (size_t)valid_path->num_of_conn_to_end)
 			break ;
 		else if (!is_room_colision(best_paths->merged_room_vector,
 						valid_path->room_vector, output->num_of_rooms))
@@ -62,6 +62,8 @@ void			select_paths_2(t_output *output, t_best_paths *best_paths,
 {
 	static size_t	nr_instruction_lines = INT_MAX;
 
+	if (selection_timeout(output))
+		return ;
 	if (branch_id < output->start_room_ptr->num_of_connections)
 	{
 		update_path_to_lst(output, best_paths, branch_id, nr_instruction_lines);

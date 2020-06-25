@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/25 00:54:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/25 10:43:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,5 +331,6 @@ void						select_paths_2(t_output *output,
 									t_best_paths *best_paths, size_t branch_id);
 void						prepare_room_data(t_room **room_array,
 														size_t num_of_rooms);
+int							selection_timeout(t_output *output);
 
 #endif

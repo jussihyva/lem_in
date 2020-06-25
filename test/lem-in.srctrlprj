@@ -13,7 +13,7 @@
                 <target_options_enabled>0</target_options_enabled>
             </cross_compilation>
             <header_search_paths>
-                <header_search_path>../libft/includes</header_search_path>
+                <header_search_path>../libft</header_search_path>
                 <header_search_path>../libftprintf/src</header_search_path>
                 <header_search_path>..</header_search_path>
             </header_search_paths>

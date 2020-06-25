@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "/home/pi/lem_in"
+		},
+		{
+			"path": ".."
 		}
 	],
 	"settings": {
