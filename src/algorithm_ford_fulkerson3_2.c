@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm_ford_fulkerson3_2.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 10:16:33 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/05/31 19:52:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/25 13:15:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void			update_room_vector(t_output *output, t_valid_path *valid_path,
 	return ;
 }
 
-static int		selection_timeout(t_output *output)
+int				selection_timeout(t_output *output)
 {
 	static size_t	path_verification_cnt = 1;
 
-	if (!(path_verification_cnt % 4000000))
+	if (!(path_verification_cnt % 3000000))
 	{
 		if (output->opt && output->opt & verbose)
 			ft_printf("Timeout: %d\n", path_verification_cnt);

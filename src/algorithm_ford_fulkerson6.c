@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm_ford_fulkerson6.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 19:23:52 by ubuntu            #+#    #+#             */
-/*   Updated: 2020/06/24 23:19:14 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/25 13:17:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int						algorithm_ford_fulkerson6(t_output *output)
 	if (output->opt && output->opt & verbose)
 		print_valid_paths(output);
 	new_path_lst = NULL;
-	select_best_group(&new_path_lst, merged_room_vector, output, 0);
+	select_paths_1(output);
 	free(merged_room_vector);
 	ft_lstdel(&new_path_lst, del_path);
 	output->number_of_paths = ft_lstlen(output->lst_of_selectd_paths);
