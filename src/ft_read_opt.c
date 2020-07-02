@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read_opt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 14:14:32 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/04/05 09:08:16 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/07/02 12:29:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 static void		save_num_of_ants(t_input *input, int *argc, char ***argv)
 {
+	int			number_of_ants;
+
 	if (*argc > 1)
 	{
 		if (!(input->opt & ants))
 		{
-			input->number_of_ants = (size_t)ft_atoi((*argv)[1]);
-			input->opt |= ants;
+			number_of_ants = (size_t)ft_atoi((*argv)[1]);
+			if (number_of_ants > 0)
+			{
+				input->number_of_ants = number_of_ants;
+				input->opt |= ants;
+			}
 		}
 		ft_step_args(argc, argv);
 	}
