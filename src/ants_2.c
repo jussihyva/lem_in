@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 08:59:46 by pi                #+#    #+#             */
-/*   Updated: 2020/06/10 20:40:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/07/02 12:26:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void				read_num_of_ants(char *line, t_input *input,
 													t_read_status *read_status)
 {
 	char			*endptr;
-	size_t			number_of_ants;
+	int				number_of_ants;
 	char			*newline;
 
 	*read_status = e_read_room_data;
 	number_of_ants = ft_strtoi(line, &endptr, 10);
-	if (errno || *endptr)
+	if (errno || *endptr || number_of_ants < 1)
 	{
 		add_valid_input_line(input->valid_input_lines, line);
 		set_error(input, line, num_of_ants_error, "#ERROR ");

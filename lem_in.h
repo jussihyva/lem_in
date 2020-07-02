@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 13:51:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/25 10:43:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/07/02 12:26:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct				s_input
 	char			*input_file;
 	size_t			input_line_cnt;
 	t_list			**valid_input_lines;
-	size_t			number_of_ants;
+	int				number_of_ants;
 	t_room			*start_room_ptr;
 	t_room			*end_room_ptr;
 	t_list			*room_lst;
